@@ -1,272 +1,312 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Barbearia NAGARAGE</title>
-    <link rel="stylesheet" href="./styles/output.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
-    <meta name="description" content="Descubra a experiência única da nossa barbearia.">
-    <meta name="keywords" content="barbearia, corte de cabelo, barba, estilo masculino, barbearia premium, agendamento online, cuidados masculinos">
-    <meta name="author" content="Nagarage Barbearia">  
-    <meta property="og:title" content="Barbearia Premium | Pior barbearia de Piraju">  
-    <meta property="og:description" content="Descubra a experiência única da nossa barbearia.">
+    <link rel="stylesheet" href="./styles/output.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✂️/text>/svg>"
+    />
+    <meta
+      name="description"
+      content="Descubra a experiência única da nossa barbearia."
+    />
+    <meta
+      name="keywords"
+      content="barbearia, corte de cabelo, barba, estilo masculino, barbearia premium, agendamento online, cuidados masculinos"
+    />
+    <meta name="author" content="Nagarage Barbearia" />
+    <meta
+      property="og:title"
+      content="Barbearia Premium | Na Garage Barbearia"
+    />
+    <meta
+      property="og:description"
+      content="Descubra a experiência única da nossa barbearia."
+    />
+    <meta
+      name="description"
+      content="Barbearia Na Garage. Cortes modernos, barba, cabelo e bigode com estilo e qualidade. Atendimento de respeito, sem frescura. Agende seu horário e saia bonito!"
+    />
     <style>
-        /* Variáveis de Cores */
-        :root {
-            --bg-dark: #0a0a0a;
-            --bg-card: #151515;
-            --gold: #ffea00;
-            --text-light: #ffffff;
-            --text-muted: #aaaaaa;
-        }
+      /* Variáveis de Cores */
+      :root {
+        --bg-dark: #0a0a0a;
+        --bg-card: #151515;
+        --gold: #ffea00;
+        --text-light: #ffffff;
+        --text-muted: #aaaaaa;
+      }
 
-        /* Reset Básico */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      /* Reset Básico */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-light);
-            font-family: 'Montserrat', sans-serif;
-            overflow-x: hidden;
-        }
+      body {
+        background-color: var(--bg-dark);
+        color: var(--text-light);
+        font-family: "Montserrat", sans-serif;
+        overflow-x: hidden;
+      }
 
-        h1, h2, h3 {
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
-        }
+      h1,
+      h2,
+      h3 {
+        font-family: "Playfair Display", serif;
+        font-weight: 700;
+      }
 
-        /* Utilidades */
-        .gold-text { color: var(--gold); 
+      /* Utilidades */
+      .gold-text {
+        color: var(--gold);
         text-shadow:
-                 0 0 1px #ffd000,
-                 0 0 3px #ffd000,
-                 0 0 5px #ffd000,
-                 0 0 5px #ffea00;}
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-     
+          0 0 1px #ffd000,
+          0 0 3px #ffd000,
+          0 0 5px #ffd000,
+          0 0 5px #ffea00;
+      }
+      .section-title {
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 3rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
 
-        /* Animações de Scroll (Classes) */
-        .hiddenn {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-        .show {
-            opacity: 1;
-            transform: translateY(0);
-        }
+      /* Animações de Scroll (Classes) */
+      .hiddenn {
+        opacity: 0;
+        transform: translateY(40px);
+        transition:
+          opacity 0.8s ease-out,
+          transform 0.8s ease-out;
+      }
+      .show {
+        opacity: 1;
+        transform: translateY(0);
+      }
 
-        /* Seção 1: Hero */
-        .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            /* Usando uma imagem de barbearia escura como placeholder. Substitua a URL pela sua arte da caveira */
-            background: linear-gradient(to bottom, rgba(10,10,10,0.7), rgba(10,10,10,0.95)), 
-                        url('img/fundo.png') center/cover no-repeat;
-            padding: 0 20px;
-        }
+      /* Seção 1: Hero */
+      .hero {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        /* Usando uma imagem de barbearia escura como placeholder. Substitua a URL pela sua arte da caveira */
+        background:
+          linear-gradient(
+            to bottom,
+            rgba(10, 10, 10, 0.7),
+            rgba(10, 10, 10, 0.95)
+          ),
+          url("img/interior.jpeg") center/cover no-repeat;
+        padding: 0 20px;
+      }
 
+      .hero h1 {
+        font-size: 3rem !important;
+        transform: translateY(-20px);
+        letter-spacing: 3px;
+      }
+
+      .hero p {
+        font-size: 1rem;
+        color: var(--text-muted);
+        margin-bottom: 80px;
+        font-style: italic;
+        font-family: "Playfair Display", serif;
+        margin: 2px;
+      }
+
+      .btn-whatsapp {
+        background-color: var(--gold);
+        color: var(--bg-dark);
+        padding: 15px 40px;
+        font-size: 1rem;
+        font-weight: 600;
+        text-decoration: none;
+        border-radius: 4px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
+        box-shadow:
+          0 0 5px #ffd000,
+          0 0 10px #ffd000,
+          0 0 10px #ffd000,
+          0 0 20px #ffea00;
+        margin-bottom: 20px;
+      }
+
+      .btn-whatsapp:hover {
+        background-color: #fce38a;
+        box-shadow: 0 0 25px rgba(212, 175, 55, 0.6);
+        transform: translateY(-3px);
+      }
+
+      /* Seção 2: Sobre a Barbearia */
+      .about {
+        padding: 100px 20px;
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: center;
+        line-height: 1.8;
+      }
+
+      .about p {
+        color: var(--text-muted);
+        font-size: 1.1rem;
+        margin-bottom: 20px;
+      }
+
+      /* Seção 3: Serviços */
+      .services {
+        padding: 80px 20px;
+        background-color: #0f0f0f;
+      }
+
+      .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .service-card {
+        background-color: var(--bg-card);
+        padding: 40px 30px;
+        border-radius: 8px;
+        text-align: center;
+        border: 1px solid #1f1f1f;
+        transition: all 0.4s ease;
+        cursor: pointer;
+      }
+
+      .service-card:hover {
+        transform: translateY(-10px);
+        border-color: var(--gold);
+        box-shadow: 0 10px 30px rgba(212, 175, 55, 0.15);
+      }
+
+      .service-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+        color: var(--gold);
+      }
+
+      .service-card p {
+        color: var(--text-muted);
+        margin-bottom: 20px;
+        font-size: 0.9rem;
+      }
+
+      .service-price {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--text-light);
+      }
+
+      /* Seção 4: Galeria */
+      .gallery {
+        padding: 100px 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+      }
+
+      .gallery-item {
+        position: relative;
+        overflow: hidden;
+        border-radius: 8px;
+        height: 350px;
+      }
+
+      .gallery-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition:
+          transform 0.6s ease,
+          filter 0.6s ease;
+        filter: grayscale(80%);
+      }
+
+      .gallery-item:hover img {
+        transform: scale(1.1);
+        filter: grayscale(0%);
+      }
+
+      /* Footer */
+      footer {
+        background-color: #050505;
+        text-align: center;
+        padding: 30px;
+        border-top: 1px solid #1a1a1a;
+      }
+
+      footer p {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+      }
+
+      /* Responsividade */
+      @media (max-width: 768px) {
         .hero h1 {
-            font-size: 3.2rem !important;
-            margin-bottom: 20px;
-            letter-spacing: 3px;
-            
+          font-size: 2.5rem;
         }
+        .section-title {
+          font-size: 2rem;
+        }
+      }
 
-        .hero p {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            margin-bottom: 40px;
-            font-style: italic;
-            font-family: 'Playfair Display', serif;
-        }
-
-        .btn-whatsapp {
-            background-color: var(--gold);
-            color: var(--bg-dark);
-            padding: 15px 40px;
-            font-size: 1rem;
-            font-weight: 600;
-            text-decoration: none;
-            border-radius: 4px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            box-shadow:
-                 0 0 5px #ffd000,
-                 0 0 10px #ffd000,
-                 0 0 10px #ffd000,
-                 0 0 20px #ffea00;
-            margin-bottom: 20px;
-        }
-
-        .btn-whatsapp:hover {
-            background-color: #fce38a;
-            box-shadow: 0 0 25px rgba(212, 175, 55, 0.6);
-            transform: translateY(-3px);
-        }
-
-        /* Seção 2: Sobre a Barbearia */
-        .about {
-            padding: 100px 20px;
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-            line-height: 1.8;
-        }
-        
-        .about p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            margin-bottom: 20px;
-        }
-
-        /* Seção 3: Serviços */
-        .services {
-            padding: 80px 20px;
-            background-color: #0f0f0f;
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .service-card {
-            background-color: var(--bg-card);
-            padding: 40px 30px;
-            border-radius: 8px;
-            text-align: center;
-            border: 1px solid #1f1f1f;
-            transition: all 0.4s ease;
-            cursor: pointer;
-        }
-
-        .service-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--gold);
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.15);
-        }
-
-        .service-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            color: var(--gold);
-        }
-
-        .service-card p {
-            color: var(--text-muted);
-            margin-bottom: 20px;
-            font-size: 0.9rem;
-        }
-
-        .service-price {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--text-light);
-        }
-
-        /* Seção 4: Galeria */
-        .gallery {
-            padding: 100px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        .gallery-item {
-            position: relative;
-            overflow: hidden;
-            border-radius: 8px;
-            height: 350px;
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s ease, filter 0.6s ease;
-            filter: grayscale(80%);
-        }
-
-        .gallery-item:hover img {
-            transform: scale(1.1);
-            filter: grayscale(0%);
-        }
-
-        /* Footer */
-        footer {
-            background-color: #050505;
-            text-align: center;
-            padding: 30px;
-            border-top: 1px solid #1a1a1a;
-        }
-
-        footer p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        /* Responsividade */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
-            .section-title { font-size: 2rem; }
-        }
-
-        .btn-neon {
+      .btn-neon {
+        margin-top: 80px;
         display: inline-flex;
         align-items: center;
         gap: 15px;
         padding: 13px 13px;
         text-decoration: none;
         color: #ffea00;
-        font-weight: 300;
-        font-size: 20px;
+
+        font-size: 15px;
         letter-spacing: 1px;
         text-transform: uppercase;
-        
+
         /* Formato e Borda */
         border: 4px solid #ffea00;
         border-radius: 50px;
         background: transparent;
-        
-        /* Efeito Neon (Brilho externo e interno na borda) */
-        box-shadow: 
-            0 0 10px #ffea00,
-            inset 0 0 10px #ffea00;
-            
-        /* Efeito Neon no Texto */
-        text-shadow: 0 0 8px #ffea00;
-        
-        transition: all 0.3s ease;
-        }
 
-        .btn-neon svg {
+        /* Efeito Neon (Brilho externo e interno na borda) */
+        box-shadow:
+          0 0 10px #ffea00,
+          inset 0 0 10px #ffea00;
+
+        /* Efeito Neon no Texto */
+        text-shadow: 0 0 13px #ffea00;
+
+        transition: all 0.3s ease;
+      }
+
+      .btn-neon svg {
         width: 45px;
         height: 45px;
         stroke: #ffea00;
@@ -274,135 +314,171 @@
         stroke-width: 2.5;
         filter: drop-shadow(0 0 5px #ffea00);
         transition: all 0.3s ease;
-        }
+      }
 
-    /* Efeito ao passar o mouse (Hover) */
-        .btn-neon:hover {
+      /* Efeito ao passar o mouse (Hover) */
+      .btn-neon:hover {
         background-color: #ffea00;
         color: #000;
-        box-shadow: 
-            0 0 20px #ffea00,
-            0 0 40px #ffea00,
-            inset 0 0 10px #ffea00;
+        box-shadow:
+          0 0 20px #ffea00,
+          0 0 40px #ffea00,
+          inset 0 0 10px #ffea00;
         text-shadow: none;
-        }
+      }
 
-        .btn-neon:hover svg {
+      .btn-neon:hover svg {
         stroke: #000;
         filter: none;
-        }
+      }
     </style>
-</head>
-<body>
-
+  </head>
+  <body>
     <section class="hero">
-        <h1 class="font-bold ">NAGARAGE <span class="gold-text font-extrabold ">BARBEARIA</span></h1>
-        <p>"✂️ A pior barbearia de Piraju."</p>
-        <a href="https://wa.me/5511999999999" target="_blank" class="btn-neon">
-        
-         ENTRAR EM CONTATO
-        </a>
-        <div class="scroll-indicator"> <img src="img/logo1.png" alt="logo" class="w-48 mt-10 "> </div>
+      <h1 class="font-bold">
+        NA GARAGE <span class="gold-text font-extrabold">BARBEARIA</span>
+      </h1>
+      <p>🪒 Cortes sem frescura.</p>
+      <p>🏆 Atendimento de respeito.</p>
+      <p>📍Estilo sem enrolação.</p>
+      <p>Se sair bonito, não foi por acaso.</p>
+      <a
+        href="https://wa.me/555514997216010?text=Olá,%20gostaria%20de%20fazer%20um%20agendamento!"
+        target="_blank"
+        class="btn-neon"
+      >
+        Atendimento por ordem de chegada, sem frescura
+      </a>
+      <!-- <div class="scroll-indicator">
+        <img src="img/logo1.png" alt="logo" class="w-48 mt-10" />
+      </div>-->
     </section>
 
-    <section class="about hiddenn flexjustify-center items-center">
-        <ul class="section-title list-none">A <span class="gold-text">Barbearia</span></ul>
-       <ul> <li>💈 Cortes Questionáveis</li>
+    <!-- <section class="about hiddenn flexjustify-center items-center">
+      <ul class="section-title list-none">
+        A
+        <span class="gold-text">Barbearia</span>
+      </ul>
+      <ul>
+        <li>💈 Cortes Questionáveis</li>
         <li>☕ Café de procedência duvidosa</li>
-         <li>🏆 Multipremiada</li>
-           <li>📍 Técnica zero</li>
-          <li>Se sair bonito, foi sorte.🍀.</li> </ul>
-    </section>
+        <li>🏆 Multipremiada</li>
+        <li>📍 Técnica zero</li>
+        <li>Se sair bonito, foi sorte.🍀.</li>
+      </ul>
+    </section>-->
 
     <section class="services">
-        <h2 class="section-title">Nossos <span class="gold-text">Serviços</span></h2>
-        <div class="services-grid">
-            <div id="service1" class="service-card hiddenn">
-                <h3>Corte Clássico</h3>
-                <p>Corte na tesoura ou máquina, com acabamento impecável, finalização com pomada e toalha quente.</p>
-                <div class="service-price">R$ 50</div>
-            </div>
-            <div id="service2" class="service-card hiddenn">
-                <h3>Barba Terapia</h3>
-                <p>Alinhamento dos fios, toalha quente, massagem facial e produtos premium para hidratar a pele.</p>
-                <div class="service-price">R$ 40</div>
-            </div>
-            <div id="service3" class="service-card hiddenn">
-                <h3>Combo Elite</h3>
-                <p>A experiência completa. Corte clássico + Barba Terapia + Lavagem especial e finalização.</p>
-                <div class="service-price">R$ 80</div>
-            </div>
+      <h2 class="section-title">
+        Nossos <span class="gold-text">Serviços</span>
+      </h2>
+      <div class="services-grid">
+        <div id="service1" class="service-card hiddenn">
+          <h3>Corte Clássico</h3>
+          <p>
+            Corte na tesoura ou máquina, com acabamento impecável, finalização
+            com pomada.
+          </p>
+          <div class="service-price">R$ 40</div>
         </div>
+        <div id="service2" class="service-card hiddenn">
+          <h3>Barba Terapia</h3>
+          <p>
+            Alinhamento dos fios, toalha quente, produtos premium para hidratar
+            a pele.
+          </p>
+          <div class="service-price">R$ 40</div>
+        </div>
+      </div>
     </section>
 
     <section class="gallery">
-        <h2 class="section-title">Nossa <span class="gold-text">Arte</span></h2>
-        <div class="gallery-grid">
-            <div class="gallery-item hiddenn">
-                <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Corte 1">
-            </div>
-            <div class="gallery-item hiddenn">
-                <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Corte 2">
-            </div>
-            <div class="gallery-item hiddenn">
-                <img src="https://images.unsplash.com/photo-1593702275687-f8b402bf1fb5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Corte 3">
-            </div>
+      <h2 class="section-title list-none">
+        A
+        <span class="gold-text">Barbearia</span>
+      </h2>
+      <div class="gallery-grid">
+        <div class="gallery-item hiddenn">
+          <img src="img/cadeira.jpeg" alt="interior da barbearia" />
         </div>
+        <div class="gallery-item hiddenn">
+          <img src="img/fachada.jpeg" alt="fachada da barbearia" />
+        </div>
+        <div class="gallery-item hiddenn">
+          <img src="img/cafe.jpeg" alt="cafe da barbearia" />
+        </div>
+      </div>
     </section>
-        <a href="#" id="whatsappBtn"
-   class="fixed bottom-6 right-6 bg-black border-2 border-yellow-500 text-white p-4 rounded-full shadow-lg hover:scale-110 hover:shadow-yellow-500/50 transition duration-300 flex items-center justify-center">
-    
-    <!-- Ícone WhatsApp -->
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="sombrabtn w-6 h-6 fill-yellow-500 0 0 5px #ffd000">
-            <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-221.7 99.3-221.7 221.7 0 39.1 10.2 77.3 29.6 111L0 480l118.7-30.9c32.6 17.8 69.5 27.2 107.2 27.2h.1c122.4 0 221.7-99.3 221.7-221.7 0-59.3-23.1-115-65-157zM223.9 438.6c-33.5 0-66.2-9-94.7-26l-6.8-4-70.4 18.3 18.8-68.6-4.4-7c-18.6-29.6-28.4-63.7-28.4-98.6 0-101.7 82.8-184.5 184.5-184.5 49.3 0 95.6 19.2 130.4 54.1 34.9 34.9 54.1 81.2 54.1 130.4 0 101.7-82.8 184.5-184.5 184.5zm101.3-138.2c-5.5-2.8-32.5-16-37.6-17.8-5.1-1.9-8.8-2.8-12.6 2.8-3.7 5.5-14.4 17.8-17.7 21.5-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-53.9-29.1-75.4-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.6-30.4-17.3-41.6-4.5-10.8-9.1-9.3-12.6-9.5-3.2-.1-6.9-.1-10.6-.1s-9.7 1.4-14.8 6.9c-5.1 5.5-19.5 19-19.5 46.3s20 53.8 22.8 57.5c2.8 3.7 39.4 60.2 95.5 84.4 13.4 5.8 23.9 9.3 32 11.9 13.4 4.3 25.6 3.7 35.3 2.2 10.8-1.6 32.5-13.3 37.1-26.2 4.6-12.9 4.6-24 3.2-26.2-1.3-2.3-5-3.7-10.5-6.5z"/>
-            </svg>
-        </a>
+    <a
+      href="#"
+      id="whatsappBtn"
+      class="fixed bottom-6 right-6 bg-black border-2 border-yellow-400 text-white p-4 rounded-full shadow-lg hover:scale-110 hover:shadow-yellow-500/50 transition duration-300 flex items-center justify-center"
+    >
+      <!-- Ícone WhatsApp -->
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 448 512"
+        class="sombrabtn w-6 h-6 fill-yellow-400 0 0 5px #ffd000"
+      >
+        <path
+          d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-221.7 99.3-221.7 221.7 0 39.1 10.2 77.3 29.6 111L0 480l118.7-30.9c32.6 17.8 69.5 27.2 107.2 27.2h.1c122.4 0 221.7-99.3 221.7-221.7 0-59.3-23.1-115-65-157zM223.9 438.6c-33.5 0-66.2-9-94.7-26l-6.8-4-70.4 18.3 18.8-68.6-4.4-7c-18.6-29.6-28.4-63.7-28.4-98.6 0-101.7 82.8-184.5 184.5-184.5 49.3 0 95.6 19.2 130.4 54.1 34.9 34.9 54.1 81.2 54.1 130.4 0 101.7-82.8 184.5-184.5 184.5zm101.3-138.2c-5.5-2.8-32.5-16-37.6-17.8-5.1-1.9-8.8-2.8-12.6 2.8-3.7 5.5-14.4 17.8-17.7 21.5-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-53.9-29.1-75.4-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.6-30.4-17.3-41.6-4.5-10.8-9.1-9.3-12.6-9.5-3.2-.1-6.9-.1-10.6-.1s-9.7 1.4-14.8 6.9c-5.1 5.5-19.5 19-19.5 46.3s20 53.8 22.8 57.5c2.8 3.7 39.4 60.2 95.5 84.4 13.4 5.8 23.9 9.3 32 11.9 13.4 4.3 25.6 3.7 35.3 2.2 10.8-1.6 32.5-13.3 37.1-26.2 4.6-12.9 4.6-24 3.2-26.2-1.3-2.3-5-3.7-10.5-6.5z"
+        />
+      </svg>
+    </a>
+
+    <iframe
+      src="https://www.google.com/maps?q=-23.1941616,-49.385763&output=embed"
+      width="100%"
+      height="300"
+      style="border: 0"
+      loading="lazy"
+    >
+    </iframe>
 
     <footer>
-        <p>&copy; Since 2019. Pior Barbearia de Piraju.</p>
+      <p>&copy; Since 2019. Pior Barbearia de Piraju.</p>
     </footer>
 
     <script>
-        // Utilizando Intersection Observer para animar os elementos quando aparecem na tela
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('show');
-                }
-            });
-        }, {
-            threshold: 0.1 // O efeito dispara quando 10% do elemento está visível
-        });
+      // Utilizando Intersection Observer para animar os elementos quando aparecem na tela
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("show");
+            }
+          });
+        },
+        {
+          threshold: 0.1, // O efeito dispara quando 10% do elemento está visível
+        },
+      );
 
-        const hiddenElements = document.querySelectorAll('.hiddenn');
-        hiddenElements.forEach((el) => observer.observe(el));
+      const hiddenElements = document.querySelectorAll(".hiddenn");
+      hiddenElements.forEach((el) => observer.observe(el));
 
+      const numero = "5514997216010"; // Substitua pelo número real da barbearia
 
-        const numero = "14999999999";
-
-        function enviarWhats(servico) {
-            const mensagem = `Olá, gostaria de agendar o ${servico} na Nagarage Barbearia.`;
-            const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`;
-            window.open(url, '_blank');
-        }
-
-        document.getElementById('service1').addEventListener('click', () => {
-        enviarWhats('Corte Clássico');
-        });
-
-        document.getElementById('service2').addEventListener('click', () => {
-        enviarWhats('Barba Terapia');
-        });
-
-        document.getElementById('service3').addEventListener('click', () => {
-        enviarWhats('Combo Elite');
-        });
-
-        document.getElementById('whatsappBtn').addEventListener('click', () => {
-        const mensagem = "Olá, gostaria de agendar um horário na Nagarage Barbearia.";
+      function enviarWhats(servico) {
+        const mensagem = `Olá, gostaria de agendar o ${servico} na Nagarage Barbearia.`;
         const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`;
-        window.open(url, '_blank');
-});
+        window.open(url, "_blank");
+      }
+
+      document.getElementById("service1").addEventListener("click", () => {
+        enviarWhats("Corte Clássico");
+      });
+
+      document.getElementById("service2").addEventListener("click", () => {
+        enviarWhats("Barba Terapia");
+      });
+
+      document.getElementById("whatsappBtn").addEventListener("click", () => {
+        const mensagem =
+          "Olá, gostaria de agendar um horário na Nagarage Barbearia.";
+        const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`;
+        window.open(url, "_blank");
+      });
     </script>
-</body>
+  </body>
 </html>
