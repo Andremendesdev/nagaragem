@@ -343,7 +343,7 @@
       <p>📍Estilo sem enrolação.</p>
       <p>Se sair bonito, não foi por acaso.</p>
       <a
-        href="https://wa.me/555514997216010?text=Olá,%20gostaria%20de%20fazer%20um%20agendamento!"
+        href="https://wa.me/555514997216010?text=Olá!%20Vocês%20estão%20atendendo%20hoje?!"
         target="_blank"
         class="btn-neon"
       >
@@ -460,7 +460,7 @@
       const numero = "5514997216010"; // Substitua pelo número real da barbearia
 
       function enviarWhats(servico) {
-        const mensagem = `Olá, gostaria de agendar o ${servico} na Nagarage Barbearia.`;
+        const mensagem = `Olá! Gostaria de saber se o serviço de ${servico} está disponível hoje na Barbearia Garage.`;
         const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`;
         window.open(url, "_blank");
       }
@@ -475,7 +475,7 @@
 
       document.getElementById("whatsappBtn").addEventListener("click", () => {
         const mensagem =
-          "Olá, gostaria de agendar um horário na Nagarage Barbearia.";
+          "Olá! Vocês estão atendendo hoje? Queria fazer um horário aí.";
         const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`;
         window.open(url, "_blank");
       });
