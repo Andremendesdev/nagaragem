@@ -1,12 +1,14 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { trackGenerateLead } from "@/lib/analytics/gtag"
 
 const WHATSAPP_MSG =
   "Olá! Vocês estão atendendo hoje? Tô pensando em passar aí — é por ordem de chegada?"
 
 export default function FloatingWhatsApp() {
   const handleClick = () => {
+    trackGenerateLead("floating")
     const url = `https://wa.me/5514997216010?text=${encodeURIComponent(WHATSAPP_MSG)}`
     window.open(url, "_blank")
   }

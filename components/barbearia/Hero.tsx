@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { trackGenerateLead, trackInstagramClick } from "@/lib/analytics/gtag";
 
 const WHATSAPP_LINK =
   "https://wa.me/5514997216010?text=Ol%C3%A1!%20Voc%C3%AAs%20est%C3%A3o%20atendendo%20hoje%3F!";
@@ -31,6 +32,7 @@ export default function Hero() {
         href="https://instagram.com/nagaragebarbearia"
         target="_blank"
         rel="noopener noreferrer"
+        onClick={() => trackInstagramClick()}
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.95 }}
         className="absolute top-20 right-5 md:top-24 md:right-8 z-20 flex items-center justify-center rounded-full w-14 h-14"
@@ -113,6 +115,7 @@ export default function Hero() {
           href={WHATSAPP_LINK}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => trackGenerateLead("hero")}
           whileHover={{ scale: 1.04, y: -2 }}
           whileTap={{ scale: 0.97 }}
           className="inline-flex items-center gap-2.5 rounded-full px-6 py-3.5 md:px-8 md:py-4 text-xs md:text-sm font-semibold uppercase tracking-widest transition-all duration-300 w-full sm:w-auto justify-center max-w-xs"

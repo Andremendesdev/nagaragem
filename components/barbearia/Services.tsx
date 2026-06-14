@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useRef } from "react";
 import { useInView } from "framer-motion";
 import { Scissors } from "lucide-react"; // Importar ícone padrão para fallback
+import { trackGenerateLead } from "@/lib/analytics/gtag";
 
 const WHATSAPP_BASE = "https://wa.me/5514997216010?text=";
 
@@ -47,6 +48,7 @@ function ServiceCard({
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   const handleClick = () => {
+    trackGenerateLead("services", { service_name: service.title });
     const url = `${WHATSAPP_BASE}${encodeURIComponent(service.whatsappMsg)}`;
     window.open(url, "_blank");
   };
