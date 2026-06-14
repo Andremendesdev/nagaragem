@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Montserrat, Playfair_Display } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 import "./globals.css";
 
 const montserrat = Montserrat({
@@ -59,6 +60,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="bg-background font-sans antialiased">
+        <GoogleAnalytics />
         {children}
 
         {process.env.NODE_ENV === "production" && <Analytics />}
