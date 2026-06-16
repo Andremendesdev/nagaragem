@@ -3,8 +3,6 @@
 import dynamic from "next/dynamic"
 import {
   BarChart3,
-  ExternalLink,
-  MousePointerClick,
   Percent,
   RefreshCw,
   Target,
@@ -21,14 +19,6 @@ const VisitsTrendChart = dynamic(() => import("./VisitsTrendChart"), {
     <div className="h-[320px] animate-pulse rounded-2xl border border-[#2a2a2a] bg-[#151515]" />
   ),
 })
-
-const GA_ID =
-  process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? "G-L48FSV5JG3"
-
-const TRACKED_EVENTS = [
-  { name: "generate_lead", description: "Clique no WhatsApp (Hero, flutuante ou serviços)" },
-  { name: "instagram_click", description: "Clique no Instagram do Hero" },
-]
 
 function StatSkeleton() {
   return (
@@ -85,10 +75,6 @@ export default function AdminVisits() {
                 <code className="text-[#ffea00]">GA4_SERVICE_ACCOUNT_JSON</code> — JSON completo da service account com acesso de Leitor no GA4
               </li>
             </ul>
-            <p className="text-xs text-[#555]">
-              Measurement ID do site:{" "}
-              <span className="font-mono text-[#ffea00]">{GA_ID}</span>
-            </p>
           </div>
         </div>
       )}
@@ -190,55 +176,6 @@ export default function AdminVisits() {
           ) : (
             <TrafficSources sources={[]} />
           )}
-        </div>
-      </div>
-
-      {/* Info GA4 */}
-      <div className="grid gap-6 lg:grid-cols-2">
-        <div className="overflow-hidden rounded-2xl border border-[#2a2a2a] bg-[#151515]">
-          <div className="border-b border-[#222] px-6 py-4">
-            <h2 className="text-base font-bold text-white">Google Analytics 4</h2>
-            <p className="text-xs text-[#555]">Propriedade conectada ao site</p>
-          </div>
-          <div className="space-y-4 p-6">
-            <div>
-              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#555]">
-                Measurement ID
-              </p>
-              <p className="mt-1 font-mono text-sm text-[#ffea00]">{GA_ID}</p>
-            </div>
-            <a
-              href="https://analytics.google.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-lg border border-[#333] px-4 py-2 text-sm text-[#ccc] transition-colors hover:border-[#ffea00]/40 hover:text-[#ffea00]"
-            >
-              Abrir GA4
-              <ExternalLink className="size-3.5" />
-            </a>
-            <p className="text-xs leading-relaxed text-[#555]">
-              Os dados podem ter atraso de algumas horas em relação ao Tempo real.
-              Este painel atualiza a cada 5 minutos.
-            </p>
-          </div>
-        </div>
-
-        <div className="overflow-hidden rounded-2xl border border-[#2a2a2a] bg-[#151515]">
-          <div className="border-b border-[#222] px-6 py-4">
-            <div className="flex items-center gap-2">
-              <MousePointerClick className="size-4 text-[#ffea00]" />
-              <h2 className="text-base font-bold text-white">Eventos rastreados</h2>
-            </div>
-            <p className="text-xs text-[#555]">Configurados no site público</p>
-          </div>
-          <ul className="divide-y divide-[#1a1a1a]">
-            {TRACKED_EVENTS.map((event) => (
-              <li key={event.name} className="px-6 py-4">
-                <p className="font-mono text-sm text-[#ffea00]">{event.name}</p>
-                <p className="mt-1 text-xs text-[#666]">{event.description}</p>
-              </li>
-            ))}
-          </ul>
         </div>
       </div>
     </div>
