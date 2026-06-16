@@ -1,12 +1,9 @@
 "use client"
 
 import dynamic from "next/dynamic"
-import Link from "next/link"
 import { useState } from "react"
 import {
-  ArrowLeft,
   BarChart3,
-  Calendar,
   DollarSign,
   LayoutDashboard,
   Scissors,
@@ -24,7 +21,6 @@ import MonthHeatmap from "./MonthHeatmap"
 import RecentEntries from "./RecentEntries"
 import RecentExpenses from "./RecentExpenses"
 import InsightsPanel from "./InsightsPanel"
-import LogoutButton from "@/components/auth/LogoutButton"
 import { cn } from "@/lib/utils"
 
 const WeeklyChart = dynamic(() => import("./WeeklyChart"), {
@@ -79,7 +75,7 @@ export default function AdminDashboard() {
 
   if (!ready) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#0a0a0a]">
+      <div className="flex min-h-[60vh] items-center justify-center">
         <div className="flex flex-col items-center gap-4 text-center">
           <div className="flex size-16 items-center justify-center rounded-2xl bg-[#ffea00]/10">
             <Scissors className="size-8 animate-pulse text-[#ffea00]" />
@@ -95,7 +91,7 @@ export default function AdminDashboard() {
 
   if (error && entries.length === 0) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#0a0a0a] px-4">
+      <div className="flex min-h-[60vh] items-center justify-center px-4">
         <div className="w-full max-w-md overflow-hidden rounded-2xl border border-red-500/20 bg-[#151515]">
           <div className="border-b border-red-500/10 bg-red-500/5 px-6 py-4">
             <p className="font-bold text-red-400">Erro ao conectar</p>
@@ -117,44 +113,13 @@ export default function AdminDashboard() {
     stats.profitThisMonth > 0 ? "profit" : stats.profitThisMonth < 0 ? "loss" : "neutral"
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a]">
-      {/* top nav */}
-      <header className="sticky top-0 z-10 border-b border-[#1a1a1a] bg-[#0a0a0a]/95 backdrop-blur-sm">
-        <div className="mx-auto flex max-w-7xl items-center gap-4 px-4 py-3 sm:px-6">
-          <Link
-            href="/"
-            className="flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm text-[#555] transition-colors hover:text-[#ffea00]"
-          >
-            <ArrowLeft className="size-4" />
-            <span className="hidden sm:inline">Voltar ao site</span>
-          </Link>
+    <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6">
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold text-white">Dashboard</h1>
+        <p className="text-sm text-[#666]">Financeiro · ganhos, despesas e metas</p>
+      </div>
 
-          <div className="flex items-center gap-2">
-            <div className="flex size-8 items-center justify-center rounded-lg bg-[#ffea00]/15">
-              <Scissors className="size-4 text-[#ffea00]" />
-            </div>
-            <span className="text-sm font-bold text-white">Na Garage</span>
-            <span className="hidden rounded-md bg-[#1a1a1a] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-widest text-[#555] sm:inline">
-              Admin
-            </span>
-          </div>
-
-          <div className="ml-auto flex items-center gap-3">
-            <div className="hidden items-center gap-2 text-xs text-[#555] sm:flex">
-              <Calendar className="size-3.5" />
-              {new Intl.DateTimeFormat("pt-BR", {
-                weekday: "short",
-                day: "numeric",
-                month: "short",
-              }).format(new Date())}
-            </div>
-            <LogoutButton />
-          </div>
-        </div>
-      </header>
-
-      <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6">
-        {error && (
+      {error && (
           <div className="mb-6 flex items-start gap-3 rounded-xl border border-red-500/20 bg-red-500/8 px-4 py-3 text-sm text-red-300">
             <span className="mt-0.5 shrink-0 text-red-400">⚠</span>
             {error}
@@ -268,14 +233,6 @@ export default function AdminDashboard() {
             </div>
           </div>
         )}
-      </div>
-
-      <footer className="mt-8 border-t border-[#111] py-6 text-center">
-        <p className="flex items-center justify-center gap-2 text-xs text-[#333]">
-          <DollarSign className="size-3.5" />
-          Dados salvos no Supabase · Acesso restrito ao administrador
-        </p>
-      </footer>
     </div>
   )
 }

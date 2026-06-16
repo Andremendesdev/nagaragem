@@ -1,11 +1,12 @@
 import type { Metadata } from "next"
 import { redirect } from "next/navigation"
+import AdminShell from "@/components/admin/AdminShell"
 import { getAdminEmail, isAdminEmail } from "@/lib/auth/admin"
 import { createClient } from "@/lib/supabase/server"
 
 export const metadata: Metadata = {
   title: "Admin | Na Garage",
-  description: "Painel de ganhos da barbearia",
+  description: "Painel administrativo da barbearia",
 }
 
 export default async function AdminLayout({
@@ -26,7 +27,5 @@ export default async function AdminLayout({
     redirect("/login")
   }
 
-  return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white">{children}</div>
-  )
+  return <AdminShell>{children}</AdminShell>
 }
