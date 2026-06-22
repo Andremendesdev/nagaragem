@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/client"
+import { toEntryIso } from "./dates"
 import { translateDbError } from "./errors"
 import type { AdminSettings, EarningCategory, EarningEntry } from "./types"
 
@@ -47,17 +48,24 @@ export async function insertEntry(
   amount: number,
   category: EarningCategory,
   clientCount: number,
-  note?: string
+  note?: string,
+  entryDate?: Date
 ): Promise<EarningEntry> {
   const supabase = createClient()
+  const row: Record<string, unknown> = {
+    amount,
+    category,
+    client_count: Math.max(1, Math.floor(clientCount)),
+    note: note ?? null,
+  }
+
+  if (entryDate) {
+    row.created_at = toEntryIso(entryDate)
+  }
+
   const { data, error } = await supabase
     .from("earnings")
-    .insert({
-      amount,
-      category,
-      client_count: Math.max(1, Math.floor(clientCount)),
-      note: note ?? null,
-    })
+    .insert(row)
     .select("id, amount, category, client_count, note, created_at")
     .single()
 

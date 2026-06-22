@@ -36,15 +36,15 @@ export default function VisitsTrendChart({ data }: VisitsTrendChartProps) {
   const hasData = data.some((d) => d.visits > 0 || d.leads > 0)
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-[#2a2a2a] bg-[#151515]">
-      <div className="border-b border-[#222] px-6 py-4">
+    <div className="overflow-hidden rounded-2xl border border-[var(--admin-border-muted)] bg-[var(--admin-surface)]">
+      <div className="border-b border-[var(--admin-border)] px-6 py-4">
         <h2 className="text-base font-bold text-white">Últimos 30 dias</h2>
-        <p className="text-xs text-[#555]">Visitas e leads (generate_lead) por dia</p>
+        <p className="text-xs text-[var(--admin-text-faint)]">Visitas e leads (generate_lead) por dia</p>
       </div>
 
       <div className="px-6 py-5">
         {!hasData ? (
-          <div className="flex h-[260px] items-center justify-center text-sm text-[#444]">
+          <div className="flex h-[260px] items-center justify-center text-sm text-[var(--admin-text-muted)]">
             Sem dados no período
           </div>
         ) : (
@@ -60,7 +60,7 @@ export default function VisitsTrendChart({ data }: VisitsTrendChartProps) {
                   <stop offset="95%" stopColor="#34d399" stopOpacity={0.02} />
                 </linearGradient>
               </defs>
-              <CartesianGrid vertical={false} stroke="#1e1e1e" />
+              <CartesianGrid vertical={false} stroke="#333333" />
               <XAxis
                 dataKey="label"
                 tickLine={false}

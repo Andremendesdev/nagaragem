@@ -102,10 +102,17 @@ export function useFinances() {
       amount: number,
       category: EarningCategory,
       clientCount: number,
-      note?: string
+      note?: string,
+      entryDate?: Date
     ) => {
       try {
-        const entry = await insertEntry(amount, category, clientCount, note)
+        const entry = await insertEntry(
+          amount,
+          category,
+          clientCount,
+          note,
+          entryDate
+        )
         setEntries((prev) => [entry, ...prev])
         setError(null)
       } catch (err) {

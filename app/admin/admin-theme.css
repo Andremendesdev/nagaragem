@@ -1,0 +1,18 @@
+/* Tema admin — tons levemente mais claros que o site público */
+.admin-theme {
+  --admin-bg: #121212;
+  --admin-bg-elevated: #1a1a1a;
+  --admin-surface: #222222;
+  --admin-input: #2a2a2a;
+  --admin-border: #333333;
+  --admin-border-subtle: #2a2a2a;
+  --admin-border-muted: #3a3a3a;
+  --admin-track: #333333;
+  --admin-hover: #2a2a2a;
+  --admin-skeleton: #333333;
+  --admin-skeleton-muted: #2a2a2a;
+  --admin-heatmap-0: #1e1e1e;
+  --admin-text-faint: #666666;
+  --admin-text-muted: #999999;
+  --admin-text-dim: #888888;
+}

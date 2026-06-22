@@ -62,15 +62,15 @@ export default function AddExpensePanel({ onAdd }: AddExpensePanelProps) {
   }
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-red-500/15 bg-[#151515]">
-      <div className="border-b border-[#222] px-6 py-4">
+    <div className="overflow-hidden rounded-2xl border border-red-500/15 bg-[var(--admin-surface)]">
+      <div className="border-b border-[var(--admin-border)] px-6 py-4">
         <div className="flex items-center gap-3">
           <div className="flex size-9 items-center justify-center rounded-xl bg-red-500/10">
             <Minus className="size-4 text-red-400" />
           </div>
           <div>
             <h2 className="text-base font-bold text-white">Registrar despesa</h2>
-            <p className="text-xs text-[#666]">Aluguel, produtos, contas...</p>
+            <p className="text-xs text-[var(--admin-text-faint)]">Aluguel, produtos, contas...</p>
           </div>
           {success && (
             <div className="ml-auto flex items-center gap-1.5 rounded-full bg-emerald-500/15 px-3 py-1 text-xs font-semibold text-emerald-400">
@@ -84,11 +84,11 @@ export default function AddExpensePanel({ onAdd }: AddExpensePanelProps) {
       <div className="p-6">
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.15em] text-[#666]">
+            <label className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.15em] text-[var(--admin-text-faint)]">
               Valor (R$)
             </label>
             <div className="relative">
-              <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-[#555]">
+              <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-[var(--admin-text-faint)]">
                 R$
               </span>
               <Input
@@ -102,7 +102,7 @@ export default function AddExpensePanel({ onAdd }: AddExpensePanelProps) {
                   if (amountError) setAmountError("")
                 }}
                 className={cn(
-                  "h-12 border-[#2a2a2a] bg-[#0f0f0f] pl-9 text-lg font-bold text-white placeholder:text-[#333] focus:border-red-500/50",
+                  "h-12 border-[var(--admin-border-muted)] bg-[var(--admin-input)] pl-9 text-lg font-bold text-white placeholder:text-[var(--admin-border)] focus:border-red-500/50",
                   amountError && "border-red-500/50"
                 )}
               />
@@ -113,7 +113,7 @@ export default function AddExpensePanel({ onAdd }: AddExpensePanelProps) {
           </div>
 
           <div>
-            <label className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.15em] text-[#666]">
+            <label className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.15em] text-[var(--admin-text-faint)]">
               Categoria
             </label>
             <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-4">
@@ -126,7 +126,7 @@ export default function AddExpensePanel({ onAdd }: AddExpensePanelProps) {
                     "rounded-xl border py-2.5 text-center text-xs font-medium transition-all",
                     category === cat.value
                       ? "border-red-400/60 bg-red-500/10 text-red-300"
-                      : "border-[#222] bg-[#0f0f0f] text-[#666] hover:border-[#333] hover:text-[#999]"
+                      : "border-[var(--admin-border)] bg-[var(--admin-input)] text-[var(--admin-text-faint)] hover:border-[#333] hover:text-[#999]"
                   )}
                 >
                   <span className="block text-base leading-none">{cat.emoji}</span>
@@ -137,14 +137,14 @@ export default function AddExpensePanel({ onAdd }: AddExpensePanelProps) {
           </div>
 
           <div>
-            <label className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.15em] text-[#666]">
-              Obs. <span className="normal-case tracking-normal text-[#444]">(opcional)</span>
+            <label className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.15em] text-[var(--admin-text-faint)]">
+              Obs. <span className="normal-case tracking-normal text-[var(--admin-text-muted)]">(opcional)</span>
             </label>
             <Input
               placeholder="Conta de luz, pomada fixadora..."
               value={note}
               onChange={(e) => setNote(e.target.value)}
-              className="border-[#2a2a2a] bg-[#0f0f0f] text-white placeholder:text-[#333] focus:border-red-500/50"
+              className="border-[var(--admin-border-muted)] bg-[var(--admin-input)] text-white placeholder:text-[var(--admin-border)] focus:border-red-500/50"
             />
           </div>
 
@@ -163,8 +163,8 @@ export default function AddExpensePanel({ onAdd }: AddExpensePanelProps) {
           </Button>
         </form>
 
-        <div className="mt-5 border-t border-[#1e1e1e] pt-4">
-          <p className="mb-2.5 flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#555]">
+        <div className="mt-5 border-t border-[var(--admin-track)] pt-4">
+          <p className="mb-2.5 flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--admin-text-faint)]">
             <Zap className="size-3 text-red-400" />
             Atalhos rápidos
           </p>
@@ -175,7 +175,7 @@ export default function AddExpensePanel({ onAdd }: AddExpensePanelProps) {
                 type="button"
                 disabled={submitting}
                 onClick={() => quickAdd(v)}
-                className="rounded-lg border border-[#222] bg-[#0a0a0a] px-3 py-1.5 text-xs font-semibold text-[#888] transition-all hover:border-red-500/30 hover:text-red-300 disabled:opacity-40"
+                className="rounded-lg border border-[var(--admin-border)] bg-[var(--admin-bg)] px-3 py-1.5 text-xs font-semibold text-[var(--admin-text-dim)] transition-all hover:border-red-500/30 hover:text-red-300 disabled:opacity-40"
               >
                 {formatCurrency(v)}
               </button>

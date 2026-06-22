@@ -31,12 +31,12 @@ export default function WeeklyChart({ data }: WeeklyChartProps) {
   const hasData = data.some((d) => d.total > 0)
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-[#2a2a2a] bg-[#151515]">
-      <div className="border-b border-[#222] px-6 py-4">
+    <div className="overflow-hidden rounded-2xl border border-[var(--admin-border-muted)] bg-[var(--admin-surface)]">
+      <div className="border-b border-[var(--admin-border)] px-6 py-4">
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-base font-bold text-white">Últimos 7 dias</h2>
-            <p className="text-xs text-[#555]">Evolução diária dos ganhos</p>
+            <p className="text-xs text-[var(--admin-text-faint)]">Evolução diária dos ganhos</p>
           </div>
           {hasData && (
             <div className="flex items-center gap-2 rounded-lg bg-[#ffea00]/8 px-3 py-1.5">
@@ -49,7 +49,7 @@ export default function WeeklyChart({ data }: WeeklyChartProps) {
 
       <div className="px-6 py-5">
         {!hasData ? (
-          <div className="flex h-[200px] items-center justify-center text-sm text-[#444]">
+          <div className="flex h-[200px] items-center justify-center text-sm text-[var(--admin-text-muted)]">
             Registre ganhos para ver a evolução
           </div>
         ) : (
@@ -61,7 +61,7 @@ export default function WeeklyChart({ data }: WeeklyChartProps) {
                   <stop offset="95%" stopColor="#ffea00" stopOpacity={0.02} />
                 </linearGradient>
               </defs>
-              <CartesianGrid vertical={false} stroke="#1e1e1e" />
+              <CartesianGrid vertical={false} stroke="#333333" />
               <XAxis
                 dataKey="label"
                 tickLine={false}

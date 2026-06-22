@@ -1,9 +1,11 @@
 "use client"
 
 import { useState } from "react"
+import { startOfDay } from "date-fns"
 import { CheckCircle, Loader2, Plus, Users, Zap } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import AdminDatePicker from "@/components/admin/AdminDatePicker"
 import {
   EARNING_CATEGORIES,
   QUICK_AMOUNTS,
@@ -17,7 +19,8 @@ type AddEarningPanelProps = {
     amount: number,
     category: EarningCategory,
     clientCount: number,
-    note?: string
+    note?: string,
+    entryDate?: Date
   ) => void | Promise<void>
 }
 
@@ -26,6 +29,7 @@ export default function AddEarningPanel({ onAdd }: AddEarningPanelProps) {
   const [clientCount, setClientCount] = useState("1")
   const [category, setCategory] = useState<EarningCategory>("corte")
   const [note, setNote] = useState("")
+  const [entryDate, setEntryDate] = useState(() => startOfDay(new Date()))
   const [submitting, setSubmitting] = useState(false)
   const [success, setSuccess] = useState(false)
   const [amountError, setAmountError] = useState("")
@@ -66,7 +70,13 @@ export default function AddEarningPanel({ onAdd }: AddEarningPanelProps) {
 
     setSubmitting(true)
     try {
-      await onAdd(parsedAmount, category, parsedClients, note.trim() || undefined)
+      await onAdd(
+        parsedAmount,
+        category,
+        parsedClients,
+        note.trim() || undefined,
+        entryDate
+      )
       setAmount("")
       setClientCount("1")
       setNote("")
@@ -80,7 +90,7 @@ export default function AddEarningPanel({ onAdd }: AddEarningPanelProps) {
     if (submitting) return
     setSubmitting(true)
     try {
-      await onAdd(value, category, 1)
+      await onAdd(value, category, 1, undefined, entryDate)
       showSuccess()
     } finally {
       setSubmitting(false)
@@ -95,15 +105,15 @@ export default function AddEarningPanel({ onAdd }: AddEarningPanelProps) {
       : null
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-[#2a2a2a] bg-[#151515]">
-      <div className="border-b border-[#222] px-6 py-4">
+    <div className="overflow-hidden rounded-2xl border border-[var(--admin-border-muted)] bg-[var(--admin-surface)]">
+      <div className="border-b border-[var(--admin-border)] px-6 py-4">
         <div className="flex items-center gap-3">
           <div className="flex size-9 items-center justify-center rounded-xl bg-[#ffea00]/15">
             <Plus className="size-4 text-[#ffea00]" />
           </div>
           <div>
             <h2 className="text-base font-bold text-white">Registrar ganho</h2>
-            <p className="text-xs text-[#666]">Valor total e quantidade de clientes</p>
+            <p className="text-xs text-[var(--admin-text-faint)]">Valor total e quantidade de clientes</p>
           </div>
           {success && (
             <div className="ml-auto flex items-center gap-1.5 rounded-full bg-emerald-500/15 px-3 py-1 text-xs font-semibold text-emerald-400">
@@ -116,13 +126,20 @@ export default function AddEarningPanel({ onAdd }: AddEarningPanelProps) {
 
       <div className="p-6">
         <form onSubmit={handleSubmit} className="space-y-5">
+          <div>
+            <label className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.15em] text-[var(--admin-text-faint)]">
+              Data do ganho
+            </label>
+            <AdminDatePicker value={entryDate} onChange={setEntryDate} />
+          </div>
+
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
-              <label className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.15em] text-[#666]">
+              <label className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.15em] text-[var(--admin-text-faint)]">
                 Valor total (R$)
               </label>
               <div className="relative">
-                <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-[#555]">
+                <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-[var(--admin-text-faint)]">
                   R$
                 </span>
                 <Input
@@ -136,7 +153,7 @@ export default function AddEarningPanel({ onAdd }: AddEarningPanelProps) {
                     if (amountError) setAmountError("")
                   }}
                   className={cn(
-                    "h-12 border-[#2a2a2a] bg-[#0f0f0f] pl-9 text-lg font-bold text-white placeholder:text-[#333] focus:border-[#ffea00]/50",
+                    "h-12 border-[var(--admin-border-muted)] bg-[var(--admin-input)] pl-9 text-lg font-bold text-white placeholder:text-[var(--admin-border)] focus:border-[#ffea00]/50",
                     amountError && "border-red-500/50 focus:border-red-500"
                   )}
                 />
@@ -147,11 +164,11 @@ export default function AddEarningPanel({ onAdd }: AddEarningPanelProps) {
             </div>
 
             <div>
-              <label className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.15em] text-[#666]">
+              <label className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.15em] text-[var(--admin-text-faint)]">
                 Clientes
               </label>
               <div className="relative">
-                <Users className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-[#555]" />
+                <Users className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-[var(--admin-text-faint)]" />
                 <Input
                   type="number"
                   min="1"
@@ -163,7 +180,7 @@ export default function AddEarningPanel({ onAdd }: AddEarningPanelProps) {
                     if (clientsError) setClientsError("")
                   }}
                   className={cn(
-                    "h-12 border-[#2a2a2a] bg-[#0f0f0f] pl-9 text-lg font-bold text-white placeholder:text-[#333] focus:border-[#ffea00]/50",
+                    "h-12 border-[var(--admin-border-muted)] bg-[var(--admin-input)] pl-9 text-lg font-bold text-white placeholder:text-[var(--admin-border)] focus:border-[#ffea00]/50",
                     clientsError && "border-red-500/50 focus:border-red-500"
                   )}
                 />
@@ -175,7 +192,7 @@ export default function AddEarningPanel({ onAdd }: AddEarningPanelProps) {
           </div>
 
           {previewTicket !== null && (
-            <p className="rounded-lg border border-[#222] bg-[#0f0f0f] px-3 py-2 text-xs text-[#666]">
+            <p className="rounded-lg border border-[var(--admin-border)] bg-[var(--admin-input)] px-3 py-2 text-xs text-[var(--admin-text-faint)]">
               Ticket médio deste registro:{" "}
               <span className="font-semibold text-[#ffea00]">
                 {formatCurrency(previewTicket)}
@@ -185,7 +202,7 @@ export default function AddEarningPanel({ onAdd }: AddEarningPanelProps) {
           )}
 
           <div>
-            <label className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.15em] text-[#666]">
+            <label className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.15em] text-[var(--admin-text-faint)]">
               Categoria
             </label>
             <div className="grid grid-cols-3 gap-1.5">
@@ -198,7 +215,7 @@ export default function AddEarningPanel({ onAdd }: AddEarningPanelProps) {
                     "rounded-xl border py-2.5 text-center text-xs font-medium transition-all",
                     category === cat.value
                       ? "border-[#ffea00]/60 bg-[#ffea00]/10 text-[#ffea00]"
-                      : "border-[#222] bg-[#0f0f0f] text-[#666] hover:border-[#333] hover:text-[#999]"
+                      : "border-[var(--admin-border)] bg-[var(--admin-input)] text-[var(--admin-text-faint)] hover:border-[#333] hover:text-[#999]"
                   )}
                 >
                   <span className="block text-base leading-none">{cat.emoji}</span>
@@ -209,14 +226,14 @@ export default function AddEarningPanel({ onAdd }: AddEarningPanelProps) {
           </div>
 
           <div>
-            <label className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.15em] text-[#666]">
-              Obs. <span className="normal-case tracking-normal text-[#444]">(opcional)</span>
+            <label className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.15em] text-[var(--admin-text-faint)]">
+              Obs. <span className="normal-case tracking-normal text-[var(--admin-text-muted)]">(opcional)</span>
             </label>
             <Input
               placeholder="Turno da tarde, promoção..."
               value={note}
               onChange={(e) => setNote(e.target.value)}
-              className="border-[#2a2a2a] bg-[#0f0f0f] text-white placeholder:text-[#333] focus:border-[#ffea00]/50"
+              className="border-[var(--admin-border-muted)] bg-[var(--admin-input)] text-white placeholder:text-[var(--admin-border)] focus:border-[#ffea00]/50"
             />
           </div>
 
@@ -234,10 +251,10 @@ export default function AddEarningPanel({ onAdd }: AddEarningPanelProps) {
           </Button>
         </form>
 
-        <div className="mt-5 border-t border-[#1e1e1e] pt-4">
-          <p className="mb-2.5 flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#555]">
+        <div className="mt-5 border-t border-[var(--admin-track)] pt-4">
+          <p className="mb-2.5 flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--admin-text-faint)]">
             <Zap className="size-3 text-[#ffea00]" />
-            Atalhos rápidos <span className="normal-case tracking-normal text-[#444]">(1 cliente)</span>
+            Atalhos rápidos <span className="normal-case tracking-normal text-[var(--admin-text-muted)]">(1 cliente)</span>
           </p>
           <div className="flex flex-wrap gap-1.5">
             {QUICK_AMOUNTS.map((v) => (
@@ -246,7 +263,7 @@ export default function AddEarningPanel({ onAdd }: AddEarningPanelProps) {
                 type="button"
                 disabled={submitting}
                 onClick={() => quickAdd(v)}
-                className="rounded-lg border border-[#222] bg-[#0a0a0a] px-3 py-1.5 text-xs font-semibold text-[#888] transition-all hover:border-[#ffea00]/40 hover:text-[#ffea00] disabled:opacity-40"
+                className="rounded-lg border border-[var(--admin-border)] bg-[var(--admin-bg)] px-3 py-1.5 text-xs font-semibold text-[var(--admin-text-dim)] transition-all hover:border-[#ffea00]/40 hover:text-[#ffea00] disabled:opacity-40"
               >
                 {formatCurrency(v)}
               </button>

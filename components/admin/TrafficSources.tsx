@@ -22,15 +22,15 @@ export default function TrafficSources({ sources }: TrafficSourcesProps) {
   const maxVisits = Math.max(...display.map((s) => s.visits), 1)
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-[#2a2a2a] bg-[#151515]">
-      <div className="border-b border-[#222] px-6 py-4">
+    <div className="overflow-hidden rounded-2xl border border-[var(--admin-border-muted)] bg-[var(--admin-surface)]">
+      <div className="border-b border-[var(--admin-border)] px-6 py-4">
         <h2 className="text-base font-bold text-white">Origem dos visitantes</h2>
-        <p className="text-xs text-[#555]">Últimos 30 dias · sessões por fonte</p>
+        <p className="text-xs text-[var(--admin-text-faint)]">Últimos 30 dias · sessões por fonte</p>
       </div>
 
       <div className="p-6">
         {display.length === 0 ? (
-          <p className="py-8 text-center text-sm text-[#444]">
+          <p className="py-8 text-center text-sm text-[var(--admin-text-muted)]">
             Sem dados de origem ainda
           </p>
         ) : (
@@ -47,12 +47,12 @@ export default function TrafficSources({ sources }: TrafficSourcesProps) {
                       <span className="text-sm font-bold text-white">
                         {source.visits}
                       </span>
-                      <span className="ml-2 text-xs text-[#555]">
+                      <span className="ml-2 text-xs text-[var(--admin-text-faint)]">
                         {formatConversionRate(source.percent)}%
                       </span>
                     </div>
                   </div>
-                  <div className="h-2 w-full overflow-hidden rounded-full bg-[#1e1e1e]">
+                  <div className="h-2 w-full overflow-hidden rounded-full bg-[var(--admin-track)]">
                     <div
                       className="h-full rounded-full transition-all"
                       style={{

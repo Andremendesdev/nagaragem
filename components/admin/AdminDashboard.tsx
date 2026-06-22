@@ -35,12 +35,12 @@ const YearOverview = dynamic(() => import("./YearOverview"), {
 
 function ChartSkeleton() {
   return (
-    <div className="overflow-hidden rounded-2xl border border-[#2a2a2a] bg-[#151515]">
-      <div className="border-b border-[#222] px-6 py-4">
-        <div className="h-4 w-32 animate-pulse rounded bg-[#222]" />
-        <div className="mt-1.5 h-3 w-24 animate-pulse rounded bg-[#1a1a1a]" />
+    <div className="overflow-hidden rounded-2xl border border-[var(--admin-border-muted)] bg-[var(--admin-surface)]">
+      <div className="border-b border-[var(--admin-border)] px-6 py-4">
+        <div className="h-4 w-32 animate-pulse rounded bg-[var(--admin-skeleton)]" />
+        <div className="mt-1.5 h-3 w-24 animate-pulse rounded bg-[var(--admin-hover)]" />
       </div>
-      <div className="flex h-[220px] items-center justify-center text-sm text-[#333]">
+      <div className="flex h-[220px] items-center justify-center text-sm text-[var(--admin-border)]">
         Carregando...
       </div>
     </div>
@@ -82,7 +82,7 @@ export default function AdminDashboard() {
           </div>
           <div>
             <p className="font-semibold text-white">Carregando painel...</p>
-            <p className="text-sm text-[#555]">Conectando ao Supabase</p>
+            <p className="text-sm text-[var(--admin-text-faint)]">Conectando ao Supabase</p>
           </div>
         </div>
       </div>
@@ -92,13 +92,13 @@ export default function AdminDashboard() {
   if (error && entries.length === 0) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center px-4">
-        <div className="w-full max-w-md overflow-hidden rounded-2xl border border-red-500/20 bg-[#151515]">
+        <div className="w-full max-w-md overflow-hidden rounded-2xl border border-red-500/20 bg-[var(--admin-surface)]">
           <div className="border-b border-red-500/10 bg-red-500/5 px-6 py-4">
             <p className="font-bold text-red-400">Erro ao conectar</p>
           </div>
           <div className="p-6">
-            <p className="text-sm text-[#888]">{error}</p>
-            <div className="mt-4 rounded-xl bg-[#0f0f0f] px-4 py-3 text-xs text-[#555]">
+            <p className="text-sm text-[var(--admin-text-dim)]">{error}</p>
+            <div className="mt-4 rounded-xl bg-[var(--admin-input)] px-4 py-3 text-xs text-[var(--admin-text-faint)]">
               Execute o SQL em{" "}
               <code className="text-[#ffea00]">supabase/migrations/001_admin.sql</code>{" "}
               no SQL Editor do Supabase.
@@ -116,7 +116,7 @@ export default function AdminDashboard() {
     <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6">
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-white">Dashboard</h1>
-        <p className="text-sm text-[#666]">Financeiro · ganhos, despesas e metas</p>
+        <p className="text-sm text-[var(--admin-text-faint)]">Financeiro · ganhos, despesas e metas</p>
       </div>
 
       {error && (
@@ -162,7 +162,7 @@ export default function AdminDashboard() {
         </div>
 
         {/* tabs */}
-        <div className="mb-6 flex gap-1 rounded-xl border border-[#1a1a1a] bg-[#0f0f0f] p-1">
+        <div className="mb-6 flex gap-1 rounded-xl border border-[var(--admin-border-subtle)] bg-[var(--admin-input)] p-1">
           {TABS.map((tab) => {
             const Icon = tab.icon
             return (
@@ -172,8 +172,8 @@ export default function AdminDashboard() {
                 className={cn(
                   "flex flex-1 items-center justify-center gap-2 rounded-lg py-2.5 text-sm font-semibold transition-all",
                   activeTab === tab.id
-                    ? "bg-[#1a1a1a] text-white shadow-sm"
-                    : "text-[#555] hover:text-[#888]"
+                    ? "bg-[var(--admin-hover)] text-white shadow-sm"
+                    : "text-[var(--admin-text-faint)] hover:text-[var(--admin-text-dim)]"
                 )}
               >
                 <Icon className="size-4" />

@@ -74,19 +74,19 @@ export default function RecentExpenses({ expenses, onRemove }: RecentExpensesPro
   }
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-red-500/15 bg-[#151515]">
-      <div className="border-b border-[#222] px-6 py-4">
+    <div className="overflow-hidden rounded-2xl border border-red-500/15 bg-[var(--admin-surface)]">
+      <div className="border-b border-[var(--admin-border)] px-6 py-4">
         <div className="flex items-center justify-between gap-4">
           <div>
             <h2 className="text-base font-bold text-white">Registros de despesas</h2>
-            <p className="text-xs text-[#555]">
+            <p className="text-xs text-[var(--admin-text-faint)]">
               {filtered.length} de {expenses.length} despesas
             </p>
           </div>
           {hasFilters && (
             <button
               onClick={resetFilters}
-              className="flex items-center gap-1.5 rounded-lg border border-[#333] px-3 py-1.5 text-xs text-[#888] transition-colors hover:text-white"
+              className="flex items-center gap-1.5 rounded-lg border border-[#333] px-3 py-1.5 text-xs text-[var(--admin-text-dim)] transition-colors hover:text-white"
             >
               <X className="size-3" />
               Limpar
@@ -95,16 +95,16 @@ export default function RecentExpenses({ expenses, onRemove }: RecentExpensesPro
         </div>
       </div>
 
-      <div className="border-b border-[#1e1e1e] px-6 py-3">
+      <div className="border-b border-[var(--admin-track)] px-6 py-3">
         <div className="flex flex-col gap-3 sm:flex-row">
           <div className="relative flex-1">
-            <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-[#444]" />
+            <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-[var(--admin-text-muted)]" />
             <input
               type="text"
               placeholder="Buscar por observação..."
               value={search}
               onChange={(e) => { setSearch(e.target.value); setPage(1) }}
-              className="h-9 w-full rounded-lg border border-[#222] bg-[#0f0f0f] pl-9 pr-3 text-sm text-white placeholder:text-[#444] outline-none focus:border-red-500/30"
+              className="h-9 w-full rounded-lg border border-[var(--admin-border)] bg-[var(--admin-input)] pl-9 pr-3 text-sm text-white placeholder:text-[var(--admin-text-muted)] outline-none focus:border-red-500/30"
             />
           </div>
 
@@ -117,7 +117,7 @@ export default function RecentExpenses({ expenses, onRemove }: RecentExpensesPro
                   "rounded-lg px-3 py-1.5 text-xs font-semibold transition-all",
                   period === p.value
                     ? "bg-red-500/15 text-red-300"
-                    : "text-[#666] hover:text-[#999]"
+                    : "text-[var(--admin-text-faint)] hover:text-[#999]"
                 )}
               >
                 {p.label}
@@ -126,11 +126,11 @@ export default function RecentExpenses({ expenses, onRemove }: RecentExpensesPro
           </div>
 
           <div className="relative flex items-center gap-1.5">
-            <SlidersHorizontal className="size-4 shrink-0 text-[#444]" />
+            <SlidersHorizontal className="size-4 shrink-0 text-[var(--admin-text-muted)]" />
             <select
               value={category}
               onChange={(e) => { setCategory(e.target.value); setPage(1) }}
-              className="h-9 rounded-lg border border-[#222] bg-[#0f0f0f] pr-2 pl-2 text-xs text-[#aaa] outline-none cursor-pointer focus:border-red-500/30"
+              className="h-9 rounded-lg border border-[var(--admin-border)] bg-[var(--admin-input)] pr-2 pl-2 text-xs text-[var(--admin-text-dim)] outline-none cursor-pointer focus:border-red-500/30"
             >
               <option value="all">Todas categorias</option>
               {EXPENSE_CATEGORIES.map((c) => (
@@ -145,7 +145,7 @@ export default function RecentExpenses({ expenses, onRemove }: RecentExpensesPro
 
       {paginated.length === 0 ? (
         <div className="flex flex-col items-center justify-center gap-2 py-14 text-center">
-          <p className="text-sm font-medium text-[#666]">
+          <p className="text-sm font-medium text-[var(--admin-text-faint)]">
             {hasFilters ? "Nenhum resultado para esses filtros" : "Nenhuma despesa registrada ainda"}
           </p>
           {hasFilters && (
@@ -156,11 +156,11 @@ export default function RecentExpenses({ expenses, onRemove }: RecentExpensesPro
         </div>
       ) : (
         <>
-          <div className="divide-y divide-[#1a1a1a]">
+          <div className="divide-y divide-[var(--admin-border-subtle)]">
             <div className="hidden grid-cols-[2fr_1fr_1fr_40px] gap-4 px-6 py-2 sm:grid">
-              <span className="text-[10px] font-semibold uppercase tracking-widest text-[#444]">Categoria / Observação</span>
-              <span className="text-[10px] font-semibold uppercase tracking-widest text-[#444]">Data</span>
-              <span className="text-right text-[10px] font-semibold uppercase tracking-widest text-[#444]">Valor</span>
+              <span className="text-[10px] font-semibold uppercase tracking-widest text-[var(--admin-text-muted)]">Categoria / Observação</span>
+              <span className="text-[10px] font-semibold uppercase tracking-widest text-[var(--admin-text-muted)]">Data</span>
+              <span className="text-right text-[10px] font-semibold uppercase tracking-widest text-[var(--admin-text-muted)]">Valor</span>
               <span />
             </div>
 
@@ -182,18 +182,18 @@ export default function RecentExpenses({ expenses, onRemove }: RecentExpensesPro
                     <div className="min-w-0">
                       <p className="text-sm font-semibold text-red-300">
                         − {formatCurrencyDetailed(expense.amount)}
-                        <span className="ml-2 text-xs font-normal text-[#555] sm:hidden">
+                        <span className="ml-2 text-xs font-normal text-[var(--admin-text-faint)] sm:hidden">
                           · {cat?.label}
                         </span>
                       </p>
-                      <p className="truncate text-xs text-[#555]">
+                      <p className="truncate text-xs text-[var(--admin-text-faint)]">
                         {expense.note || cat?.label}
                       </p>
                     </div>
                   </div>
 
                   <div className="hidden items-center sm:flex">
-                    <span className="text-xs text-[#555]">
+                    <span className="text-xs text-[var(--admin-text-faint)]">
                       {format(parseISO(expense.createdAt), "dd MMM · HH:mm", { locale: ptBR })}
                     </span>
                   </div>
@@ -208,7 +208,7 @@ export default function RecentExpenses({ expenses, onRemove }: RecentExpensesPro
                     <button
                       disabled={isRemoving}
                       onClick={() => handleRemove(expense.id)}
-                      className="rounded-lg p-1.5 text-[#444] opacity-0 transition-all group-hover:opacity-100 hover:bg-red-500/10 hover:text-red-400 disabled:opacity-30"
+                      className="rounded-lg p-1.5 text-[var(--admin-text-muted)] transition-all hover:bg-red-500/10 hover:text-red-400 disabled:opacity-30"
                     >
                       <Trash2 className="size-3.5" />
                     </button>
@@ -219,15 +219,15 @@ export default function RecentExpenses({ expenses, onRemove }: RecentExpensesPro
           </div>
 
           {totalPages > 1 && (
-            <div className="flex items-center justify-between border-t border-[#1e1e1e] px-6 py-3">
-              <span className="text-xs text-[#555]">
+            <div className="flex items-center justify-between border-t border-[var(--admin-track)] px-6 py-3">
+              <span className="text-xs text-[var(--admin-text-faint)]">
                 Página {safePage} de {totalPages}
               </span>
               <div className="flex items-center gap-1">
                 <button
                   disabled={safePage === 1}
                   onClick={() => setPage(safePage - 1)}
-                  className="flex size-8 items-center justify-center rounded-lg border border-[#222] text-[#666] transition-colors hover:text-white disabled:opacity-30"
+                  className="flex size-8 items-center justify-center rounded-lg border border-[var(--admin-border)] text-[var(--admin-text-faint)] transition-colors hover:text-white disabled:opacity-30"
                 >
                   <ChevronLeft className="size-4" />
                 </button>
@@ -240,7 +240,7 @@ export default function RecentExpenses({ expenses, onRemove }: RecentExpensesPro
                   }, [])
                   .map((p, i) =>
                     p === "…" ? (
-                      <span key={`ellipsis-${i}`} className="px-1 text-xs text-[#444]">…</span>
+                      <span key={`ellipsis-${i}`} className="px-1 text-xs text-[var(--admin-text-muted)]">…</span>
                     ) : (
                       <button
                         key={p}
@@ -249,7 +249,7 @@ export default function RecentExpenses({ expenses, onRemove }: RecentExpensesPro
                           "flex size-8 items-center justify-center rounded-lg text-xs font-semibold transition-all",
                           safePage === p
                             ? "bg-red-500/15 text-red-300"
-                            : "border border-[#222] text-[#666] hover:text-white"
+                            : "border border-[var(--admin-border)] text-[var(--admin-text-faint)] hover:text-white"
                         )}
                       >
                         {p}
@@ -259,7 +259,7 @@ export default function RecentExpenses({ expenses, onRemove }: RecentExpensesPro
                 <button
                   disabled={safePage === totalPages}
                   onClick={() => setPage(safePage + 1)}
-                  className="flex size-8 items-center justify-center rounded-lg border border-[#222] text-[#666] transition-colors hover:text-white disabled:opacity-30"
+                  className="flex size-8 items-center justify-center rounded-lg border border-[var(--admin-border)] text-[var(--admin-text-faint)] transition-colors hover:text-white disabled:opacity-30"
                 >
                   <ChevronRight className="size-4" />
                 </button>

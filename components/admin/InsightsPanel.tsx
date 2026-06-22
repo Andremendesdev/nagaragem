@@ -87,8 +87,8 @@ export default function InsightsPanel({
       </div>
 
       {/* goal */}
-      <div className="overflow-hidden rounded-2xl border border-[#2a2a2a] bg-[#151515]">
-        <div className="border-b border-[#1e1e1e] px-5 py-4">
+      <div className="overflow-hidden rounded-2xl border border-[var(--admin-border-muted)] bg-[var(--admin-surface)]">
+        <div className="border-b border-[var(--admin-track)] px-5 py-4">
           <div className="flex items-center gap-2">
             <Target className="size-4 text-[#ffea00]" />
             <h2 className="text-sm font-bold text-white">Meta mensal</h2>
@@ -101,7 +101,7 @@ export default function InsightsPanel({
               <p className="text-2xl font-bold text-[#ffea00]">
                 {formatCurrency(stats.thisMonth)}
               </p>
-              <p className="text-xs text-[#555]">
+              <p className="text-xs text-[var(--admin-text-faint)]">
                 de {formatCurrency(monthlyGoal)}
               </p>
             </div>
@@ -118,18 +118,18 @@ export default function InsightsPanel({
           <div className="relative mb-1">
             <Progress
               value={goalPercent}
-              className="h-2 bg-[#1e1e1e]"
+              className="h-2 bg-[var(--admin-track)]"
             />
             {overGoal && (
-              <div className="absolute right-0 top-1/2 -translate-y-1/2 size-3 rounded-full bg-emerald-400 ring-2 ring-[#151515]" />
+              <div className="absolute right-0 top-1/2 -translate-y-1/2 size-3 rounded-full bg-emerald-400 ring-2 ring-[var(--admin-surface)]" />
             )}
           </div>
-          <p className="text-[11px] text-[#444]">
+          <p className="text-[11px] text-[var(--admin-text-muted)]">
             Projeção: {formatCurrency(stats.monthlyProjection)} · {stats.daysLeftInMonth}d restantes
           </p>
 
-          <div className="mt-4 border-t border-[#1e1e1e] pt-4">
-            <label className="mb-1.5 block text-[10px] font-semibold uppercase tracking-[0.2em] text-[#555]">
+          <div className="mt-4 border-t border-[var(--admin-track)] pt-4">
+            <label className="mb-1.5 block text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--admin-text-faint)]">
               Ajustar meta (R$)
             </label>
             <Input
@@ -141,7 +141,7 @@ export default function InsightsPanel({
                 const val = Number(e.target.value)
                 if (val > 0) onGoalChange(val)
               }}
-              className="h-9 border-[#222] bg-[#0a0a0a] text-sm text-white focus:border-[#ffea00]/40"
+              className="h-9 border-[var(--admin-border)] bg-[var(--admin-bg)] text-sm text-white focus:border-[#ffea00]/40"
             />
           </div>
         </div>
@@ -188,14 +188,14 @@ export default function InsightsPanel({
             <Trophy className="size-6 text-[#ffea00]" />
           </div>
           <div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#666]">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--admin-text-faint)]">
               Recorde pessoal
             </p>
             <p className="text-xl font-bold text-white">
               {formatCurrency(stats.personalRecord)}
             </p>
             {stats.personalRecordDate && (
-              <p className="text-xs text-[#555]">
+              <p className="text-xs text-[var(--admin-text-faint)]">
                 {formatShortDate(parseISO(stats.personalRecordDate))}
               </p>
             )}

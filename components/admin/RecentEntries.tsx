@@ -2,11 +2,12 @@
 
 import { useMemo, useState } from "react"
 import { ChevronLeft, ChevronRight, Search, SlidersHorizontal, Trash2, X } from "lucide-react"
-import { format, parseISO, subDays, startOfMonth } from "date-fns"
+import { format, isSameDay, parseISO, startOfDay, subDays, startOfMonth } from "date-fns"
 import { ptBR } from "date-fns/locale"
 import type { EarningEntry } from "@/lib/admin/types"
 import { EARNING_CATEGORIES } from "@/lib/admin/types"
 import { formatCurrencyDetailed } from "@/lib/admin/format"
+import AdminDatePicker from "@/components/admin/AdminDatePicker"
 import { cn } from "@/lib/utils"
 
 const PAGE_SIZE = 10
@@ -28,6 +29,7 @@ export default function RecentEntries({ entries, onRemove }: RecentEntriesProps)
   const [search, setSearch] = useState("")
   const [category, setCategory] = useState("all")
   const [period, setPeriod] = useState<Period>("all")
+  const [selectedDay, setSelectedDay] = useState<Date | null>(null)
   const [page, setPage] = useState(1)
   const [removingId, setRemovingId] = useState<string | null>(null)
 
@@ -46,10 +48,12 @@ export default function RecentEntries({ entries, onRemove }: RecentEntriesProps)
     return entries.filter((e) => {
       if (search && !e.note?.toLowerCase().includes(search.toLowerCase())) return false
       if (category !== "all" && e.category !== category) return false
-      if (cutoff && parseISO(e.createdAt) < cutoff) return false
+      if (selectedDay) {
+        if (!isSameDay(parseISO(e.createdAt), selectedDay)) return false
+      } else if (cutoff && parseISO(e.createdAt) < cutoff) return false
       return true
     })
-  }, [entries, search, category, period, now])
+  }, [entries, search, category, period, selectedDay, now])
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE))
   const safePage = Math.min(page, totalPages)
@@ -59,10 +63,28 @@ export default function RecentEntries({ entries, onRemove }: RecentEntriesProps)
     setSearch("")
     setCategory("all")
     setPeriod("all")
+    setSelectedDay(null)
     setPage(1)
   }
 
-  const hasFilters = search || category !== "all" || period !== "all"
+  function handlePeriodChange(next: Period) {
+    setPeriod(next)
+    setSelectedDay(null)
+    setPage(1)
+  }
+
+  function handleDayChange(day: Date) {
+    setSelectedDay(startOfDay(day))
+    setPeriod("all")
+    setPage(1)
+  }
+
+  function clearSelectedDay() {
+    setSelectedDay(null)
+    setPage(1)
+  }
+
+  const hasFilters = search || category !== "all" || period !== "all" || selectedDay !== null
 
   async function handleRemove(id: string) {
     setRemovingId(id)
@@ -74,20 +96,20 @@ export default function RecentEntries({ entries, onRemove }: RecentEntriesProps)
   }
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-[#2a2a2a] bg-[#151515]">
+    <div className="overflow-hidden rounded-2xl border border-[var(--admin-border-muted)] bg-[var(--admin-surface)]">
       {/* header */}
-      <div className="border-b border-[#222] px-6 py-4">
+      <div className="border-b border-[var(--admin-border)] px-6 py-4">
         <div className="flex items-center justify-between gap-4">
           <div>
             <h2 className="text-base font-bold text-white">Registros de ganhos</h2>
-            <p className="text-xs text-[#555]">
+            <p className="text-xs text-[var(--admin-text-faint)]">
               {filtered.length} de {entries.length} entradas
             </p>
           </div>
           {hasFilters && (
             <button
               onClick={resetFilters}
-              className="flex items-center gap-1.5 rounded-lg border border-[#333] px-3 py-1.5 text-xs text-[#888] transition-colors hover:border-[#444] hover:text-white"
+              className="flex items-center gap-1.5 rounded-lg border border-[#333] px-3 py-1.5 text-xs text-[var(--admin-text-dim)] transition-colors hover:border-[#444] hover:text-white"
             >
               <X className="size-3" />
               Limpar filtros
@@ -97,53 +119,81 @@ export default function RecentEntries({ entries, onRemove }: RecentEntriesProps)
       </div>
 
       {/* filters */}
-      <div className="border-b border-[#1e1e1e] px-6 py-3">
-        <div className="flex flex-col gap-3 sm:flex-row">
-          {/* search */}
-          <div className="relative flex-1">
-            <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-[#444]" />
-            <input
-              type="text"
-              placeholder="Buscar por observação..."
-              value={search}
-              onChange={(e) => { setSearch(e.target.value); setPage(1) }}
-              className="h-9 w-full rounded-lg border border-[#222] bg-[#0f0f0f] pl-9 pr-3 text-sm text-white placeholder:text-[#444] outline-none focus:border-[#ffea00]/40"
-            />
-          </div>
+      <div className="border-b border-[var(--admin-track)] px-6 py-3">
+        <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3 sm:flex-row">
+            {/* search */}
+            <div className="relative flex-1">
+              <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-[var(--admin-text-muted)]" />
+              <input
+                type="text"
+                placeholder="Buscar por observação..."
+                value={search}
+                onChange={(e) => { setSearch(e.target.value); setPage(1) }}
+                className="h-9 w-full rounded-lg border border-[var(--admin-border)] bg-[var(--admin-input)] pl-9 pr-3 text-sm text-white placeholder:text-[var(--admin-text-muted)] outline-none focus:border-[#ffea00]/40"
+              />
+            </div>
 
-          {/* period pills */}
-          <div className="flex items-center gap-1">
-            {PERIODS.map((p) => (
-              <button
-                key={p.value}
-                onClick={() => { setPeriod(p.value); setPage(1) }}
-                className={cn(
-                  "rounded-lg px-3 py-1.5 text-xs font-semibold transition-all",
-                  period === p.value
-                    ? "bg-[#ffea00]/15 text-[#ffea00]"
-                    : "text-[#666] hover:text-[#999]"
-                )}
-              >
-                {p.label}
-              </button>
-            ))}
-          </div>
-
-          {/* category filter */}
-          <div className="relative flex items-center gap-1.5">
-            <SlidersHorizontal className="size-4 shrink-0 text-[#444]" />
-            <select
-              value={category}
-              onChange={(e) => { setCategory(e.target.value); setPage(1) }}
-              className="h-9 rounded-lg border border-[#222] bg-[#0f0f0f] pr-2 pl-2 text-xs text-[#aaa] outline-none focus:border-[#ffea00]/40 cursor-pointer"
-            >
-              <option value="all">Todas categorias</option>
-              {EARNING_CATEGORIES.map((c) => (
-                <option key={c.value} value={c.value}>
-                  {c.emoji} {c.label}
-                </option>
+            {/* period pills */}
+            <div className="flex items-center gap-1">
+              {PERIODS.map((p) => (
+                <button
+                  key={p.value}
+                  onClick={() => handlePeriodChange(p.value)}
+                  className={cn(
+                    "rounded-lg px-3 py-1.5 text-xs font-semibold transition-all",
+                    period === p.value && !selectedDay
+                      ? "bg-[#ffea00]/15 text-[#ffea00]"
+                      : "text-[var(--admin-text-faint)] hover:text-[#999]"
+                  )}
+                >
+                  {p.label}
+                </button>
               ))}
-            </select>
+            </div>
+
+            {/* category filter */}
+            <div className="relative flex items-center gap-1.5">
+              <SlidersHorizontal className="size-4 shrink-0 text-[var(--admin-text-muted)]" />
+              <select
+                value={category}
+                onChange={(e) => { setCategory(e.target.value); setPage(1) }}
+                className="h-9 rounded-lg border border-[var(--admin-border)] bg-[var(--admin-input)] pr-2 pl-2 text-xs text-[var(--admin-text-dim)] outline-none focus:border-[#ffea00]/40 cursor-pointer"
+              >
+                <option value="all">Todas categorias</option>
+                {EARNING_CATEGORIES.map((c) => (
+                  <option key={c.value} value={c.value}>
+                    {c.emoji} {c.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          {/* filtro por dia específico */}
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+            <span className="text-[10px] font-semibold uppercase tracking-[0.15em] text-[var(--admin-text-faint)]">
+              Filtrar por dia
+            </span>
+            <div className="flex flex-1 flex-wrap items-center gap-2">
+              <AdminDatePicker
+                value={selectedDay ?? startOfDay(now)}
+                onChange={handleDayChange}
+                showTodayButton={false}
+                placeholder="Escolher dia..."
+                active={selectedDay !== null}
+                className="max-w-xs"
+              />
+              {selectedDay && (
+                <button
+                  type="button"
+                  onClick={clearSelectedDay}
+                  className="rounded-lg border border-[var(--admin-border)] px-3 py-2 text-xs font-semibold text-[var(--admin-text-dim)] transition-colors hover:border-[#ffea00]/40 hover:text-[#ffea00]"
+                >
+                  Ver todos os dias
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -151,7 +201,7 @@ export default function RecentEntries({ entries, onRemove }: RecentEntriesProps)
       {/* table */}
       {paginated.length === 0 ? (
         <div className="flex flex-col items-center justify-center gap-2 py-14 text-center">
-          <p className="text-sm font-medium text-[#666]">
+          <p className="text-sm font-medium text-[var(--admin-text-faint)]">
             {hasFilters ? "Nenhum resultado para esses filtros" : "Nenhum ganho registrado ainda"}
           </p>
           {hasFilters && (
@@ -162,13 +212,13 @@ export default function RecentEntries({ entries, onRemove }: RecentEntriesProps)
         </div>
       ) : (
         <>
-          <div className="divide-y divide-[#1a1a1a]">
+          <div className="divide-y divide-[var(--admin-border-subtle)]">
             {/* table head */}
             <div className="hidden grid-cols-[2fr_1fr_1fr_1fr_40px] gap-4 px-6 py-2 sm:grid">
-              <span className="text-[10px] font-semibold uppercase tracking-widest text-[#444]">Categoria / Observação</span>
-              <span className="text-[10px] font-semibold uppercase tracking-widest text-[#444]">Clientes</span>
-              <span className="text-[10px] font-semibold uppercase tracking-widest text-[#444]">Data</span>
-              <span className="text-right text-[10px] font-semibold uppercase tracking-widest text-[#444]">Valor</span>
+              <span className="text-[10px] font-semibold uppercase tracking-widest text-[var(--admin-text-muted)]">Categoria / Observação</span>
+              <span className="text-[10px] font-semibold uppercase tracking-widest text-[var(--admin-text-muted)]">Clientes</span>
+              <span className="text-[10px] font-semibold uppercase tracking-widest text-[var(--admin-text-muted)]">Data</span>
+              <span className="text-right text-[10px] font-semibold uppercase tracking-widest text-[var(--admin-text-muted)]">Valor</span>
               <span />
             </div>
 
@@ -191,25 +241,27 @@ export default function RecentEntries({ entries, onRemove }: RecentEntriesProps)
                     <div className="min-w-0">
                       <p className="text-sm font-semibold text-[#ffea00]">
                         {formatCurrencyDetailed(entry.amount)}
-                        <span className="ml-2 text-xs font-normal text-[#555] sm:hidden">
+                        <span className="ml-2 text-xs font-normal text-[var(--admin-text-faint)] sm:hidden">
                           · {clients} {clients === 1 ? "cliente" : "clientes"}
                         </span>
                       </p>
-                      <p className="truncate text-xs text-[#555]">
+                      <p className="truncate text-xs text-[var(--admin-text-faint)]">
                         {entry.note || cat?.label}
                       </p>
                     </div>
                   </div>
 
                   <div className="hidden items-center sm:flex">
-                    <span className="rounded-full bg-white/5 px-2 py-0.5 text-xs font-medium text-[#888]">
+                    <span className="rounded-full bg-white/5 px-2 py-0.5 text-xs font-medium text-[var(--admin-text-dim)]">
                       {clients} {clients === 1 ? "cliente" : "clientes"}
                     </span>
                   </div>
 
                   <div className="hidden items-center sm:flex">
-                    <span className="text-xs text-[#555]">
-                      {format(parseISO(entry.createdAt), "dd MMM · HH:mm", { locale: ptBR })}
+                    <span className="text-xs text-[var(--admin-text-faint)]">
+                      {selectedDay
+                        ? format(parseISO(entry.createdAt), "dd MMM yyyy", { locale: ptBR })
+                        : format(parseISO(entry.createdAt), "dd MMM · HH:mm", { locale: ptBR })}
                     </span>
                   </div>
 
@@ -224,7 +276,7 @@ export default function RecentEntries({ entries, onRemove }: RecentEntriesProps)
                     <button
                       disabled={isRemoving}
                       onClick={() => handleRemove(entry.id)}
-                      className="rounded-lg p-1.5 text-[#444] opacity-0 transition-all group-hover:opacity-100 hover:bg-red-500/10 hover:text-red-400 disabled:opacity-30"
+                      className="rounded-lg p-1.5 text-[var(--admin-text-muted)] transition-all hover:bg-red-500/10 hover:text-red-400 disabled:opacity-30"
                     >
                       <Trash2 className="size-3.5" />
                     </button>
@@ -236,15 +288,15 @@ export default function RecentEntries({ entries, onRemove }: RecentEntriesProps)
 
           {/* pagination */}
           {totalPages > 1 && (
-            <div className="flex items-center justify-between border-t border-[#1e1e1e] px-6 py-3">
-              <span className="text-xs text-[#555]">
+            <div className="flex items-center justify-between border-t border-[var(--admin-track)] px-6 py-3">
+              <span className="text-xs text-[var(--admin-text-faint)]">
                 Página {safePage} de {totalPages}
               </span>
               <div className="flex items-center gap-1">
                 <button
                   disabled={safePage === 1}
                   onClick={() => setPage(safePage - 1)}
-                  className="flex size-8 items-center justify-center rounded-lg border border-[#222] text-[#666] transition-colors hover:border-[#333] hover:text-white disabled:opacity-30"
+                  className="flex size-8 items-center justify-center rounded-lg border border-[var(--admin-border)] text-[var(--admin-text-faint)] transition-colors hover:border-[#333] hover:text-white disabled:opacity-30"
                 >
                   <ChevronLeft className="size-4" />
                 </button>
@@ -257,7 +309,7 @@ export default function RecentEntries({ entries, onRemove }: RecentEntriesProps)
                   }, [])
                   .map((p, i) =>
                     p === "…" ? (
-                      <span key={`ellipsis-${i}`} className="px-1 text-xs text-[#444]">…</span>
+                      <span key={`ellipsis-${i}`} className="px-1 text-xs text-[var(--admin-text-muted)]">…</span>
                     ) : (
                       <button
                         key={p}
@@ -266,7 +318,7 @@ export default function RecentEntries({ entries, onRemove }: RecentEntriesProps)
                           "flex size-8 items-center justify-center rounded-lg text-xs font-semibold transition-all",
                           safePage === p
                             ? "bg-[#ffea00]/15 text-[#ffea00]"
-                            : "border border-[#222] text-[#666] hover:border-[#333] hover:text-white"
+                            : "border border-[var(--admin-border)] text-[var(--admin-text-faint)] hover:border-[#333] hover:text-white"
                         )}
                       >
                         {p}
@@ -276,7 +328,7 @@ export default function RecentEntries({ entries, onRemove }: RecentEntriesProps)
                 <button
                   disabled={safePage === totalPages}
                   onClick={() => setPage(safePage + 1)}
-                  className="flex size-8 items-center justify-center rounded-lg border border-[#222] text-[#666] transition-colors hover:border-[#333] hover:text-white disabled:opacity-30"
+                  className="flex size-8 items-center justify-center rounded-lg border border-[var(--admin-border)] text-[var(--admin-text-faint)] transition-colors hover:border-[#333] hover:text-white disabled:opacity-30"
                 >
                   <ChevronRight className="size-4" />
                 </button>

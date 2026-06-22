@@ -36,18 +36,18 @@ export default function AdminSidebar({ onNavigate, className }: AdminSidebarProp
   return (
     <aside
       className={cn(
-        "flex h-full w-64 shrink-0 flex-col border-r border-[#1a1a1a] bg-[#0f0f0f]",
+        "flex h-full w-64 shrink-0 flex-col border-r border-[var(--admin-border-subtle)] bg-[var(--admin-bg-elevated)]",
         className
       )}
     >
-      <div className="border-b border-[#1a1a1a] px-5 py-5">
+      <div className="border-b border-[var(--admin-border-subtle)] px-5 py-5">
         <div className="flex items-center gap-3">
           <div className="flex size-10 items-center justify-center rounded-xl bg-[#ffea00]/15">
             <Scissors className="size-5 text-[#ffea00]" />
           </div>
           <div>
             <p className="text-sm font-bold text-white">Na Garage</p>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#555]">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--admin-text-faint)]">
               Admin
             </p>
           </div>
@@ -55,7 +55,7 @@ export default function AdminSidebar({ onNavigate, className }: AdminSidebarProp
       </div>
 
       <nav className="flex-1 space-y-1 p-3">
-        <p className="px-3 pb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#444]">
+        <p className="px-3 pb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--admin-text-muted)]">
           Menu
         </p>
         {NAV_ITEMS.map((item) => {
@@ -71,7 +71,7 @@ export default function AdminSidebar({ onNavigate, className }: AdminSidebarProp
                 "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all",
                 active
                   ? "bg-[#ffea00]/10 text-[#ffea00]"
-                  : "text-[#888] hover:bg-[#1a1a1a] hover:text-white"
+                  : "text-[var(--admin-text-dim)] hover:bg-[var(--admin-hover)] hover:text-white"
               )}
             >
               <Icon className={cn("size-4 shrink-0", active && "text-[#ffea00]")} />
@@ -81,8 +81,8 @@ export default function AdminSidebar({ onNavigate, className }: AdminSidebarProp
         })}
       </nav>
 
-      <div className="border-t border-[#1a1a1a] p-4">
-        <p className="text-[11px] leading-relaxed text-[#444]">
+      <div className="border-t border-[var(--admin-border-subtle)] p-4">
+        <p className="text-[11px] leading-relaxed text-[var(--admin-text-muted)]">
           Painel interno da barbearia. Dados financeiros e visitas do site.
         </p>
       </div>

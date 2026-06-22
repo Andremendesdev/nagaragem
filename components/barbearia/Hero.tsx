@@ -1,7 +1,9 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { trackGenerateLead, trackInstagramClick } from "@/lib/analytics/gtag";
+import { usePageReady } from "@/components/barbearia/LoadingScreen";
 
 const WHATSAPP_LINK =
   "https://wa.me/5514997216010?text=Ol%C3%A1!%20Voc%C3%AAs%20est%C3%A3o%20atendendo%20hoje%3F!";
@@ -16,14 +18,69 @@ const fadeUp = {
 };
 
 export default function Hero() {
+  const { canPlayHeroVideo, markHeroVideoReady } = usePageReady();
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const handleReady = () => {
+      markHeroVideoReady();
+      void video.play().catch(() => {});
+    };
+
+    if (video.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) {
+      handleReady();
+      return;
+    }
+
+    video.addEventListener("canplay", handleReady, { once: true });
+    video.addEventListener("error", handleReady, { once: true });
+
+    return () => {
+      video.removeEventListener("canplay", handleReady);
+      video.removeEventListener("error", handleReady);
+    };
+  }, [markHeroVideoReady]);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!canPlayHeroVideo || !video) return;
+
+    video.currentTime = 0;
+    void video.play().catch(() => {});
+  }, [canPlayHeroVideo]);
+
   return (
-    <section
-      className="relative pt-40 flex flex-col overflow-hidden"
-      style={{
-        background:
-          "linear-gradient(to bottom, rgba(10,10,10,0.65) 0%, rgba(10,10,10,0.97) 100%), url('/interior.jpeg') center/cover no-repeat",
-      }}
-    >
+    <section id="hero" className="relative flex min-h-screen flex-col overflow-hidden pt-40">
+      {/* Vídeo de fundo cinematográfico */}
+      <div className="absolute inset-0 z-0" aria-hidden="true">
+        <video
+          ref={videoRef}
+          muted
+          loop
+          playsInline
+          preload="auto"
+          className="h-full w-full object-cover"
+          src="/herovid.mp4"
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(to bottom, rgba(10,10,10,0.38) 0%, rgba(10,10,10,0.52) 45%, rgba(10,10,10,0.78) 100%)",
+          }}
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(ellipse at center, transparent 35%, rgba(10,10,10,0.28) 100%)",
+          }}
+        />
+      </div>
+
       {/* Instagram button */}
       <motion.a
         initial={{ opacity: 0, y: -10 }}
@@ -35,7 +92,7 @@ export default function Hero() {
         onClick={() => trackInstagramClick()}
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.95 }}
-        className="absolute top-20 right-5 md:top-24 md:right-8 z-20 flex items-center justify-center rounded-full w-14 h-14"
+        className="absolute top-20 right-5 z-20 flex h-14 w-14 items-center justify-center rounded-full md:top-24 md:right-8"
         style={{
           border: "1.5px solid #ffea00",
           color: "#ffea00",
@@ -67,15 +124,16 @@ export default function Hero() {
         </svg>
       </motion.a>
 
-      {/* Conteúdo centralizado */}
-      <div className="flex flex-col items-center justify-center text-center px-5 pt-8 pb-16 md:pt-0 md:min-h-screen">
+      {/* Conteúdo — centralizado no mobile, esquerda no desktop */}
+      <div className="relative z-10 flex flex-col items-center justify-center px-5 pb-16 pt-8 text-center md:min-h-screen md:pt-0">
+        <div className="w-full max-w-7xl md:mx-auto md:flex md:-translate-y-6 md:flex-col md:items-start md:px-6 md:text-left lg:px-8">
         {/* Eyebrow */}
         <motion.span
           variants={fadeUp}
           initial="hidden"
           animate="visible"
           custom={0.1}
-          className="inline-block text-[9px] md:text-[10px] tracking-[0.3em] md:tracking-[0.35em] uppercase text-zinc-400 mb-5 border border-zinc-700 rounded-full px-4 py-1.5"
+          className="gold-glow inline-block rounded-full border border-[#ffea00]/60 px-4 py-1.5 text-[9px] uppercase tracking-[0.3em] md:text-[10px] md:tracking-[0.35em] mb-5"
         >
           Desde 2019 · Piraju, SP
         </motion.span>
@@ -86,7 +144,7 @@ export default function Hero() {
           initial="hidden"
           animate="visible"
           custom={0.25}
-          className="font-serif text-[2.75rem] sm:text-6xl lg:text-8xl font-bold leading-none tracking-tight mb-5"
+          className="font-serif text-[2.75rem] font-bold leading-none tracking-tight mb-5 sm:text-6xl md:text-5xl lg:text-6xl"
         >
           NA GARAGE <span className="gold-glow block">BARBEARIA</span>
         </motion.h1>
@@ -118,7 +176,7 @@ export default function Hero() {
           onClick={() => trackGenerateLead("hero")}
           whileHover={{ scale: 1.04, y: -2 }}
           whileTap={{ scale: 0.97 }}
-          className="inline-flex items-center gap-2.5 rounded-full px-6 py-3.5 md:px-8 md:py-4 text-xs md:text-sm font-semibold uppercase tracking-widest transition-all duration-300 w-full sm:w-auto justify-center max-w-xs"
+          className="inline-flex w-full max-w-xs items-center justify-center gap-2.5 rounded-xl px-6 py-3.5 text-xs font-semibold uppercase tracking-widest transition-all duration-300 sm:w-auto md:justify-start md:px-8 md:py-4 md:text-sm"
           style={{
             border: "2px solid #ffea00",
             color: "#ffea00",
@@ -152,6 +210,7 @@ export default function Hero() {
           </svg>
           Atendimento por ordem de chegada
         </motion.a>
+        </div>
       </div>
 
       {/* Scroll cue — só desktop */}
@@ -159,7 +218,7 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2, duration: 0.8 }}
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2"
+        className="absolute bottom-6 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-2 md:flex"
         aria-hidden="true"
       >
         <span className="text-[10px] tracking-widest text-zinc-600 uppercase">
@@ -174,7 +233,7 @@ export default function Hero() {
 
       {/* Bottom divider line */}
       <div
-        className="absolute bottom-0 left-0 right-0 h-px"
+        className="absolute bottom-0 left-0 right-0 z-10 h-px"
         style={{
           background:
             "linear-gradient(to right, transparent, rgba(255,234,0,0.4), transparent)",

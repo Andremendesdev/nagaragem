@@ -16,15 +16,15 @@ import { formatConversionRate } from "@/lib/analytics/types"
 const VisitsTrendChart = dynamic(() => import("./VisitsTrendChart"), {
   ssr: false,
   loading: () => (
-    <div className="h-[320px] animate-pulse rounded-2xl border border-[#2a2a2a] bg-[#151515]" />
+    <div className="h-[320px] animate-pulse rounded-2xl border border-[var(--admin-border-muted)] bg-[var(--admin-surface)]" />
   ),
 })
 
 function StatSkeleton() {
   return (
-    <div className="rounded-2xl border border-[#2a2a2a] bg-[#151515] p-5">
-      <div className="h-3 w-24 animate-pulse rounded bg-[#222]" />
-      <div className="mt-3 h-8 w-16 animate-pulse rounded bg-[#1a1a1a]" />
+    <div className="rounded-2xl border border-[var(--admin-border-muted)] bg-[var(--admin-surface)] p-5">
+      <div className="h-3 w-24 animate-pulse rounded bg-[var(--admin-skeleton)]" />
+      <div className="mt-3 h-8 w-16 animate-pulse rounded bg-[var(--admin-hover)]" />
     </div>
   )
 }
@@ -42,7 +42,7 @@ export default function AdminVisits() {
             <BarChart3 className="size-5 text-[#ffea00]" />
             <h1 className="text-2xl font-bold text-white">Visitas</h1>
           </div>
-          <p className="text-sm text-[#666]">
+          <p className="text-sm text-[var(--admin-text-faint)]">
             Métricas do site via Google Analytics 4
           </p>
         </div>
@@ -50,7 +50,7 @@ export default function AdminVisits() {
           type="button"
           onClick={() => refresh()}
           disabled={loading}
-          className="inline-flex items-center gap-2 self-start rounded-lg border border-[#333] px-4 py-2 text-sm text-[#888] transition-colors hover:border-[#ffea00]/40 hover:text-[#ffea00] disabled:opacity-50"
+          className="inline-flex items-center gap-2 self-start rounded-lg border border-[var(--admin-border)] px-4 py-2 text-sm text-[var(--admin-text-dim)] transition-colors hover:border-[#ffea00]/40 hover:text-[#ffea00] disabled:opacity-50"
         >
           <RefreshCw className={`size-4 ${loading ? "animate-spin" : ""}`} />
           Atualizar
@@ -64,15 +64,20 @@ export default function AdminVisits() {
               {notConfigured ? "GA4 não configurado no servidor" : "Erro ao buscar dados"}
             </p>
           </div>
-          <div className="space-y-3 p-6 text-sm text-[#888]">
+          <div className="space-y-3 p-6 text-sm text-[var(--admin-text-dim)]">
             {error && <p className="text-red-300">{error}</p>}
             <p>Configure no Netlify (ou `.env.local`):</p>
-            <ul className="list-inside list-disc space-y-1 text-xs text-[#666]">
+            <ul className="list-inside list-disc space-y-1 text-xs text-[var(--admin-text-faint)]">
               <li>
                 <code className="text-[#ffea00]">GA4_PROPERTY_ID</code> — ID numérico da propriedade (Admin → Detalhes da propriedade)
               </li>
               <li>
-                <code className="text-[#ffea00]">GA4_SERVICE_ACCOUNT_JSON</code> — JSON completo da service account com acesso de Leitor no GA4
+                <code className="text-[#ffea00]">GA4_SERVICE_ACCOUNT_JSON</code> — JSON da service account em uma linha (Leitor no GA4)
+              </li>
+              <li>
+                Ou <code className="text-[#ffea00]">GA4_CLIENT_EMAIL</code> +{" "}
+                <code className="text-[#ffea00]">GA4_PRIVATE_KEY</code> — chave com{" "}
+                <code className="text-[#ffea00]">\n</code> nas quebras (recomendado no Netlify)
               </li>
             </ul>
           </div>
@@ -81,7 +86,7 @@ export default function AdminVisits() {
 
       {/* Hoje */}
       <section className="mb-8">
-        <h2 className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-[#555]">
+        <h2 className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--admin-text-faint)]">
           Hoje
         </h2>
         <div className="grid gap-3 sm:grid-cols-3">
@@ -120,7 +125,7 @@ export default function AdminVisits() {
 
       {/* Mês */}
       <section className="mb-8">
-        <h2 className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-[#555]">
+        <h2 className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--admin-text-faint)]">
           Mês
         </h2>
         <div className="grid gap-3 sm:grid-cols-3">
@@ -163,7 +168,7 @@ export default function AdminVisits() {
           {!loading && data?.configured ? (
             <VisitsTrendChart data={data.daily} />
           ) : loading ? (
-            <div className="h-[320px] animate-pulse rounded-2xl border border-[#2a2a2a] bg-[#151515]" />
+            <div className="h-[320px] animate-pulse rounded-2xl border border-[var(--admin-border-muted)] bg-[var(--admin-surface)]" />
           ) : (
             <VisitsTrendChart data={[]} />
           )}
@@ -172,7 +177,7 @@ export default function AdminVisits() {
           {!loading && data?.configured ? (
             <TrafficSources sources={data.sources} />
           ) : loading ? (
-            <div className="h-[320px] animate-pulse rounded-2xl border border-[#2a2a2a] bg-[#151515]" />
+            <div className="h-[320px] animate-pulse rounded-2xl border border-[var(--admin-border-muted)] bg-[var(--admin-surface)]" />
           ) : (
             <TrafficSources sources={[]} />
           )}

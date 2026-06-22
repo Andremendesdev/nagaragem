@@ -6,12 +6,13 @@ import { ArrowLeft, Calendar, Menu, X } from "lucide-react"
 import AdminSidebar from "./AdminSidebar"
 import LogoutButton from "@/components/auth/LogoutButton"
 import { cn } from "@/lib/utils"
+import "@/app/admin/admin-theme.css"
 
 export default function AdminShell({ children }: { children: React.ReactNode }) {
   const [mobileOpen, setMobileOpen] = useState(false)
 
   return (
-    <div className="flex min-h-screen bg-[#0a0a0a] text-white">
+    <div className="admin-theme flex min-h-screen bg-[var(--admin-bg)] text-white">
       {/* Desktop sidebar */}
       <div className="hidden lg:block">
         <AdminSidebar className="sticky top-0 h-screen" />
@@ -37,12 +38,12 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
       </div>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-30 border-b border-[#1a1a1a] bg-[#0a0a0a]/95 backdrop-blur-sm">
+        <header className="sticky top-0 z-30 border-b border-[var(--admin-border-subtle)] bg-[var(--admin-bg)]/95 backdrop-blur-sm">
           <div className="flex items-center gap-3 px-4 py-3 sm:px-6">
             <button
               type="button"
               onClick={() => setMobileOpen((v) => !v)}
-              className="flex size-9 items-center justify-center rounded-lg border border-[#222] text-[#888] transition-colors hover:text-white lg:hidden"
+              className="flex size-9 items-center justify-center rounded-lg border border-[var(--admin-border)] text-[var(--admin-text-dim)] transition-colors hover:text-white lg:hidden"
               aria-label={mobileOpen ? "Fechar menu" : "Abrir menu"}
             >
               {mobileOpen ? <X className="size-5" /> : <Menu className="size-5" />}
@@ -50,14 +51,14 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
 
             <Link
               href="/"
-              className="flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm text-[#555] transition-colors hover:text-[#ffea00]"
+              className="flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm text-[var(--admin-text-faint)] transition-colors hover:text-[#ffea00]"
             >
               <ArrowLeft className="size-4" />
               <span className="hidden sm:inline">Voltar ao site</span>
             </Link>
 
             <div className="ml-auto flex items-center gap-3">
-              <div className="hidden items-center gap-2 text-xs text-[#555] sm:flex">
+              <div className="hidden items-center gap-2 text-xs text-[var(--admin-text-faint)] sm:flex">
                 <Calendar className="size-3.5" />
                 {new Intl.DateTimeFormat("pt-BR", {
                   weekday: "short",

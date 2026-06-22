@@ -18,29 +18,29 @@ type StatCardProps = {
 
 const variantStyles: Record<Variant, { card: string; value: string; bar: string }> = {
   default: {
-    card: "border-[#2a2a2a] bg-[#151515] hover:border-[#3a3a3a]",
+    card: "border-[var(--admin-border-muted)] bg-[var(--admin-surface)] hover:border-[var(--admin-border-muted)]",
     value: "text-white",
-    bar: "bg-[#3a3a3a]",
+    bar: "bg-[var(--admin-border-muted)]",
   },
   gold: {
-    card: "border-[#ffea00]/30 bg-gradient-to-br from-[#151515] to-[#1c1900] hover:border-[#ffea00]/50",
+    card: "border-[#ffea00]/30 bg-gradient-to-br from-[var(--admin-surface)] to-[#1c1900] hover:border-[#ffea00]/50",
     value: "text-[#ffea00]",
     bar: "bg-[#ffea00]",
   },
   profit: {
-    card: "border-emerald-500/20 bg-gradient-to-br from-[#151515] to-[#0d1a10] hover:border-emerald-500/40",
+    card: "border-emerald-500/20 bg-gradient-to-br from-[var(--admin-surface)] to-[#0d1a10] hover:border-emerald-500/40",
     value: "text-emerald-400",
     bar: "bg-emerald-500",
   },
   loss: {
-    card: "border-red-500/20 bg-gradient-to-br from-[#151515] to-[#1a0d0d] hover:border-red-500/40",
+    card: "border-red-500/20 bg-gradient-to-br from-[var(--admin-surface)] to-[#1a0d0d] hover:border-red-500/40",
     value: "text-red-400",
     bar: "bg-red-500",
   },
   neutral: {
-    card: "border-[#2a2a2a] bg-[#151515] hover:border-[#3a3a3a]",
-    value: "text-[#aaa]",
-    bar: "bg-[#3a3a3a]",
+    card: "border-[var(--admin-border-muted)] bg-[var(--admin-surface)] hover:border-[var(--admin-border-muted)]",
+    value: "text-[var(--admin-text-dim)]",
+    bar: "bg-[var(--admin-border-muted)]",
   },
 }
 
@@ -69,7 +69,7 @@ export default function StatCard({
       <div className={cn("absolute inset-x-0 top-0 h-0.5", s.bar)} />
 
       <div className="flex items-start justify-between gap-3">
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#666]">
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--admin-text-faint)]">
           {label}
         </p>
         {Icon && (
@@ -102,7 +102,7 @@ export default function StatCard({
           </span>
         )}
         {sublabel && (
-          <span className="text-xs text-[#555]">{sublabel}</span>
+          <span className="text-xs text-[var(--admin-text-faint)]">{sublabel}</span>
         )}
       </div>
     </div>
@@ -121,16 +121,16 @@ export function MiniStat({
   icon?: LucideIcon
 }) {
   return (
-    <div className="flex items-center gap-3 rounded-xl border border-[#222] bg-[#0f0f0f] px-4 py-3">
+    <div className="flex items-center gap-3 rounded-xl border border-[var(--admin-border)] bg-[var(--admin-input)] px-4 py-3">
       {Icon && (
         <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-white/5">
-          <Icon className="size-4 text-[#666]" />
+          <Icon className="size-4 text-[var(--admin-text-faint)]" />
         </div>
       )}
       <div className="min-w-0">
-        <p className="text-[10px] uppercase tracking-widest text-[#555]">{label}</p>
+        <p className="text-[10px] uppercase tracking-widest text-[var(--admin-text-faint)]">{label}</p>
         <p className="mt-0.5 truncate text-base font-bold text-white">{value}</p>
-        {hint && <p className="text-[11px] text-[#555]">{hint}</p>}
+        {hint && <p className="text-[11px] text-[var(--admin-text-faint)]">{hint}</p>}
       </div>
     </div>
   )

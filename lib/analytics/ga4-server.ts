@@ -24,6 +24,12 @@ const EMPTY_ANALYTICS: VisitsAnalytics = {
 
 type SourceBucket = "Google" | "Direto" | "Instagram" | "Outros"
 
+type ServiceAccountCredentials = {
+  client_email: string
+  private_key: string
+  [key: string]: unknown
+}
+
 function conversionRate(visits: number, leads: number) {
   if (visits <= 0) return 0
   return (leads / visits) * 100
@@ -44,19 +50,108 @@ function parseGa4Date(value: string) {
   return `${year}-${month}-${day}`
 }
 
-function getGa4Config() {
-  const propertyId = process.env.GA4_PROPERTY_ID?.trim()
-  const json = process.env.GA4_SERVICE_ACCOUNT_JSON?.trim()
+function normalizePrivateKey(key: string) {
+  let normalized = key.trim()
 
-  if (!propertyId || !json) return null
+  // Netlify / .env costumam salvar \n como texto literal
+  normalized = normalized.replace(/\\n/g, "\n")
+
+  // Quebras Windows ou JSON colado em uma linha só
+  normalized = normalized.replace(/\r\n/g, "\n").replace(/\r/g, "\n")
+
+  if (!normalized.includes("\n") && normalized.includes("-----BEGIN")) {
+    normalized = normalized
+      .replace("-----BEGIN PRIVATE KEY-----", "-----BEGIN PRIVATE KEY-----\n")
+      .replace("-----END PRIVATE KEY-----", "\n-----END PRIVATE KEY-----")
+  }
+
+  return normalized.trim()
+}
+
+function parseServiceAccountJson(raw: string): ServiceAccountCredentials | null {
+  let value = raw.trim()
+
+  if (
+    (value.startsWith("'") && value.endsWith("'")) ||
+    (value.startsWith('"') && value.endsWith('"') && !value.startsWith('{"'))
+  ) {
+    value = value.slice(1, -1)
+  }
 
   try {
-    const credentials = JSON.parse(json) as Record<string, unknown>
-    const client = new BetaAnalyticsDataClient({ credentials })
-    return { client, property: `properties/${propertyId}` }
+    const parsed = JSON.parse(value) as Record<string, unknown>
+    const clientEmail = parsed.client_email
+    const privateKey = parsed.private_key
+
+    if (typeof clientEmail !== "string" || typeof privateKey !== "string") {
+      return null
+    }
+
+    return {
+      ...parsed,
+      client_email: clientEmail.trim(),
+      private_key: normalizePrivateKey(privateKey),
+    }
   } catch {
     return null
   }
+}
+
+function parseServiceAccountFromParts(): ServiceAccountCredentials | null {
+  const clientEmail = process.env.GA4_CLIENT_EMAIL?.trim()
+  const privateKey = process.env.GA4_PRIVATE_KEY?.trim()
+
+  if (!clientEmail || !privateKey) return null
+
+  return {
+    type: "service_account",
+    client_email: clientEmail,
+    private_key: normalizePrivateKey(privateKey),
+  }
+}
+
+function getServiceAccountCredentials(): ServiceAccountCredentials | null {
+  const json = process.env.GA4_SERVICE_ACCOUNT_JSON?.trim()
+  if (json) {
+    const fromJson = parseServiceAccountJson(json)
+    if (fromJson) return fromJson
+  }
+
+  return parseServiceAccountFromParts()
+}
+
+function getGa4Config() {
+  const propertyId = process.env.GA4_PROPERTY_ID?.trim()
+  const credentials = getServiceAccountCredentials()
+
+  if (!propertyId || !credentials) return null
+
+  if (
+    !credentials.private_key.includes("BEGIN PRIVATE KEY") ||
+    !credentials.private_key.includes("END PRIVATE KEY")
+  ) {
+    return null
+  }
+
+  const client = new BetaAnalyticsDataClient({ credentials })
+  return { client, property: `properties/${propertyId}` }
+}
+
+export function formatGa4ConfigError(error: unknown): string {
+  const message = error instanceof Error ? error.message : String(error)
+
+  if (
+    message.includes("DECODER") ||
+    message.includes("unsupported") ||
+    message.includes("private_key")
+  ) {
+    return (
+      "Chave privada da service account inválida. No Netlify ou .env.local, use o JSON em uma linha " +
+      "ou defina GA4_CLIENT_EMAIL + GA4_PRIVATE_KEY com \\n nas quebras da chave."
+    )
+  }
+
+  return message || "Erro ao buscar dados do Google Analytics"
 }
 
 async function fetchSessions(
@@ -245,11 +340,7 @@ export async function fetchVisitsAnalytics(): Promise<VisitsAnalytics> {
     }
   } catch (error) {
     console.error("[GA4]", error)
-    throw new Error(
-      error instanceof Error
-        ? error.message
-        : "Erro ao buscar dados do Google Analytics"
-    )
+    throw new Error(formatGa4ConfigError(error))
   }
 }
 
