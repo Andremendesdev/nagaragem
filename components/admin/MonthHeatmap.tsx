@@ -30,7 +30,7 @@ export default function MonthHeatmap({ days }: MonthHeatmapProps) {
   return (
     <div className="overflow-hidden rounded-2xl border border-[var(--admin-border-muted)] bg-[var(--admin-surface)]">
       <div className="border-b border-[var(--admin-border)] px-6 py-4">
-        <h2 className="text-base font-bold text-white">Mapa do mês</h2>
+        <h2 className="text-base font-bold text-[var(--admin-text)]">Mapa do mês</h2>
         <p className="text-xs text-[var(--admin-text-faint)]">
           {format(new Date(), "MMMM yyyy", { locale: ptBR })} · dias mais fortes em destaque
         </p>

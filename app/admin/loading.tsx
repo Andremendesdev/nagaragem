@@ -8,8 +8,8 @@ export default function AdminLoading() {
           <Scissors className="size-8 animate-pulse text-[#ffea00]" />
         </div>
         <div>
-          <p className="font-semibold text-white">Carregando...</p>
-          <p className="text-sm text-[#555]">Aguarde um momento</p>
+          <p className="font-semibold text-[var(--admin-text)]">Carregando...</p>
+          <p className="text-sm text-[var(--admin-text-faint)]">Aguarde um momento</p>
         </div>
       </div>
     </div>

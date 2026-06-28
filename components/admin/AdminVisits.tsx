@@ -40,7 +40,7 @@ export default function AdminVisits() {
         <div>
           <div className="mb-2 flex items-center gap-2">
             <BarChart3 className="size-5 text-[#ffea00]" />
-            <h1 className="text-2xl font-bold text-white">Visitas</h1>
+            <h1 className="text-2xl font-bold text-[var(--admin-text)]">Visitas</h1>
           </div>
           <p className="text-sm text-[var(--admin-text-faint)]">
             Métricas do site via Google Analytics 4

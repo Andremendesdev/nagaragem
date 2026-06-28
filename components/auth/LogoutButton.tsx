@@ -26,7 +26,7 @@ export default function LogoutButton() {
       variant="outline"
       disabled={loading}
       onClick={handleLogout}
-      className="border-[var(--admin-border-muted)] bg-transparent text-[#ccc] hover:border-red-500/50 hover:bg-red-500/10 hover:text-red-300"
+      className="border-[var(--admin-border-muted)] bg-transparent text-[var(--admin-text-dim)] hover:border-red-500/50 hover:bg-red-500/10 hover:text-red-600"
     >
       {loading ? (
         <Loader2 className="size-4 animate-spin" />

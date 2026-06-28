@@ -17,7 +17,7 @@ export default function CategoryBreakdown({
   return (
     <div className="overflow-hidden rounded-2xl border border-[var(--admin-border-muted)] bg-[var(--admin-surface)]">
       <div className="border-b border-[var(--admin-border)] px-6 py-4">
-        <h2 className="text-base font-bold text-white">Por categoria</h2>
+        <h2 className="text-base font-bold text-[var(--admin-text)]">Por categoria</h2>
         <p className="text-xs text-[var(--admin-text-faint)]">
           Mix do mês · {formatCurrency(monthTotal)}
         </p>
@@ -36,11 +36,11 @@ export default function CategoryBreakdown({
                   <div className="flex items-center gap-2 min-w-0">
                     <span className="shrink-0">{cat.emoji}</span>
                     <span className="truncate text-sm text-[#ccc]">{cat.label}</span>
-                    <span className="shrink-0 rounded-full bg-white/5 px-1.5 py-0.5 text-[10px] text-[var(--admin-text-faint)]">
+                    <span className="shrink-0 rounded-full bg-black/5 px-1.5 py-0.5 text-[10px] text-[var(--admin-text-faint)]">
                       {cat.count} {cat.count === 1 ? "cliente" : "clientes"}
                     </span>
                   </div>
-                  <span className="shrink-0 text-sm font-semibold text-white">
+                  <span className="shrink-0 text-sm font-semibold text-[var(--admin-text)]">
                     {formatCurrency(cat.total)}
                   </span>
                 </div>

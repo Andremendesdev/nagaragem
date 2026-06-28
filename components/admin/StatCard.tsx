@@ -19,22 +19,22 @@ type StatCardProps = {
 const variantStyles: Record<Variant, { card: string; value: string; bar: string }> = {
   default: {
     card: "border-[var(--admin-border-muted)] bg-[var(--admin-surface)] hover:border-[var(--admin-border-muted)]",
-    value: "text-white",
+    value: "text-[var(--admin-text)]",
     bar: "bg-[var(--admin-border-muted)]",
   },
   gold: {
-    card: "border-[#ffea00]/30 bg-gradient-to-br from-[var(--admin-surface)] to-[#1c1900] hover:border-[#ffea00]/50",
+    card: "border-[#ffea00]/30 bg-gradient-to-br from-[var(--admin-surface)] to-[#fffbeb] hover:border-[#ffea00]/50",
     value: "text-[#ffea00]",
     bar: "bg-[#ffea00]",
   },
   profit: {
-    card: "border-emerald-500/20 bg-gradient-to-br from-[var(--admin-surface)] to-[#0d1a10] hover:border-emerald-500/40",
-    value: "text-emerald-400",
+    card: "border-emerald-500/20 bg-gradient-to-br from-[var(--admin-surface)] to-[#ecfdf5] hover:border-emerald-500/40",
+    value: "text-emerald-600",
     bar: "bg-emerald-500",
   },
   loss: {
-    card: "border-red-500/20 bg-gradient-to-br from-[var(--admin-surface)] to-[#1a0d0d] hover:border-red-500/40",
-    value: "text-red-400",
+    card: "border-red-500/20 bg-gradient-to-br from-[var(--admin-surface)] to-[#fef2f2] hover:border-red-500/40",
+    value: "text-red-600",
     bar: "bg-red-500",
   },
   neutral: {
@@ -73,7 +73,7 @@ export default function StatCard({
           {label}
         </p>
         {Icon && (
-          <div className="rounded-lg bg-white/5 p-1.5">
+          <div className="rounded-lg bg-black/5 p-1.5">
             <Icon className={cn("size-4", s.value)} />
           </div>
         )}
@@ -123,13 +123,13 @@ export function MiniStat({
   return (
     <div className="flex items-center gap-3 rounded-xl border border-[var(--admin-border)] bg-[var(--admin-input)] px-4 py-3">
       {Icon && (
-        <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-white/5">
+        <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-black/5">
           <Icon className="size-4 text-[var(--admin-text-faint)]" />
         </div>
       )}
       <div className="min-w-0">
         <p className="text-[10px] uppercase tracking-widest text-[var(--admin-text-faint)]">{label}</p>
-        <p className="mt-0.5 truncate text-base font-bold text-white">{value}</p>
+        <p className="mt-0.5 truncate text-base font-bold text-[var(--admin-text)]">{value}</p>
         {hint && <p className="text-[11px] text-[var(--admin-text-faint)]">{hint}</p>}
       </div>
     </div>

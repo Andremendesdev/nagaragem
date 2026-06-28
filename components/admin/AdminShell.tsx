@@ -12,7 +12,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
   const [mobileOpen, setMobileOpen] = useState(false)
 
   return (
-    <div className="admin-theme flex min-h-screen bg-[var(--admin-bg)] text-white">
+    <div className="admin-theme flex min-h-screen bg-[var(--admin-bg)] text-[var(--admin-text)]">
       {/* Desktop sidebar */}
       <div className="hidden lg:block">
         <AdminSidebar className="sticky top-0 h-screen" />
@@ -43,7 +43,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
             <button
               type="button"
               onClick={() => setMobileOpen((v) => !v)}
-              className="flex size-9 items-center justify-center rounded-lg border border-[var(--admin-border)] text-[var(--admin-text-dim)] transition-colors hover:text-white lg:hidden"
+              className="flex size-9 items-center justify-center rounded-lg border border-[var(--admin-border)] text-[var(--admin-text-dim)] transition-colors hover:text-[var(--admin-text)] lg:hidden"
               aria-label={mobileOpen ? "Fechar menu" : "Abrir menu"}
             >
               {mobileOpen ? <X className="size-5" /> : <Menu className="size-5" />}

@@ -40,7 +40,7 @@ function ChartSkeleton() {
         <div className="h-4 w-32 animate-pulse rounded bg-[var(--admin-skeleton)]" />
         <div className="mt-1.5 h-3 w-24 animate-pulse rounded bg-[var(--admin-hover)]" />
       </div>
-      <div className="flex h-[220px] items-center justify-center text-sm text-[var(--admin-border)]">
+      <div className="flex h-[220px] items-center justify-center text-sm text-[var(--admin-text-muted)]">
         Carregando...
       </div>
     </div>
@@ -81,7 +81,7 @@ export default function AdminDashboard() {
             <Scissors className="size-8 animate-pulse text-[#ffea00]" />
           </div>
           <div>
-            <p className="font-semibold text-white">Carregando painel...</p>
+            <p className="font-semibold text-[var(--admin-text)]">Carregando painel...</p>
             <p className="text-sm text-[var(--admin-text-faint)]">Conectando ao Supabase</p>
           </div>
         </div>
@@ -115,7 +115,7 @@ export default function AdminDashboard() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-white">Dashboard</h1>
+        <h1 className="text-2xl font-bold text-[var(--admin-text)]">Dashboard</h1>
         <p className="text-sm text-[var(--admin-text-faint)]">Financeiro · ganhos, despesas e metas</p>
       </div>
 
@@ -172,7 +172,7 @@ export default function AdminDashboard() {
                 className={cn(
                   "flex flex-1 items-center justify-center gap-2 rounded-lg py-2.5 text-sm font-semibold transition-all",
                   activeTab === tab.id
-                    ? "bg-[var(--admin-hover)] text-white shadow-sm"
+                    ? "bg-[var(--admin-hover)] text-[var(--admin-text)] shadow-sm"
                     : "text-[var(--admin-text-faint)] hover:text-[var(--admin-text-dim)]"
                 )}
               >

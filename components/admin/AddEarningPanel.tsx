@@ -112,7 +112,7 @@ export default function AddEarningPanel({ onAdd }: AddEarningPanelProps) {
             <Plus className="size-4 text-[#ffea00]" />
           </div>
           <div>
-            <h2 className="text-base font-bold text-white">Registrar ganho</h2>
+            <h2 className="text-base font-bold text-[var(--admin-text)]">Registrar ganho</h2>
             <p className="text-xs text-[var(--admin-text-faint)]">Valor total e quantidade de clientes</p>
           </div>
           {success && (
@@ -153,7 +153,7 @@ export default function AddEarningPanel({ onAdd }: AddEarningPanelProps) {
                     if (amountError) setAmountError("")
                   }}
                   className={cn(
-                    "h-12 border-[var(--admin-border-muted)] bg-[var(--admin-input)] pl-9 text-lg font-bold text-white placeholder:text-[var(--admin-border)] focus:border-[#ffea00]/50",
+                    "h-12 border-[var(--admin-border-muted)] bg-[var(--admin-input)] pl-9 text-lg font-bold text-[var(--admin-text)] placeholder:text-[var(--admin-text-muted)] focus:border-[#ffea00]/50",
                     amountError && "border-red-500/50 focus:border-red-500"
                   )}
                 />
@@ -180,7 +180,7 @@ export default function AddEarningPanel({ onAdd }: AddEarningPanelProps) {
                     if (clientsError) setClientsError("")
                   }}
                   className={cn(
-                    "h-12 border-[var(--admin-border-muted)] bg-[var(--admin-input)] pl-9 text-lg font-bold text-white placeholder:text-[var(--admin-border)] focus:border-[#ffea00]/50",
+                    "h-12 border-[var(--admin-border-muted)] bg-[var(--admin-input)] pl-9 text-lg font-bold text-[var(--admin-text)] placeholder:text-[var(--admin-text-muted)] focus:border-[#ffea00]/50",
                     clientsError && "border-red-500/50 focus:border-red-500"
                   )}
                 />
@@ -215,7 +215,7 @@ export default function AddEarningPanel({ onAdd }: AddEarningPanelProps) {
                     "rounded-xl border py-2.5 text-center text-xs font-medium transition-all",
                     category === cat.value
                       ? "border-[#ffea00]/60 bg-[#ffea00]/10 text-[#ffea00]"
-                      : "border-[var(--admin-border)] bg-[var(--admin-input)] text-[var(--admin-text-faint)] hover:border-[#333] hover:text-[#999]"
+                      : "border-[var(--admin-border)] bg-[var(--admin-input)] text-[var(--admin-text-faint)] hover:border-[var(--admin-border-muted)] hover:text-[var(--admin-text-dim)]"
                   )}
                 >
                   <span className="block text-base leading-none">{cat.emoji}</span>
@@ -233,7 +233,7 @@ export default function AddEarningPanel({ onAdd }: AddEarningPanelProps) {
               placeholder="Turno da tarde, promoção..."
               value={note}
               onChange={(e) => setNote(e.target.value)}
-              className="border-[var(--admin-border-muted)] bg-[var(--admin-input)] text-white placeholder:text-[var(--admin-border)] focus:border-[#ffea00]/50"
+              className="border-[var(--admin-border-muted)] bg-[var(--admin-input)] text-[var(--admin-text)] placeholder:text-[var(--admin-text-muted)] focus:border-[#ffea00]/50"
             />
           </div>
 

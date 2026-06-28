@@ -79,7 +79,7 @@ export default function InsightsPanel({
             <p className={cn("text-xs font-bold uppercase tracking-[0.18em]", mood.color)}>
               {mood.label}
             </p>
-            <p className="mt-1.5 text-sm leading-relaxed text-[#bbb]">
+            <p className="mt-1.5 text-sm leading-relaxed text-[var(--admin-text-faint)]">
               {stats.insight}
             </p>
           </div>
@@ -91,7 +91,7 @@ export default function InsightsPanel({
         <div className="border-b border-[var(--admin-track)] px-5 py-4">
           <div className="flex items-center gap-2">
             <Target className="size-4 text-[#ffea00]" />
-            <h2 className="text-sm font-bold text-white">Meta mensal</h2>
+            <h2 className="text-sm font-bold text-[var(--admin-text)]">Meta mensal</h2>
           </div>
         </div>
 
@@ -109,7 +109,7 @@ export default function InsightsPanel({
               "rounded-full px-3 py-1 text-sm font-bold",
               overGoal
                 ? "bg-emerald-500/15 text-emerald-400"
-                : "bg-white/5 text-white"
+                : "bg-black/5 text-[var(--admin-text)]"
             )}>
               {Math.min(stats.goalProgress, 999).toFixed(0)}%
             </span>
@@ -141,7 +141,7 @@ export default function InsightsPanel({
                 const val = Number(e.target.value)
                 if (val > 0) onGoalChange(val)
               }}
-              className="h-9 border-[var(--admin-border)] bg-[var(--admin-bg)] text-sm text-white focus:border-[#ffea00]/40"
+              className="h-9 border-[var(--admin-border)] bg-[var(--admin-bg)] text-sm text-[var(--admin-text)] focus:border-[#ffea00]/40"
             />
           </div>
         </div>
@@ -191,7 +191,7 @@ export default function InsightsPanel({
             <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--admin-text-faint)]">
               Recorde pessoal
             </p>
-            <p className="text-xl font-bold text-white">
+            <p className="text-xl font-bold text-[var(--admin-text)]">
               {formatCurrency(stats.personalRecord)}
             </p>
             {stats.personalRecordDate && (

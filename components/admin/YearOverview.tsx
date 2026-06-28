@@ -122,7 +122,7 @@ export default function YearOverview({ data, yearTotal }: YearOverviewProps) {
       <div className="border-b border-[var(--admin-border)] px-6 py-4">
         <div className="flex items-end justify-between gap-4">
           <div>
-            <h2 className="text-base font-bold text-white">Visão anual</h2>
+            <h2 className="text-base font-bold text-[var(--admin-text)]">Visão anual</h2>
             <p className="text-xs text-[var(--admin-text-faint)]">
               Faturamento mês a mês · selecione meses para comparar
             </p>
@@ -178,7 +178,7 @@ export default function YearOverview({ data, yearTotal }: YearOverviewProps) {
                   "rounded-lg border px-2 py-2 text-center text-xs font-semibold capitalize transition-all",
                   selected
                     ? "border-[#ffea00]/60 bg-[#ffea00]/10 text-[#ffea00]"
-                    : "border-[var(--admin-border)] bg-[var(--admin-input)] text-[var(--admin-text-faint)] hover:border-[#ffea00]/30 hover:text-white",
+                    : "border-[var(--admin-border)] bg-[var(--admin-input)] text-[var(--admin-text-faint)] hover:border-[#ffea00]/30 hover:text-[var(--admin-text)]",
                   isCurrent && !selected && "ring-1 ring-[#ffea00]/25"
                 )}
               >
@@ -201,17 +201,17 @@ export default function YearOverview({ data, yearTotal }: YearOverviewProps) {
           <div className="mb-3 grid gap-2 sm:grid-cols-3">
             <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 px-3 py-2">
               <p className="text-[10px] uppercase tracking-wide text-emerald-400/80">Melhor</p>
-              <p className="text-sm font-bold capitalize text-white">{comparison.best.label.replace(".", "")}</p>
+              <p className="text-sm font-bold capitalize text-[var(--admin-text)]">{comparison.best.label.replace(".", "")}</p>
               <p className="text-sm font-semibold text-emerald-400">{formatCurrency(comparison.best.total)}</p>
             </div>
             <div className="rounded-xl border border-[var(--admin-border)] bg-[var(--admin-input)] px-3 py-2">
               <p className="text-[10px] uppercase tracking-wide text-[var(--admin-text-faint)]">Média</p>
-              <p className="text-sm font-bold text-white">Selecionados</p>
+              <p className="text-sm font-bold text-[var(--admin-text)]">Selecionados</p>
               <p className="text-sm font-semibold text-[#ffea00]">{formatCurrency(comparison.avg)}</p>
             </div>
             <div className="rounded-xl border border-red-500/20 bg-red-500/5 px-3 py-2">
               <p className="text-[10px] uppercase tracking-wide text-red-400/80">Menor</p>
-              <p className="text-sm font-bold capitalize text-white">{comparison.worst.label.replace(".", "")}</p>
+              <p className="text-sm font-bold capitalize text-[var(--admin-text)]">{comparison.worst.label.replace(".", "")}</p>
               <p className="text-sm font-semibold text-red-400">{formatCurrency(comparison.worst.total)}</p>
             </div>
           </div>
@@ -235,7 +235,7 @@ export default function YearOverview({ data, yearTotal }: YearOverviewProps) {
                       className="size-2.5 rounded-full"
                       style={{ background: color }}
                     />
-                    <span className="text-sm font-semibold capitalize text-white">
+                    <span className="text-sm font-semibold capitalize text-[var(--admin-text)]">
                       {point.label.replace(".", "")}
                     </span>
                   </div>
@@ -267,7 +267,7 @@ export default function YearOverview({ data, yearTotal }: YearOverviewProps) {
       {hasSelection && selectedMonths.length === 1 && (
         <div className="border-b border-[var(--admin-border)] bg-[var(--admin-bg)]/40 px-6 py-3">
           <p className="text-xs text-[var(--admin-text-faint)]">
-            <span className="font-semibold capitalize text-white">
+            <span className="font-semibold capitalize text-[var(--admin-text)]">
               {monthLabels[selectedMonths[0]].replace(".", "")}
             </span>
             {" · "}
@@ -286,17 +286,17 @@ export default function YearOverview({ data, yearTotal }: YearOverviewProps) {
         ) : (
           <ChartContainer config={chartConfig} className="h-[180px] w-full">
             <BarChart data={months} margin={{ top: 8, right: 8, left: -20, bottom: 0 }}>
-              <CartesianGrid vertical={false} stroke="#333333" />
+              <CartesianGrid vertical={false} stroke="var(--admin-chart-grid)" />
               <XAxis
                 dataKey="month"
                 tickLine={false}
                 axisLine={false}
-                tick={{ fill: "#555", fontSize: 11 }}
+                tick={{ fill: "var(--admin-chart-tick)", fontSize: 11 }}
               />
               <YAxis
                 tickLine={false}
                 axisLine={false}
-                tick={{ fill: "#444", fontSize: 10 }}
+                tick={{ fill: "var(--admin-chart-tick-muted)", fontSize: 10 }}
                 tickFormatter={(v) =>
                   v >= 1000 ? `${(v / 1000).toFixed(0)}k` : String(v)
                 }

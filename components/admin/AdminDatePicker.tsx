@@ -54,7 +54,7 @@ export default function AdminDatePicker({
             className={cn(
               "flex h-12 flex-1 items-center gap-2 rounded-lg border bg-[var(--admin-input)] px-3 text-left text-sm transition-colors hover:border-[#ffea00]/40 focus:outline-none focus:border-[#ffea00]/50",
               active
-                ? "border-[#ffea00]/40 text-white"
+                ? "border-[#ffea00]/40 text-[var(--admin-text)]"
                 : "border-[var(--admin-border-muted)] text-[var(--admin-text-dim)]"
             )}
           >
@@ -67,7 +67,7 @@ export default function AdminDatePicker({
           </button>
         </PopoverTrigger>
         <PopoverContent
-          className="w-auto border-[var(--admin-border-muted)] bg-[var(--admin-surface)] p-0 text-white"
+          className="w-auto border-[var(--admin-border-muted)] bg-[var(--admin-surface)] p-0 text-[var(--admin-text)]"
           align="start"
         >
           <Calendar

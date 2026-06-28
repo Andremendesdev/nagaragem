@@ -38,7 +38,7 @@ export default function VisitsTrendChart({ data }: VisitsTrendChartProps) {
   return (
     <div className="overflow-hidden rounded-2xl border border-[var(--admin-border-muted)] bg-[var(--admin-surface)]">
       <div className="border-b border-[var(--admin-border)] px-6 py-4">
-        <h2 className="text-base font-bold text-white">Últimos 30 dias</h2>
+        <h2 className="text-base font-bold text-[var(--admin-text)]">Últimos 30 dias</h2>
         <p className="text-xs text-[var(--admin-text-faint)]">Visitas e leads (generate_lead) por dia</p>
       </div>
 
@@ -60,18 +60,18 @@ export default function VisitsTrendChart({ data }: VisitsTrendChartProps) {
                   <stop offset="95%" stopColor="#34d399" stopOpacity={0.02} />
                 </linearGradient>
               </defs>
-              <CartesianGrid vertical={false} stroke="#333333" />
+              <CartesianGrid vertical={false} stroke="var(--admin-chart-grid)" />
               <XAxis
                 dataKey="label"
                 tickLine={false}
                 axisLine={false}
-                tick={{ fill: "#555", fontSize: 10 }}
+                tick={{ fill: "var(--admin-chart-tick)", fontSize: 10 }}
                 interval="preserveStartEnd"
               />
               <YAxis
                 tickLine={false}
                 axisLine={false}
-                tick={{ fill: "#444", fontSize: 11 }}
+                tick={{ fill: "var(--admin-chart-tick-muted)", fontSize: 11 }}
                 allowDecimals={false}
               />
               <ChartTooltip content={<ChartTooltipContent />} />

@@ -35,7 +35,7 @@ export default function WeeklyChart({ data }: WeeklyChartProps) {
       <div className="border-b border-[var(--admin-border)] px-6 py-4">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-base font-bold text-white">Últimos 7 dias</h2>
+            <h2 className="text-base font-bold text-[var(--admin-text)]">Últimos 7 dias</h2>
             <p className="text-xs text-[var(--admin-text-faint)]">Evolução diária dos ganhos</p>
           </div>
           {hasData && (
@@ -61,17 +61,17 @@ export default function WeeklyChart({ data }: WeeklyChartProps) {
                   <stop offset="95%" stopColor="#ffea00" stopOpacity={0.02} />
                 </linearGradient>
               </defs>
-              <CartesianGrid vertical={false} stroke="#333333" />
+              <CartesianGrid vertical={false} stroke="var(--admin-chart-grid)" />
               <XAxis
                 dataKey="label"
                 tickLine={false}
                 axisLine={false}
-                tick={{ fill: "#555", fontSize: 12 }}
+                tick={{ fill: "var(--admin-chart-tick)", fontSize: 12 }}
               />
               <YAxis
                 tickLine={false}
                 axisLine={false}
-                tick={{ fill: "#444", fontSize: 11 }}
+                tick={{ fill: "var(--admin-chart-tick-muted)", fontSize: 11 }}
                 tickFormatter={(v) => `R$${v}`}
               />
               <ChartTooltip

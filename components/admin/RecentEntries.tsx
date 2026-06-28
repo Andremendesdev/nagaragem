@@ -101,7 +101,7 @@ export default function RecentEntries({ entries, onRemove }: RecentEntriesProps)
       <div className="border-b border-[var(--admin-border)] px-6 py-4">
         <div className="flex items-center justify-between gap-4">
           <div>
-            <h2 className="text-base font-bold text-white">Registros de ganhos</h2>
+            <h2 className="text-base font-bold text-[var(--admin-text)]">Registros de ganhos</h2>
             <p className="text-xs text-[var(--admin-text-faint)]">
               {filtered.length} de {entries.length} entradas
             </p>
@@ -109,7 +109,7 @@ export default function RecentEntries({ entries, onRemove }: RecentEntriesProps)
           {hasFilters && (
             <button
               onClick={resetFilters}
-              className="flex items-center gap-1.5 rounded-lg border border-[#333] px-3 py-1.5 text-xs text-[var(--admin-text-dim)] transition-colors hover:border-[#444] hover:text-white"
+              className="flex items-center gap-1.5 rounded-lg border border-[var(--admin-border-muted)] px-3 py-1.5 text-xs text-[var(--admin-text-dim)] transition-colors hover:border-[var(--admin-border-muted)] hover:text-[var(--admin-text)]"
             >
               <X className="size-3" />
               Limpar filtros
@@ -130,7 +130,7 @@ export default function RecentEntries({ entries, onRemove }: RecentEntriesProps)
                 placeholder="Buscar por observação..."
                 value={search}
                 onChange={(e) => { setSearch(e.target.value); setPage(1) }}
-                className="h-9 w-full rounded-lg border border-[var(--admin-border)] bg-[var(--admin-input)] pl-9 pr-3 text-sm text-white placeholder:text-[var(--admin-text-muted)] outline-none focus:border-[#ffea00]/40"
+                className="h-9 w-full rounded-lg border border-[var(--admin-border)] bg-[var(--admin-input)] pl-9 pr-3 text-sm text-[var(--admin-text)] placeholder:text-[var(--admin-text-muted)] outline-none focus:border-[#ffea00]/40"
               />
             </div>
 
@@ -144,7 +144,7 @@ export default function RecentEntries({ entries, onRemove }: RecentEntriesProps)
                     "rounded-lg px-3 py-1.5 text-xs font-semibold transition-all",
                     period === p.value && !selectedDay
                       ? "bg-[#ffea00]/15 text-[#ffea00]"
-                      : "text-[var(--admin-text-faint)] hover:text-[#999]"
+                      : "text-[var(--admin-text-faint)] hover:text-[var(--admin-text-dim)]"
                   )}
                 >
                   {p.label}
@@ -230,7 +230,7 @@ export default function RecentEntries({ entries, onRemove }: RecentEntriesProps)
                 <div
                   key={entry.id}
                   className={cn(
-                    "group grid grid-cols-[1fr_40px] gap-3 px-6 py-3.5 transition-colors hover:bg-white/[0.02] sm:grid-cols-[2fr_1fr_1fr_1fr_40px]",
+                    "group grid grid-cols-[1fr_40px] gap-3 px-6 py-3.5 transition-colors hover:bg-black/[0.04] sm:grid-cols-[2fr_1fr_1fr_1fr_40px]",
                     isRemoving && "opacity-50"
                   )}
                 >
@@ -252,7 +252,7 @@ export default function RecentEntries({ entries, onRemove }: RecentEntriesProps)
                   </div>
 
                   <div className="hidden items-center sm:flex">
-                    <span className="rounded-full bg-white/5 px-2 py-0.5 text-xs font-medium text-[var(--admin-text-dim)]">
+                    <span className="rounded-full bg-black/5 px-2 py-0.5 text-xs font-medium text-[var(--admin-text-dim)]">
                       {clients} {clients === 1 ? "cliente" : "clientes"}
                     </span>
                   </div>
@@ -266,7 +266,7 @@ export default function RecentEntries({ entries, onRemove }: RecentEntriesProps)
                   </div>
 
                   <div className="hidden items-center justify-end sm:flex">
-                    <span className="text-sm font-bold text-white">
+                    <span className="text-sm font-bold text-[var(--admin-text)]">
                       {formatCurrencyDetailed(entry.amount)}
                     </span>
                   </div>
@@ -296,7 +296,7 @@ export default function RecentEntries({ entries, onRemove }: RecentEntriesProps)
                 <button
                   disabled={safePage === 1}
                   onClick={() => setPage(safePage - 1)}
-                  className="flex size-8 items-center justify-center rounded-lg border border-[var(--admin-border)] text-[var(--admin-text-faint)] transition-colors hover:border-[#333] hover:text-white disabled:opacity-30"
+                  className="flex size-8 items-center justify-center rounded-lg border border-[var(--admin-border)] text-[var(--admin-text-faint)] transition-colors hover:border-[var(--admin-border-muted)] hover:text-[var(--admin-text)] disabled:opacity-30"
                 >
                   <ChevronLeft className="size-4" />
                 </button>
@@ -318,7 +318,7 @@ export default function RecentEntries({ entries, onRemove }: RecentEntriesProps)
                           "flex size-8 items-center justify-center rounded-lg text-xs font-semibold transition-all",
                           safePage === p
                             ? "bg-[#ffea00]/15 text-[#ffea00]"
-                            : "border border-[var(--admin-border)] text-[var(--admin-text-faint)] hover:border-[#333] hover:text-white"
+                            : "border border-[var(--admin-border)] text-[var(--admin-text-faint)] hover:border-[var(--admin-border-muted)] hover:text-[var(--admin-text)]"
                         )}
                       >
                         {p}
@@ -328,7 +328,7 @@ export default function RecentEntries({ entries, onRemove }: RecentEntriesProps)
                 <button
                   disabled={safePage === totalPages}
                   onClick={() => setPage(safePage + 1)}
-                  className="flex size-8 items-center justify-center rounded-lg border border-[var(--admin-border)] text-[var(--admin-text-faint)] transition-colors hover:border-[#333] hover:text-white disabled:opacity-30"
+                  className="flex size-8 items-center justify-center rounded-lg border border-[var(--admin-border)] text-[var(--admin-text-faint)] transition-colors hover:border-[var(--admin-border-muted)] hover:text-[var(--admin-text)] disabled:opacity-30"
                 >
                   <ChevronRight className="size-4" />
                 </button>

@@ -78,7 +78,7 @@ export default function RecentExpenses({ expenses, onRemove }: RecentExpensesPro
       <div className="border-b border-[var(--admin-border)] px-6 py-4">
         <div className="flex items-center justify-between gap-4">
           <div>
-            <h2 className="text-base font-bold text-white">Registros de despesas</h2>
+            <h2 className="text-base font-bold text-[var(--admin-text)]">Registros de despesas</h2>
             <p className="text-xs text-[var(--admin-text-faint)]">
               {filtered.length} de {expenses.length} despesas
             </p>
@@ -86,7 +86,7 @@ export default function RecentExpenses({ expenses, onRemove }: RecentExpensesPro
           {hasFilters && (
             <button
               onClick={resetFilters}
-              className="flex items-center gap-1.5 rounded-lg border border-[#333] px-3 py-1.5 text-xs text-[var(--admin-text-dim)] transition-colors hover:text-white"
+              className="flex items-center gap-1.5 rounded-lg border border-[var(--admin-border-muted)] px-3 py-1.5 text-xs text-[var(--admin-text-dim)] transition-colors hover:text-[var(--admin-text)]"
             >
               <X className="size-3" />
               Limpar
@@ -104,7 +104,7 @@ export default function RecentExpenses({ expenses, onRemove }: RecentExpensesPro
               placeholder="Buscar por observação..."
               value={search}
               onChange={(e) => { setSearch(e.target.value); setPage(1) }}
-              className="h-9 w-full rounded-lg border border-[var(--admin-border)] bg-[var(--admin-input)] pl-9 pr-3 text-sm text-white placeholder:text-[var(--admin-text-muted)] outline-none focus:border-red-500/30"
+              className="h-9 w-full rounded-lg border border-[var(--admin-border)] bg-[var(--admin-input)] pl-9 pr-3 text-sm text-[var(--admin-text)] placeholder:text-[var(--admin-text-muted)] outline-none focus:border-red-500/30"
             />
           </div>
 
@@ -117,7 +117,7 @@ export default function RecentExpenses({ expenses, onRemove }: RecentExpensesPro
                   "rounded-lg px-3 py-1.5 text-xs font-semibold transition-all",
                   period === p.value
                     ? "bg-red-500/15 text-red-300"
-                    : "text-[var(--admin-text-faint)] hover:text-[#999]"
+                    : "text-[var(--admin-text-faint)] hover:text-[var(--admin-text-dim)]"
                 )}
               >
                 {p.label}
@@ -171,7 +171,7 @@ export default function RecentExpenses({ expenses, onRemove }: RecentExpensesPro
                 <div
                   key={expense.id}
                   className={cn(
-                    "group grid grid-cols-[1fr_40px] gap-3 px-6 py-3.5 transition-colors hover:bg-white/[0.02] sm:grid-cols-[2fr_1fr_1fr_40px]",
+                    "group grid grid-cols-[1fr_40px] gap-3 px-6 py-3.5 transition-colors hover:bg-black/[0.04] sm:grid-cols-[2fr_1fr_1fr_40px]",
                     isRemoving && "opacity-50"
                   )}
                 >
@@ -227,7 +227,7 @@ export default function RecentExpenses({ expenses, onRemove }: RecentExpensesPro
                 <button
                   disabled={safePage === 1}
                   onClick={() => setPage(safePage - 1)}
-                  className="flex size-8 items-center justify-center rounded-lg border border-[var(--admin-border)] text-[var(--admin-text-faint)] transition-colors hover:text-white disabled:opacity-30"
+                  className="flex size-8 items-center justify-center rounded-lg border border-[var(--admin-border)] text-[var(--admin-text-faint)] transition-colors hover:text-[var(--admin-text)] disabled:opacity-30"
                 >
                   <ChevronLeft className="size-4" />
                 </button>
@@ -249,7 +249,7 @@ export default function RecentExpenses({ expenses, onRemove }: RecentExpensesPro
                           "flex size-8 items-center justify-center rounded-lg text-xs font-semibold transition-all",
                           safePage === p
                             ? "bg-red-500/15 text-red-300"
-                            : "border border-[var(--admin-border)] text-[var(--admin-text-faint)] hover:text-white"
+                            : "border border-[var(--admin-border)] text-[var(--admin-text-faint)] hover:text-[var(--admin-text)]"
                         )}
                       >
                         {p}
@@ -259,7 +259,7 @@ export default function RecentExpenses({ expenses, onRemove }: RecentExpensesPro
                 <button
                   disabled={safePage === totalPages}
                   onClick={() => setPage(safePage + 1)}
-                  className="flex size-8 items-center justify-center rounded-lg border border-[var(--admin-border)] text-[var(--admin-text-faint)] transition-colors hover:text-white disabled:opacity-30"
+                  className="flex size-8 items-center justify-center rounded-lg border border-[var(--admin-border)] text-[var(--admin-text-faint)] transition-colors hover:text-[var(--admin-text)] disabled:opacity-30"
                 >
                   <ChevronRight className="size-4" />
                 </button>
