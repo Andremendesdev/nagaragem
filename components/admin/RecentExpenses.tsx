@@ -104,7 +104,7 @@ export default function RecentExpenses({ expenses, onRemove }: RecentExpensesPro
               placeholder="Buscar por observação..."
               value={search}
               onChange={(e) => { setSearch(e.target.value); setPage(1) }}
-              className="h-9 w-full rounded-lg border border-[var(--admin-border)] bg-[var(--admin-input)] pl-9 pr-3 text-sm text-[var(--admin-text)] placeholder:text-[var(--admin-text-muted)] outline-none focus:border-red-500/30"
+              className="h-9 w-full rounded-lg border border-[var(--admin-border)] bg-[var(--admin-input)] pl-9 pr-3 text-sm text-[var(--admin-text)] placeholder:text-[var(--admin-text-faint)] outline-none focus:border-red-500/30"
             />
           </div>
 

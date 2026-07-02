@@ -58,12 +58,12 @@ export default function MonthHeatmap({ days }: MonthHeatmapProps) {
                 title={`${day.label}: R$ ${day.total.toFixed(0)}`}
                 className={cn(
                   "flex aspect-square items-center justify-center rounded-lg text-[10px] font-semibold transition-all",
-                  isToday && "ring-1 ring-[#ffea00]/60 ring-offset-1 ring-offset-[var(--admin-surface)]",
+                  isToday && "ring-1 ring-[var(--admin-gold-border)] ring-offset-1 ring-offset-[var(--admin-surface)]",
                   level === 0 && "bg-[var(--admin-heatmap-0)] text-[var(--admin-border)]",
-                  level === 1 && "bg-[#ffea00]/15 text-[#ffea00]/70",
-                  level === 2 && "bg-[#ffea00]/30 text-[#ffea00]",
-                  level === 3 && "bg-[#ffea00]/55 text-black",
-                  level === 4 && "bg-[#ffea00] text-black"
+                  level === 1 && "bg-[var(--admin-gold-bg-subtle)] text-[var(--admin-gold)]",
+                  level === 2 && "bg-[var(--admin-gold-bg)] text-[var(--admin-gold)]",
+                  level === 3 && "bg-[var(--admin-gold-bg-strong)] text-[#171717]",
+                  level === 4 && "bg-[var(--admin-gold-vivid)] text-[#171717]"
                 )}
               >
                 {format(parseISO(day.date), "d")}
@@ -81,10 +81,10 @@ export default function MonthHeatmap({ days }: MonthHeatmapProps) {
               className={cn(
                 "size-3 rounded-sm",
                 l === 0 && "bg-[var(--admin-heatmap-0)]",
-                l === 1 && "bg-[#ffea00]/15",
-                l === 2 && "bg-[#ffea00]/30",
-                l === 3 && "bg-[#ffea00]/55",
-                l === 4 && "bg-[#ffea00]"
+                l === 1 && "bg-[var(--admin-gold-bg-subtle)]",
+                l === 2 && "bg-[var(--admin-gold-bg)]",
+                l === 3 && "bg-[var(--admin-gold-bg-strong)]",
+                l === 4 && "bg-[var(--admin-gold-vivid)]"
               )}
             />
           ))}

@@ -110,7 +110,11 @@ function sumForMonth(entries: EarningEntry[], date: Date) {
   return sumMoneyForMonth(entries, date)
 }
 
-function sumClientsForMonth(entries: EarningEntry[], date: Date) {
+export function sumEarningsForMonth(entries: EarningEntry[], date: Date) {
+  return sumForMonth(entries, date)
+}
+
+export function sumClientsForMonth(entries: EarningEntry[], date: Date) {
   return entries
     .filter((e) => isSameMonth(new Date(e.createdAt), date))
     .reduce((acc, e) => acc + clientsOf(e), 0)

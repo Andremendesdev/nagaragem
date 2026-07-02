@@ -39,7 +39,7 @@ export default function AdminVisits() {
       <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <div className="mb-2 flex items-center gap-2">
-            <BarChart3 className="size-5 text-[#ffea00]" />
+            <BarChart3 className="size-5 text-[var(--admin-gold)]" />
             <h1 className="text-2xl font-bold text-[var(--admin-text)]">Visitas</h1>
           </div>
           <p className="text-sm text-[var(--admin-text-faint)]">
@@ -50,7 +50,7 @@ export default function AdminVisits() {
           type="button"
           onClick={() => refresh()}
           disabled={loading}
-          className="inline-flex items-center gap-2 self-start rounded-lg border border-[var(--admin-border)] px-4 py-2 text-sm text-[var(--admin-text-dim)] transition-colors hover:border-[#ffea00]/40 hover:text-[#ffea00] disabled:opacity-50"
+          className="inline-flex items-center gap-2 self-start rounded-lg border border-[var(--admin-border)] px-4 py-2 text-sm text-[var(--admin-text-dim)] transition-colors hover:border-[var(--admin-gold-border)] hover:text-[var(--admin-gold)] disabled:opacity-50"
         >
           <RefreshCw className={`size-4 ${loading ? "animate-spin" : ""}`} />
           Atualizar
@@ -69,15 +69,15 @@ export default function AdminVisits() {
             <p>Configure no Netlify (ou `.env.local`):</p>
             <ul className="list-inside list-disc space-y-1 text-xs text-[var(--admin-text-faint)]">
               <li>
-                <code className="text-[#ffea00]">GA4_PROPERTY_ID</code> — ID numérico da propriedade (Admin → Detalhes da propriedade)
+                <code className="text-[var(--admin-gold)]">GA4_PROPERTY_ID</code> — ID numérico da propriedade (Admin → Detalhes da propriedade)
               </li>
               <li>
-                <code className="text-[#ffea00]">GA4_SERVICE_ACCOUNT_JSON</code> — JSON da service account em uma linha (Leitor no GA4)
+                <code className="text-[var(--admin-gold)]">GA4_SERVICE_ACCOUNT_JSON</code> — JSON da service account em uma linha (Leitor no GA4)
               </li>
               <li>
-                Ou <code className="text-[#ffea00]">GA4_CLIENT_EMAIL</code> +{" "}
-                <code className="text-[#ffea00]">GA4_PRIVATE_KEY</code> — chave com{" "}
-                <code className="text-[#ffea00]">\n</code> nas quebras (recomendado no Netlify)
+                Ou <code className="text-[var(--admin-gold)]">GA4_CLIENT_EMAIL</code> +{" "}
+                <code className="text-[var(--admin-gold)]">GA4_PRIVATE_KEY</code> — chave com{" "}
+                <code className="text-[var(--admin-gold)]">\n</code> nas quebras (recomendado no Netlify)
               </li>
             </ul>
           </div>

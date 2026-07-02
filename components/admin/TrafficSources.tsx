@@ -8,7 +8,7 @@ type TrafficSourcesProps = {
 }
 
 const SOURCE_COLORS: Record<string, string> = {
-  Google: "#ffea00",
+  Google: "#d4b800",
   Direto: "#60a5fa",
   Instagram: "#f472b6",
   Outros: "#666",
@@ -40,7 +40,7 @@ export default function TrafficSources({ sources }: TrafficSourcesProps) {
               return (
                 <div key={source.name}>
                   <div className="mb-2 flex items-center justify-between gap-3">
-                    <span className="text-sm font-medium text-[#ccc]">
+                    <span className="text-sm font-medium text-[var(--admin-text-dim)]">
                       {source.name}
                     </span>
                     <div className="text-right">

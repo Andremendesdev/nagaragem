@@ -23,9 +23,9 @@ const variantStyles: Record<Variant, { card: string; value: string; bar: string 
     bar: "bg-[var(--admin-border-muted)]",
   },
   gold: {
-    card: "border-[#ffea00]/30 bg-gradient-to-br from-[var(--admin-surface)] to-[#fffbeb] hover:border-[#ffea00]/50",
-    value: "text-[#ffea00]",
-    bar: "bg-[#ffea00]",
+    card: "border-[var(--admin-gold-border)] bg-gradient-to-br from-[var(--admin-surface)] to-[#fffbeb] hover:border-[var(--admin-gold-border)]",
+    value: "text-[var(--admin-gold)]",
+    bar: "bg-[var(--admin-gold-vivid)]",
   },
   profit: {
     card: "border-emerald-500/20 bg-gradient-to-br from-[var(--admin-surface)] to-[#ecfdf5] hover:border-emerald-500/40",

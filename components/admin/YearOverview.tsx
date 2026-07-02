@@ -9,7 +9,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts"
-import { format } from "date-fns"
+import { format, startOfMonth, subMonths } from "date-fns"
 import { ptBR } from "date-fns/locale"
 import { GitCompare, X } from "lucide-react"
 import {
@@ -19,26 +19,50 @@ import {
   type ChartConfig,
 } from "@/components/ui/chart"
 import { formatCurrency, formatPercent } from "@/lib/admin/format"
+import { sumEarningsForMonth } from "@/lib/admin/stats"
+import type { EarningEntry } from "@/lib/admin/types"
 import { cn } from "@/lib/utils"
 
 const chartConfig = {
   total: {
     label: "Mês",
-    color: "#ffea00",
+    color: "#d4b800",
   },
 } satisfies ChartConfig
 
-const COMPARE_COLORS = ["#ffea00", "#60a5fa", "#34d399", "#f472b6", "#fb923c", "#a78bfa"]
+const COMPARE_COLORS = ["#d4b800", "#2563eb", "#059669", "#db2777", "#ea580c", "#7c3aed"]
 
 type MonthPoint = { month: string; total: number; index: number }
 
 type YearOverviewProps = {
   data: { month: string; total: number }[]
   yearTotal: number
+  entries: EarningEntry[]
 }
 
 function buildMonthPoints(data: YearOverviewProps["data"]): MonthPoint[] {
   return data.map((point, index) => ({ ...point, index }))
+}
+
+function monthKey(date: Date) {
+  return format(date, "yyyy-MM")
+}
+
+function monthKeyFromIndex(year: number, index: number) {
+  return format(new Date(year, index, 1), "yyyy-MM")
+}
+
+function parseMonthKey(key: string) {
+  const [y, m] = key.split("-").map(Number)
+  return new Date(y, m - 1, 1)
+}
+
+function labelForMonthKey(key: string) {
+  return format(parseMonthKey(key), "MMM yyyy", { locale: ptBR })
+}
+
+function sortMonthKeys(keys: string[]) {
+  return [...keys].sort()
 }
 
 function percentChange(from: number, to: number) {
@@ -46,14 +70,14 @@ function percentChange(from: number, to: number) {
   return ((to - from) / from) * 100
 }
 
-export default function YearOverview({ data, yearTotal }: YearOverviewProps) {
+export default function YearOverview({ data, yearTotal, entries }: YearOverviewProps) {
   const currentMonth = new Date().getMonth()
   const year = new Date().getFullYear()
-  const [selectedMonths, setSelectedMonths] = useState<number[]>([])
+  const [selectedMonthKeys, setSelectedMonthKeys] = useState<string[]>([])
 
   const months = useMemo(() => buildMonthPoints(data), [data])
   const hasData = months.some((d) => d.total > 0)
-  const hasSelection = selectedMonths.length > 0
+  const hasSelection = selectedMonthKeys.length > 0
 
   const monthLabels = useMemo(
     () =>
@@ -64,35 +88,37 @@ export default function YearOverview({ data, yearTotal }: YearOverviewProps) {
   )
 
   function toggleMonth(index: number) {
-    setSelectedMonths((prev) =>
-      prev.includes(index)
-        ? prev.filter((m) => m !== index)
-        : [...prev, index].sort((a, b) => a - b)
+    const key = monthKeyFromIndex(year, index)
+    setSelectedMonthKeys((prev) =>
+      prev.includes(key)
+        ? prev.filter((k) => k !== key)
+        : sortMonthKeys([...prev, key])
     )
   }
 
   function selectCurrentMonth() {
-    setSelectedMonths([currentMonth])
+    setSelectedMonthKeys([monthKey(startOfMonth(new Date()))])
   }
 
   function selectLastThreeMonths() {
-    const indices = Array.from({ length: 3 }, (_, i) =>
-      Math.max(0, currentMonth - 2 + i)
+    const today = new Date()
+    const keys = Array.from({ length: 3 }, (_, i) =>
+      monthKey(startOfMonth(subMonths(today, 2 - i)))
     )
-    setSelectedMonths([...new Set(indices)].sort((a, b) => a - b))
+    setSelectedMonthKeys(keys)
   }
 
   function clearSelection() {
-    setSelectedMonths([])
+    setSelectedMonthKeys([])
   }
 
   const comparison = useMemo(() => {
-    if (selectedMonths.length < 2) return null
+    if (selectedMonthKeys.length < 2) return null
 
-    const points = selectedMonths.map((index) => ({
-      index,
-      label: monthLabels[index],
-      total: months[index]?.total ?? 0,
+    const points = selectedMonthKeys.map((key) => ({
+      key,
+      label: labelForMonthKey(key),
+      total: sumEarningsForMonth(entries, parseMonthKey(key)),
     }))
 
     const totals = points.map((p) => p.total)
@@ -103,17 +129,23 @@ export default function YearOverview({ data, yearTotal }: YearOverviewProps) {
     const worst = points.find((p) => p.total === min)!
 
     return { points, max, min, avg, best, worst }
-  }, [selectedMonths, months, monthLabels])
+  }, [selectedMonthKeys, entries])
+
+  const hasOffChartSelection = selectedMonthKeys.some(
+    (key) => parseMonthKey(key).getFullYear() !== year
+  )
 
   function barOpacity(index: number) {
-    if (!hasSelection) return index === currentMonth ? 1 : 0.35
-    return selectedMonths.includes(index) ? 1 : 0.12
+    const key = monthKeyFromIndex(year, index)
+    if (!hasSelection) return index === currentMonth ? 1 : 0.55
+    return selectedMonthKeys.includes(key) ? 1 : 0.2
   }
 
   function barColor(index: number) {
-    if (!hasSelection) return "#ffea00"
-    const pos = selectedMonths.indexOf(index)
-    if (pos === -1) return "#ffea00"
+    const key = monthKeyFromIndex(year, index)
+    if (!hasSelection) return "#d4b800"
+    const pos = selectedMonthKeys.indexOf(key)
+    if (pos === -1) return "#d4b800"
     return COMPARE_COLORS[pos % COMPARE_COLORS.length]
   }
 
@@ -129,7 +161,7 @@ export default function YearOverview({ data, yearTotal }: YearOverviewProps) {
           </div>
           <div className="text-right">
             <p className="text-xs text-[var(--admin-text-faint)]">Total {year}</p>
-            <p className="text-xl font-bold text-[#ffea00]">
+            <p className="text-xl font-bold text-[var(--admin-gold)]">
               {formatCurrency(yearTotal)}
             </p>
           </div>
@@ -141,14 +173,14 @@ export default function YearOverview({ data, yearTotal }: YearOverviewProps) {
           <button
             type="button"
             onClick={selectCurrentMonth}
-            className="rounded-lg border border-[var(--admin-border)] bg-[var(--admin-bg)] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-[var(--admin-text-dim)] transition-colors hover:border-[#ffea00]/40 hover:text-[#ffea00]"
+            className="rounded-lg border border-[var(--admin-border)] bg-[var(--admin-bg)] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-[var(--admin-text-dim)] transition-colors hover:border-[var(--admin-gold-border)] hover:text-[var(--admin-gold)]"
           >
             Este mês
           </button>
           <button
             type="button"
             onClick={selectLastThreeMonths}
-            className="rounded-lg border border-[var(--admin-border)] bg-[var(--admin-bg)] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-[var(--admin-text-dim)] transition-colors hover:border-[#ffea00]/40 hover:text-[#ffea00]"
+            className="rounded-lg border border-[var(--admin-border)] bg-[var(--admin-bg)] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-[var(--admin-text-dim)] transition-colors hover:border-[var(--admin-gold-border)] hover:text-[var(--admin-gold)]"
           >
             Últimos 3 meses
           </button>
@@ -166,7 +198,8 @@ export default function YearOverview({ data, yearTotal }: YearOverviewProps) {
 
         <div className="grid grid-cols-4 gap-1.5 sm:grid-cols-6">
           {monthLabels.map((label, index) => {
-            const selected = selectedMonths.includes(index)
+            const key = monthKeyFromIndex(year, index)
+            const selected = selectedMonthKeys.includes(key)
             const isCurrent = index === currentMonth
 
             return (
@@ -177,9 +210,9 @@ export default function YearOverview({ data, yearTotal }: YearOverviewProps) {
                 className={cn(
                   "rounded-lg border px-2 py-2 text-center text-xs font-semibold capitalize transition-all",
                   selected
-                    ? "border-[#ffea00]/60 bg-[#ffea00]/10 text-[#ffea00]"
-                    : "border-[var(--admin-border)] bg-[var(--admin-input)] text-[var(--admin-text-faint)] hover:border-[#ffea00]/30 hover:text-[var(--admin-text)]",
-                  isCurrent && !selected && "ring-1 ring-[#ffea00]/25"
+                    ? "border border-[var(--admin-gold-border-muted)] bg-[var(--admin-gold-bg)] text-[var(--admin-gold)]"
+                    : "border-[var(--admin-border)] bg-[var(--admin-input)] text-[var(--admin-text-faint)] hover:border-[var(--admin-gold-border)] hover:text-[var(--admin-text)]",
+                  isCurrent && !selected && "ring-1 ring-[var(--admin-gold-border-muted)]"
                 )}
               >
                 {label.replace(".", "")}
@@ -187,12 +220,19 @@ export default function YearOverview({ data, yearTotal }: YearOverviewProps) {
             )
           })}
         </div>
+
+        {hasOffChartSelection && (
+          <p className="mt-3 text-[11px] text-[var(--admin-text-faint)]">
+            Meses de{" "}
+            {year - 1} incluídos na comparação · o gráfico mostra só {year}
+          </p>
+        )}
       </div>
 
       {comparison && (
         <div className="border-b border-[var(--admin-border)] bg-[var(--admin-bg)]/40 px-6 py-4">
           <div className="mb-3 flex items-center gap-2">
-            <GitCompare className="size-4 text-[#ffea00]" />
+            <GitCompare className="size-4 text-[var(--admin-gold)]" />
             <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[var(--admin-text-faint)]">
               Comparação ({comparison.points.length} meses)
             </p>
@@ -207,7 +247,7 @@ export default function YearOverview({ data, yearTotal }: YearOverviewProps) {
             <div className="rounded-xl border border-[var(--admin-border)] bg-[var(--admin-input)] px-3 py-2">
               <p className="text-[10px] uppercase tracking-wide text-[var(--admin-text-faint)]">Média</p>
               <p className="text-sm font-bold text-[var(--admin-text)]">Selecionados</p>
-              <p className="text-sm font-semibold text-[#ffea00]">{formatCurrency(comparison.avg)}</p>
+              <p className="text-sm font-semibold text-[var(--admin-gold)]">{formatCurrency(comparison.avg)}</p>
             </div>
             <div className="rounded-xl border border-red-500/20 bg-red-500/5 px-3 py-2">
               <p className="text-[10px] uppercase tracking-wide text-red-400/80">Menor</p>
@@ -227,7 +267,7 @@ export default function YearOverview({ data, yearTotal }: YearOverviewProps) {
 
               return (
                 <div
-                  key={point.index}
+                  key={point.key}
                   className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-[var(--admin-border)] bg-[var(--admin-surface)] px-3 py-2"
                 >
                   <div className="flex items-center gap-2">
@@ -240,7 +280,7 @@ export default function YearOverview({ data, yearTotal }: YearOverviewProps) {
                     </span>
                   </div>
                   <div className="flex flex-wrap items-center gap-3 text-xs">
-                    <span className="font-bold text-[#ffea00]">
+                    <span className="font-bold text-[var(--admin-gold)]">
                       {formatCurrency(point.total)}
                     </span>
                     <span
@@ -264,14 +304,16 @@ export default function YearOverview({ data, yearTotal }: YearOverviewProps) {
         </div>
       )}
 
-      {hasSelection && selectedMonths.length === 1 && (
+      {hasSelection && selectedMonthKeys.length === 1 && (
         <div className="border-b border-[var(--admin-border)] bg-[var(--admin-bg)]/40 px-6 py-3">
           <p className="text-xs text-[var(--admin-text-faint)]">
             <span className="font-semibold capitalize text-[var(--admin-text)]">
-              {monthLabels[selectedMonths[0]].replace(".", "")}
+              {labelForMonthKey(selectedMonthKeys[0]).replace(".", "")}
             </span>
             {" · "}
-            {formatCurrency(months[selectedMonths[0]]?.total ?? 0)}
+            {formatCurrency(
+              sumEarningsForMonth(entries, parseMonthKey(selectedMonthKeys[0]))
+            )}
             {" · "}
             Selecione mais um mês para comparar
           </p>

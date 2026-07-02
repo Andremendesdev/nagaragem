@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import {
   Flame,
   Lightbulb,
@@ -7,14 +8,15 @@ import {
   TrendingUp,
   Trophy,
   Zap,
-  CalendarDays,
-  Scissors,
   Star,
   Users,
+  Scissors,
 } from "lucide-react"
 import type { DashboardStats } from "@/lib/admin/stats"
+import type { EarningEntry } from "@/lib/admin/types"
 import { formatCurrency, formatShortDate } from "@/lib/admin/format"
 import { MiniStat } from "./StatCard"
+import ClientsMonthStat from "./ClientsMonthStat"
 import { Progress } from "@/components/ui/progress"
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
@@ -22,6 +24,7 @@ import { parseISO } from "date-fns"
 
 type InsightsPanelProps = {
   stats: DashboardStats
+  entries: EarningEntry[]
   monthlyGoal: number
   onGoalChange: (goal: number) => void
 }
@@ -43,9 +46,9 @@ const moodConfig = {
   },
   neutral: {
     icon: Zap,
-    color: "text-[#ffea00]",
-    bg: "bg-[#ffea00]/8 border-[#ffea00]/15",
-    bar: "bg-[#ffea00]",
+    color: "text-[var(--admin-gold)]",
+    bg: "bg-[var(--admin-gold-bg-subtle)] border-[var(--admin-gold-border-muted)]",
+    bar: "bg-[var(--admin-gold-vivid)]",
     label: "Ritmo estável",
   },
   slow: {
@@ -59,6 +62,7 @@ const moodConfig = {
 
 export default function InsightsPanel({
   stats,
+  entries,
   monthlyGoal,
   onGoalChange,
 }: InsightsPanelProps) {
@@ -66,6 +70,11 @@ export default function InsightsPanel({
   const MoodIcon = mood.icon
   const goalPercent = Math.min(stats.goalProgress, 100)
   const overGoal = stats.goalProgress > 100
+  const [goalDraft, setGoalDraft] = useState(String(monthlyGoal))
+
+  useEffect(() => {
+    setGoalDraft(String(monthlyGoal))
+  }, [monthlyGoal])
 
   return (
     <div className="space-y-4">
@@ -90,7 +99,7 @@ export default function InsightsPanel({
       <div className="overflow-hidden rounded-2xl border border-[var(--admin-border-muted)] bg-[var(--admin-surface)]">
         <div className="border-b border-[var(--admin-track)] px-5 py-4">
           <div className="flex items-center gap-2">
-            <Target className="size-4 text-[#ffea00]" />
+            <Target className="size-4 text-[var(--admin-gold)]" />
             <h2 className="text-sm font-bold text-[var(--admin-text)]">Meta mensal</h2>
           </div>
         </div>
@@ -98,7 +107,7 @@ export default function InsightsPanel({
         <div className="p-5">
           <div className="mb-4 flex items-end justify-between">
             <div>
-              <p className="text-2xl font-bold text-[#ffea00]">
+              <p className="text-2xl font-bold text-[var(--admin-gold)]">
                 {formatCurrency(stats.thisMonth)}
               </p>
               <p className="text-xs text-[var(--admin-text-faint)]">
@@ -136,12 +145,17 @@ export default function InsightsPanel({
               type="number"
               min="0"
               step="100"
-              defaultValue={monthlyGoal}
-              onBlur={(e) => {
-                const val = Number(e.target.value)
-                if (val > 0) onGoalChange(val)
+              value={goalDraft}
+              onChange={(e) => setGoalDraft(e.target.value)}
+              onBlur={() => {
+                const val = Number(goalDraft)
+                if (val > 0 && val !== monthlyGoal) {
+                  onGoalChange(val)
+                } else {
+                  setGoalDraft(String(monthlyGoal))
+                }
               }}
-              className="h-9 border-[var(--admin-border)] bg-[var(--admin-bg)] text-sm text-[var(--admin-text)] focus:border-[#ffea00]/40"
+              className="h-9 border-[var(--admin-border)] bg-[var(--admin-bg)] text-sm text-[var(--admin-text)] focus:border-[var(--admin-gold-border)]"
             />
           </div>
         </div>
@@ -173,19 +187,14 @@ export default function InsightsPanel({
           value={String(stats.entriesToday)}
           hint="Clientes atendidos hoje"
         />
-        <MiniStat
-          icon={CalendarDays}
-          label="Clientes no mês"
-          value={String(stats.clientsThisMonth)}
-          hint="Total de atendimentos"
-        />
+        <ClientsMonthStat entries={entries} />
       </div>
 
       {/* personal record */}
       {stats.personalRecord > 0 && (
-        <div className="flex items-center gap-4 rounded-2xl border border-[#ffea00]/15 bg-gradient-to-r from-[#ffea00]/5 to-transparent p-5">
-          <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-[#ffea00]/10">
-            <Trophy className="size-6 text-[#ffea00]" />
+        <div className="flex items-center gap-4 rounded-2xl border border-[var(--admin-gold-border-muted)] bg-gradient-to-r from-[var(--admin-gold-bg-subtle)] to-transparent p-5">
+          <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-[var(--admin-gold-bg)]">
+            <Trophy className="size-6 text-[var(--admin-gold)]" />
           </div>
           <div>
             <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--admin-text-faint)]">

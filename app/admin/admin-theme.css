@@ -13,10 +13,73 @@
   --admin-skeleton-muted: #f0f0f0;
   --admin-heatmap-0: #f5f5f5;
   --admin-text: #171717;
-  --admin-text-faint: #737373;
-  --admin-text-muted: #a3a3a3;
-  --admin-text-dim: #525252;
+  --admin-text-faint: #525252;
+  --admin-text-muted: #6b6b6b;
+  --admin-text-dim: #404040;
   --admin-chart-grid: #e5e5e5;
-  --admin-chart-tick: #737373;
-  --admin-chart-tick-muted: #525252;
+  --admin-chart-tick: #525252;
+  --admin-chart-tick-muted: #404040;
+
+  /* Dourado — legível no fundo branco */
+  --admin-gold: #a67c00;
+  --admin-gold-vivid: #ffea00;
+  --admin-gold-bg-subtle: #fef9c3;
+  --admin-gold-bg: #fef08a;
+  --admin-gold-bg-strong: #fde047;
+  --admin-gold-border: #e6c200;
+  --admin-gold-border-muted: #d4b800;
+}
+
+/* Calendário — contraste no tema claro */
+.admin-theme .admin-calendar {
+  --cell-size: 2.25rem;
+}
+
+.admin-theme .admin-calendar .rdp-weekday {
+  color: var(--admin-text-dim);
+  font-weight: 600;
+  opacity: 1;
+}
+
+.admin-theme .admin-calendar .rdp-caption_label {
+  color: var(--admin-text);
+  font-weight: 600;
+}
+
+.admin-theme .admin-calendar .rdp-day button {
+  color: var(--admin-text);
+}
+
+.admin-theme .admin-calendar .rdp-day.rdp-outside button {
+  color: var(--admin-text-muted);
+  opacity: 0.65;
+}
+
+.admin-theme .admin-calendar .rdp-day.rdp-disabled button {
+  color: var(--admin-text-muted);
+  opacity: 0.4;
+}
+
+.admin-theme .admin-calendar .rdp-day.rdp-today:not(.rdp-selected) button {
+  background: var(--admin-gold-bg);
+  color: var(--admin-gold);
+  font-weight: 700;
+}
+
+.admin-theme .admin-calendar .rdp-day.rdp-selected button,
+.admin-theme .admin-calendar button[data-selected-single="true"] {
+  background: var(--admin-gold) !important;
+  color: #ffffff !important;
+  font-weight: 700;
+}
+
+.admin-theme .admin-calendar .rdp-button_previous,
+.admin-theme .admin-calendar .rdp-button_next {
+  color: var(--admin-text);
+}
+
+.admin-theme .admin-calendar .rdp-button_previous:hover,
+.admin-theme .admin-calendar .rdp-button_next:hover {
+  background: var(--admin-hover);
+  color: var(--admin-text);
 }

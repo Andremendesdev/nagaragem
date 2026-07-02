@@ -102,7 +102,7 @@ export default function AddExpensePanel({ onAdd }: AddExpensePanelProps) {
                   if (amountError) setAmountError("")
                 }}
                 className={cn(
-                  "h-12 border-[var(--admin-border-muted)] bg-[var(--admin-input)] pl-9 text-lg font-bold text-[var(--admin-text)] placeholder:text-[var(--admin-text-muted)] focus:border-red-500/50",
+                  "h-12 border-[var(--admin-border-muted)] bg-[var(--admin-input)] pl-9 text-lg font-bold text-[var(--admin-text)] placeholder:text-[var(--admin-text-faint)] focus:border-red-500/50",
                   amountError && "border-red-500/50"
                 )}
               />
@@ -144,7 +144,7 @@ export default function AddExpensePanel({ onAdd }: AddExpensePanelProps) {
               placeholder="Conta de luz, pomada fixadora..."
               value={note}
               onChange={(e) => setNote(e.target.value)}
-              className="border-[var(--admin-border-muted)] bg-[var(--admin-input)] text-[var(--admin-text)] placeholder:text-[var(--admin-text-muted)] focus:border-red-500/50"
+              className="border-[var(--admin-border-muted)] bg-[var(--admin-input)] text-[var(--admin-text)] placeholder:text-[var(--admin-text-faint)] focus:border-red-500/50"
             />
           </div>
 

@@ -51,7 +51,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
 
             <Link
               href="/"
-              className="flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm text-[var(--admin-text-faint)] transition-colors hover:text-[#ffea00]"
+              className="flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm text-[var(--admin-text-faint)] transition-colors hover:text-[var(--admin-gold)]"
             >
               <ArrowLeft className="size-4" />
               <span className="hidden sm:inline">Voltar ao site</span>

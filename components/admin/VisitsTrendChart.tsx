@@ -20,7 +20,7 @@ import type { DailyPoint } from "@/lib/analytics/types"
 const chartConfig = {
   visits: {
     label: "Visitas",
-    color: "#ffea00",
+    color: "#d4b800",
   },
   leads: {
     label: "Leads",
@@ -52,8 +52,8 @@ export default function VisitsTrendChart({ data }: VisitsTrendChartProps) {
             <AreaChart data={data} margin={{ top: 8, right: 8, left: -16, bottom: 0 }}>
               <defs>
                 <linearGradient id="visitsGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#ffea00" stopOpacity={0.2} />
-                  <stop offset="95%" stopColor="#ffea00" stopOpacity={0.02} />
+                  <stop offset="5%" stopColor="#d4b800" stopOpacity={0.35} />
+                  <stop offset="95%" stopColor="#d4b800" stopOpacity={0.05} />
                 </linearGradient>
                 <linearGradient id="leadsGradient" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="5%" stopColor="#34d399" stopOpacity={0.2} />
@@ -79,7 +79,7 @@ export default function VisitsTrendChart({ data }: VisitsTrendChartProps) {
               <Area
                 type="monotone"
                 dataKey="visits"
-                stroke="#ffea00"
+                stroke="#d4b800"
                 strokeWidth={2}
                 fill="url(#visitsGradient)"
                 dot={false}

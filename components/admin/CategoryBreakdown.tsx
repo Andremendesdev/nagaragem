@@ -35,7 +35,7 @@ export default function CategoryBreakdown({
                 <div className="mb-2 flex items-center justify-between gap-3">
                   <div className="flex items-center gap-2 min-w-0">
                     <span className="shrink-0">{cat.emoji}</span>
-                    <span className="truncate text-sm text-[#ccc]">{cat.label}</span>
+                    <span className="truncate text-sm text-[var(--admin-text-dim)]">{cat.label}</span>
                     <span className="shrink-0 rounded-full bg-black/5 px-1.5 py-0.5 text-[10px] text-[var(--admin-text-faint)]">
                       {cat.count} {cat.count === 1 ? "cliente" : "clientes"}
                     </span>
@@ -53,10 +53,10 @@ export default function CategoryBreakdown({
                       width: `${cat.percent}%`,
                       background:
                         idx === 0
-                          ? "#ffea00"
+                          ? "#d4b800"
                           : idx === 1
-                          ? "#ffea0099"
-                          : "#ffea0055",
+                          ? "#c9a800"
+                          : "#e6c200",
                     }}
                   />
                 </div>

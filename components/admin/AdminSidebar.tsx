@@ -42,8 +42,8 @@ export default function AdminSidebar({ onNavigate, className }: AdminSidebarProp
     >
       <div className="border-b border-[var(--admin-border-subtle)] px-5 py-5">
         <div className="flex items-center gap-3">
-          <div className="flex size-10 items-center justify-center rounded-xl bg-[#ffea00]/15">
-            <Scissors className="size-5 text-[#ffea00]" />
+          <div className="flex size-10 items-center justify-center rounded-xl bg-[var(--admin-gold-bg)]">
+            <Scissors className="size-5 text-[var(--admin-gold)]" />
           </div>
           <div>
             <p className="text-sm font-bold text-[var(--admin-text)]">Na Garage</p>
@@ -70,11 +70,11 @@ export default function AdminSidebar({ onNavigate, className }: AdminSidebarProp
               className={cn(
                 "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all",
                 active
-                  ? "bg-[#ffea00]/10 text-[#ffea00]"
+                  ? "border border-[var(--admin-gold-border-muted)] bg-[var(--admin-gold-bg)] text-[var(--admin-gold)]"
                   : "text-[var(--admin-text-dim)] hover:bg-[var(--admin-hover)] hover:text-[var(--admin-text)]"
               )}
             >
-              <Icon className={cn("size-4 shrink-0", active && "text-[#ffea00]")} />
+              <Icon className={cn("size-4 shrink-0", active && "text-[var(--admin-gold)]")} />
               {item.label}
             </Link>
           )

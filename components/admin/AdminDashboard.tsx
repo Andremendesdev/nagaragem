@@ -77,8 +77,8 @@ export default function AdminDashboard() {
     return (
       <div className="flex min-h-[60vh] items-center justify-center">
         <div className="flex flex-col items-center gap-4 text-center">
-          <div className="flex size-16 items-center justify-center rounded-2xl bg-[#ffea00]/10">
-            <Scissors className="size-8 animate-pulse text-[#ffea00]" />
+          <div className="flex size-16 items-center justify-center rounded-2xl bg-[var(--admin-gold-bg)]">
+            <Scissors className="size-8 animate-pulse text-[var(--admin-gold)]" />
           </div>
           <div>
             <p className="font-semibold text-[var(--admin-text)]">Carregando painel...</p>
@@ -100,7 +100,7 @@ export default function AdminDashboard() {
             <p className="text-sm text-[var(--admin-text-dim)]">{error}</p>
             <div className="mt-4 rounded-xl bg-[var(--admin-input)] px-4 py-3 text-xs text-[var(--admin-text-faint)]">
               Execute o SQL em{" "}
-              <code className="text-[#ffea00]">supabase/migrations/001_admin.sql</code>{" "}
+              <code className="text-[var(--admin-gold)]">supabase/migrations/001_admin.sql</code>{" "}
               no SQL Editor do Supabase.
             </div>
           </div>
@@ -189,6 +189,7 @@ export default function AdminDashboard() {
             <div className="space-y-6 lg:col-span-1">
               <InsightsPanel
                 stats={stats}
+                entries={entries}
                 monthlyGoal={settings.monthlyGoal}
                 onGoalChange={updateGoal}
               />
@@ -205,7 +206,11 @@ export default function AdminDashboard() {
                 <MonthHeatmap days={stats.monthDays} />
               </div>
 
-              <YearOverview data={yearMonths} yearTotal={stats.thisYear} />
+              <YearOverview
+                data={yearMonths}
+                yearTotal={stats.thisYear}
+                entries={entries}
+              />
             </div>
           </div>
         )}

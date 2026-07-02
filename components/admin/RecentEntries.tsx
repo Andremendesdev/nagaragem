@@ -130,7 +130,7 @@ export default function RecentEntries({ entries, onRemove }: RecentEntriesProps)
                 placeholder="Buscar por observação..."
                 value={search}
                 onChange={(e) => { setSearch(e.target.value); setPage(1) }}
-                className="h-9 w-full rounded-lg border border-[var(--admin-border)] bg-[var(--admin-input)] pl-9 pr-3 text-sm text-[var(--admin-text)] placeholder:text-[var(--admin-text-muted)] outline-none focus:border-[#ffea00]/40"
+                className="h-9 w-full rounded-lg border border-[var(--admin-border)] bg-[var(--admin-input)] pl-9 pr-3 text-sm text-[var(--admin-text)] placeholder:text-[var(--admin-text-faint)] outline-none focus:border-[var(--admin-gold-border)]"
               />
             </div>
 
@@ -143,7 +143,7 @@ export default function RecentEntries({ entries, onRemove }: RecentEntriesProps)
                   className={cn(
                     "rounded-lg px-3 py-1.5 text-xs font-semibold transition-all",
                     period === p.value && !selectedDay
-                      ? "bg-[#ffea00]/15 text-[#ffea00]"
+                      ? "border border-[var(--admin-gold-border-muted)] bg-[var(--admin-gold-bg)] text-[var(--admin-gold)]"
                       : "text-[var(--admin-text-faint)] hover:text-[var(--admin-text-dim)]"
                   )}
                 >
@@ -158,7 +158,7 @@ export default function RecentEntries({ entries, onRemove }: RecentEntriesProps)
               <select
                 value={category}
                 onChange={(e) => { setCategory(e.target.value); setPage(1) }}
-                className="h-9 rounded-lg border border-[var(--admin-border)] bg-[var(--admin-input)] pr-2 pl-2 text-xs text-[var(--admin-text-dim)] outline-none focus:border-[#ffea00]/40 cursor-pointer"
+                className="h-9 rounded-lg border border-[var(--admin-border)] bg-[var(--admin-input)] pr-2 pl-2 text-xs text-[var(--admin-text-dim)] outline-none focus:border-[var(--admin-gold-border)] cursor-pointer"
               >
                 <option value="all">Todas categorias</option>
                 {EARNING_CATEGORIES.map((c) => (
@@ -188,7 +188,7 @@ export default function RecentEntries({ entries, onRemove }: RecentEntriesProps)
                 <button
                   type="button"
                   onClick={clearSelectedDay}
-                  className="rounded-lg border border-[var(--admin-border)] px-3 py-2 text-xs font-semibold text-[var(--admin-text-dim)] transition-colors hover:border-[#ffea00]/40 hover:text-[#ffea00]"
+                  className="rounded-lg border border-[var(--admin-border)] px-3 py-2 text-xs font-semibold text-[var(--admin-text-dim)] transition-colors hover:border-[var(--admin-gold-border)] hover:text-[var(--admin-gold)]"
                 >
                   Ver todos os dias
                 </button>
@@ -205,7 +205,7 @@ export default function RecentEntries({ entries, onRemove }: RecentEntriesProps)
             {hasFilters ? "Nenhum resultado para esses filtros" : "Nenhum ganho registrado ainda"}
           </p>
           {hasFilters && (
-            <button onClick={resetFilters} className="text-xs text-[#ffea00] hover:underline">
+            <button onClick={resetFilters} className="text-xs text-[var(--admin-gold)] hover:underline">
               Limpar filtros
             </button>
           )}
@@ -235,11 +235,11 @@ export default function RecentEntries({ entries, onRemove }: RecentEntriesProps)
                   )}
                 >
                   <div className="flex items-center gap-3 min-w-0">
-                    <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-[#ffea00]/8 text-base">
+                    <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-[var(--admin-gold-bg-subtle)] text-base">
                       {cat?.emoji ?? "📌"}
                     </span>
                     <div className="min-w-0">
-                      <p className="text-sm font-semibold text-[#ffea00]">
+                      <p className="text-sm font-semibold text-[var(--admin-gold)]">
                         {formatCurrencyDetailed(entry.amount)}
                         <span className="ml-2 text-xs font-normal text-[var(--admin-text-faint)] sm:hidden">
                           · {clients} {clients === 1 ? "cliente" : "clientes"}
@@ -317,7 +317,7 @@ export default function RecentEntries({ entries, onRemove }: RecentEntriesProps)
                         className={cn(
                           "flex size-8 items-center justify-center rounded-lg text-xs font-semibold transition-all",
                           safePage === p
-                            ? "bg-[#ffea00]/15 text-[#ffea00]"
+                            ? "border border-[var(--admin-gold-border-muted)] bg-[var(--admin-gold-bg)] text-[var(--admin-gold)]"
                             : "border border-[var(--admin-border)] text-[var(--admin-text-faint)] hover:border-[var(--admin-border-muted)] hover:text-[var(--admin-text)]"
                         )}
                       >

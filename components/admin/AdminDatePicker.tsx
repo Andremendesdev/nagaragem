@@ -52,13 +52,13 @@ export default function AdminDatePicker({
           <button
             type="button"
             className={cn(
-              "flex h-12 flex-1 items-center gap-2 rounded-lg border bg-[var(--admin-input)] px-3 text-left text-sm transition-colors hover:border-[#ffea00]/40 focus:outline-none focus:border-[#ffea00]/50",
+              "flex h-12 flex-1 items-center gap-2 rounded-lg border bg-[var(--admin-input)] px-3 text-left text-sm transition-colors hover:border-[var(--admin-gold-border)] focus:outline-none focus:border-[var(--admin-gold-border)]",
               active
-                ? "border-[#ffea00]/40 text-[var(--admin-text)]"
-                : "border-[var(--admin-border-muted)] text-[var(--admin-text-dim)]"
+                ? "border-[var(--admin-gold-border)] text-[var(--admin-text)]"
+                : "border-[var(--admin-border-muted)] text-[var(--admin-text-faint)]"
             )}
           >
-            <CalendarIcon className="size-4 shrink-0 text-[var(--admin-text-faint)]" />
+            <CalendarIcon className="size-4 shrink-0 text-[var(--admin-text-dim)]" />
             <span className={cn("font-medium capitalize", !active && placeholder && "normal-case font-normal")}>
               {active || !placeholder
                 ? format(value, "dd MMM yyyy", { locale: ptBR })
@@ -77,7 +77,19 @@ export default function AdminDatePicker({
             disabled={{ after: maxDate }}
             defaultMonth={value}
             locale={ptBR}
-            className="rounded-lg"
+            className="admin-calendar rounded-lg"
+            classNames={{
+              weekday:
+                "text-[var(--admin-text-dim)] rounded-md flex-1 font-semibold text-[0.8rem] select-none",
+              caption_label: "select-none font-semibold text-[var(--admin-text)] text-sm",
+              outside: "text-[var(--admin-text-muted)] aria-selected:text-[var(--admin-text-muted)]",
+              disabled: "text-[var(--admin-text-muted)] opacity-40",
+              today: "rounded-md font-bold",
+              button_previous:
+                "text-[var(--admin-text)] hover:bg-[var(--admin-hover)] hover:text-[var(--admin-text)]",
+              button_next:
+                "text-[var(--admin-text)] hover:bg-[var(--admin-hover)] hover:text-[var(--admin-text)]",
+            }}
           />
         </PopoverContent>
       </Popover>
@@ -86,7 +98,7 @@ export default function AdminDatePicker({
         <button
           type="button"
           onClick={handleToday}
-          className="shrink-0 rounded-lg border border-[var(--admin-border)] bg-[var(--admin-bg)] px-3 text-xs font-semibold text-[var(--admin-text-dim)] transition-colors hover:border-[#ffea00]/40 hover:text-[#ffea00]"
+          className="shrink-0 rounded-lg border border-[var(--admin-border)] bg-[var(--admin-bg)] px-3 text-xs font-semibold text-[var(--admin-text-dim)] transition-colors hover:border-[var(--admin-gold-border)] hover:text-[var(--admin-gold)]"
         >
           Hoje
         </button>
