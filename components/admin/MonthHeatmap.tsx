@@ -39,7 +39,7 @@ export default function MonthHeatmap({ days }: MonthHeatmapProps) {
       <div className="p-6">
         <div className="mb-2 grid grid-cols-7 gap-1 text-center">
           {["D", "S", "T", "Q", "Q", "S", "S"].map((d, i) => (
-            <span key={`${d}-${i}`} className="text-[10px] font-semibold text-[var(--admin-text-muted)]">
+            <span key={`${d}-${i}`} className="text-[10px] font-semibold text-[var(--admin-text-dim)]">
               {d}
             </span>
           ))}
@@ -59,9 +59,9 @@ export default function MonthHeatmap({ days }: MonthHeatmapProps) {
                 className={cn(
                   "flex aspect-square items-center justify-center rounded-lg text-[10px] font-semibold transition-all",
                   isToday && "ring-1 ring-[var(--admin-gold-border)] ring-offset-1 ring-offset-[var(--admin-surface)]",
-                  level === 0 && "bg-[var(--admin-heatmap-0)] text-[var(--admin-border)]",
-                  level === 1 && "bg-[var(--admin-gold-bg-subtle)] text-[var(--admin-gold)]",
-                  level === 2 && "bg-[var(--admin-gold-bg)] text-[var(--admin-gold)]",
+                  level === 0 && "bg-[var(--admin-heatmap-0)] text-[var(--admin-text-dim)]",
+                  level === 1 && "bg-[var(--admin-gold-bg-subtle)] text-[var(--admin-text-dim)]",
+                  level === 2 && "bg-[var(--admin-gold-bg)] text-[#171717]",
                   level === 3 && "bg-[var(--admin-gold-bg-strong)] text-[#171717]",
                   level === 4 && "bg-[var(--admin-gold-vivid)] text-[#171717]"
                 )}
@@ -74,7 +74,7 @@ export default function MonthHeatmap({ days }: MonthHeatmapProps) {
 
         {/* legend */}
         <div className="mt-4 flex items-center justify-end gap-2">
-          <span className="text-[10px] text-[var(--admin-text-muted)]">menos</span>
+          <span className="text-[10px] text-[var(--admin-text-faint)]">menos</span>
           {[0, 1, 2, 3, 4].map((l) => (
             <div
               key={l}
@@ -88,7 +88,7 @@ export default function MonthHeatmap({ days }: MonthHeatmapProps) {
               )}
             />
           ))}
-          <span className="text-[10px] text-[var(--admin-text-muted)]">mais</span>
+          <span className="text-[10px] text-[var(--admin-text-faint)]">mais</span>
         </div>
       </div>
     </div>
