@@ -81,7 +81,7 @@ export default function ClientsMonthStat({ entries }: ClientsMonthStatProps) {
 
       <PopoverContent
         align="start"
-        className="w-72 border-[var(--admin-border-muted)] bg-[var(--admin-surface)] p-4"
+        className="admin-popover w-72 p-4 shadow-lg"
       >
         <p className="mb-3 text-xs font-semibold uppercase tracking-[0.15em] text-[var(--admin-text-faint)]">
           Selecionar mês

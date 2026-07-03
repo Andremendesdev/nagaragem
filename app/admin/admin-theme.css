@@ -1,5 +1,6 @@
 /* Tema admin — fundo branco */
-.admin-theme {
+.admin-theme,
+.admin-popover {
   --admin-bg: #ffffff;
   --admin-bg-elevated: #f8f8f8;
   --admin-surface: #ffffff;
@@ -30,56 +31,76 @@
   --admin-gold-border-muted: #d4b800;
 }
 
+/* Popovers Radix renderizam fora de .admin-theme (portal) */
+.admin-popover {
+  background-color: var(--admin-surface) !important;
+  color: var(--admin-text) !important;
+  border-color: var(--admin-border-muted) !important;
+}
+
 /* Calendário — contraste no tema claro */
-.admin-theme .admin-calendar {
+.admin-theme .admin-calendar,
+.admin-popover .admin-calendar {
   --cell-size: 2.25rem;
 }
 
-.admin-theme .admin-calendar .rdp-weekday {
+.admin-theme .admin-calendar .rdp-weekday,
+.admin-popover .admin-calendar .rdp-weekday {
   color: var(--admin-text-dim);
   font-weight: 600;
   opacity: 1;
 }
 
-.admin-theme .admin-calendar .rdp-caption_label {
+.admin-theme .admin-calendar .rdp-caption_label,
+.admin-popover .admin-calendar .rdp-caption_label {
   color: var(--admin-text);
   font-weight: 600;
 }
 
-.admin-theme .admin-calendar .rdp-day button {
+.admin-theme .admin-calendar .rdp-day button,
+.admin-popover .admin-calendar .rdp-day button {
   color: var(--admin-text);
 }
 
-.admin-theme .admin-calendar .rdp-day.rdp-outside button {
+.admin-theme .admin-calendar .rdp-day.rdp-outside button,
+.admin-popover .admin-calendar .rdp-day.rdp-outside button {
   color: var(--admin-text-muted);
   opacity: 0.65;
 }
 
-.admin-theme .admin-calendar .rdp-day.rdp-disabled button {
+.admin-theme .admin-calendar .rdp-day.rdp-disabled button,
+.admin-popover .admin-calendar .rdp-day.rdp-disabled button {
   color: var(--admin-text-muted);
   opacity: 0.4;
 }
 
-.admin-theme .admin-calendar .rdp-day.rdp-today:not(.rdp-selected) button {
+.admin-theme .admin-calendar .rdp-day.rdp-today:not(.rdp-selected) button,
+.admin-popover .admin-calendar .rdp-day.rdp-today:not(.rdp-selected) button {
   background: var(--admin-gold-bg);
   color: var(--admin-gold);
   font-weight: 700;
 }
 
 .admin-theme .admin-calendar .rdp-day.rdp-selected button,
-.admin-theme .admin-calendar button[data-selected-single="true"] {
+.admin-theme .admin-calendar button[data-selected-single="true"],
+.admin-popover .admin-calendar .rdp-day.rdp-selected button,
+.admin-popover .admin-calendar button[data-selected-single="true"] {
   background: var(--admin-gold) !important;
   color: #ffffff !important;
   font-weight: 700;
 }
 
 .admin-theme .admin-calendar .rdp-button_previous,
-.admin-theme .admin-calendar .rdp-button_next {
+.admin-theme .admin-calendar .rdp-button_next,
+.admin-popover .admin-calendar .rdp-button_previous,
+.admin-popover .admin-calendar .rdp-button_next {
   color: var(--admin-text);
 }
 
 .admin-theme .admin-calendar .rdp-button_previous:hover,
-.admin-theme .admin-calendar .rdp-button_next:hover {
+.admin-theme .admin-calendar .rdp-button_next:hover,
+.admin-popover .admin-calendar .rdp-button_previous:hover,
+.admin-popover .admin-calendar .rdp-button_next:hover {
   background: var(--admin-hover);
   color: var(--admin-text);
 }

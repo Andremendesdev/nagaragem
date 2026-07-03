@@ -67,7 +67,7 @@ export default function AdminDatePicker({
           </button>
         </PopoverTrigger>
         <PopoverContent
-          className="w-auto border-[var(--admin-border-muted)] bg-[var(--admin-surface)] p-0 text-[var(--admin-text)]"
+          className="admin-popover w-auto p-0 shadow-lg"
           align="start"
         >
           <Calendar
