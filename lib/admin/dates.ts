@@ -135,6 +135,10 @@ export function dayKeyFromDate(date: Date): string {
   return `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`
 }
 
+export function calendarPartsFromDate(date: Date): CalendarParts {
+  return calendarPartsInTimeZone(date, BUSINESS_TZ)
+}
+
 export function isEntryInMonth(iso: string, ref: Date): boolean {
   return entryMonthKey(iso) === monthKeyFromDate(ref)
 }

@@ -44,7 +44,7 @@ export default function RecentEntries({ entries, onRemove }: RecentEntriesProps)
 
   const filtered = useMemo(() => {
     const todayKey = dayKeyFromDate(now)
-    const weekCutoffKey = format(subDays(now, 7), "yyyy-MM-dd")
+    const weekCutoffKey = dayKeyFromDate(subDays(now, 7))
 
     return entries.filter((e) => {
       if (search && !e.note?.toLowerCase().includes(search.toLowerCase())) return false

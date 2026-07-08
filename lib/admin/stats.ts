@@ -10,6 +10,8 @@ import {
 } from "date-fns"
 import { ptBR } from "date-fns/locale"
 import {
+  calendarPartsFromDate,
+  dayKeyFromDate,
   entryDayKey,
   entryMonthKey,
   isEntryInMonth,
@@ -87,13 +89,13 @@ function sumMoneyForMonth(items: MoneyEntry[], date: Date) {
 }
 
 function sumMoneyForYearUpToDate(items: MoneyEntry[], refDate: Date) {
-  const year = refDate.getFullYear()
-  const endKey = format(startOfDay(refDate), "yyyy-MM-dd")
+  const endKey = dayKeyFromDate(refDate)
+  const year = endKey.slice(0, 4)
 
   return items
     .filter((e) => {
       const key = entryDayKey(e.createdAt)
-      return key.slice(0, 4) === String(year) && key <= endKey
+      return key.slice(0, 4) === year && key <= endKey
     })
     .reduce((acc, e) => acc + e.amount, 0)
 }
@@ -160,19 +162,16 @@ function sumForYearUpToDate(entries: EarningEntry[], refDate: Date) {
 
 function sumForMonthUpToDay(
   entries: EarningEntry[],
-  year: number,
-  month: number,
+  refMonth: Date,
   upToDay: number
 ) {
-  const monthKey = `${year}-${String(month + 1).padStart(2, "0")}`
+  const monthKey = monthKeyFromDate(refMonth)
 
   return entries
     .filter((e) => {
-      const cal = parseEntryCalendarDate(e.createdAt)
-      return (
-        entryMonthKey(e.createdAt) === monthKey &&
-        cal.getDate() <= upToDay
-      )
+      if (entryMonthKey(e.createdAt) !== monthKey) return false
+      const day = Number(entryDayKey(e.createdAt).slice(8, 10))
+      return day <= upToDay
     })
     .reduce((acc, e) => acc + e.amount, 0)
 }
@@ -280,16 +279,16 @@ export function computeStats(
     today.getMonth(),
     today.getDate()
   )
-  const dayOfMonth = today.getDate()
+  const todayParts = calendarPartsFromDate(today)
+  const lastMonthParts = calendarPartsFromDate(lastMonthRef)
 
   const todayTotal = sumForDay(entries, today)
   const yesterdayTotal = sumForDay(entries, yesterday)
   const thisMonthTotal = sumForMonth(entries, today)
   const lastMonthTotal = sumForMonthUpToDay(
     entries,
-    lastMonthRef.getFullYear(),
-    lastMonthRef.getMonth(),
-    Math.min(dayOfMonth, lastMonthRef.getDate())
+    lastMonthRef,
+    Math.min(todayParts.day, lastMonthParts.day)
   )
   const thisYearTotal = sumForYearUpToDate(entries, today)
   const lastYearTotal = sumForYearUpToDate(entries, lastYearSameDay)
