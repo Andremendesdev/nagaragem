@@ -10,7 +10,8 @@ import {
 import { ptBR } from "date-fns/locale"
 import { CalendarDays, ChevronDown } from "lucide-react"
 import type { EarningEntry } from "@/lib/admin/types"
-import { sumClientsForMonth } from "@/lib/admin/stats"
+import { monthKeyFromDate } from "@/lib/admin/dates"
+import { buildClientsByMonth } from "@/lib/admin/stats"
 import {
   Popover,
   PopoverContent,
@@ -30,14 +31,19 @@ export default function ClientsMonthStat({ entries }: ClientsMonthStatProps) {
 
   const monthOptions = useMemo(
     () =>
-      Array.from({ length: 12 }, (_, i) => startOfMonth(subMonths(new Date(), i))),
+      Array.from({ length: 12 }, (_, i) =>
+        startOfMonth(subMonths(new Date(), 11 - i))
+      ),
     []
   )
 
-  const count = useMemo(
-    () => sumClientsForMonth(entries, selectedMonth),
-    [entries, selectedMonth]
+  const clientsByMonth = useMemo(
+    () => buildClientsByMonth(entries),
+    [entries]
   )
+
+  const selectedMonthKey = monthKeyFromDate(selectedMonth)
+  const count = clientsByMonth.get(selectedMonthKey) ?? 0
 
   const isCurrentMonth = isSameMonth(selectedMonth, new Date())
   const monthLabel = format(selectedMonth, "MMMM yyyy", { locale: ptBR })
@@ -67,6 +73,8 @@ export default function ClientsMonthStat({ entries }: ClientsMonthStatProps) {
             <p className="text-[11px] capitalize text-[var(--admin-text-dim)]">
               {isCurrentMonth ? "Mês atual" : monthLabel}
               {" · "}
+              mês completo
+              {" · "}
               <span className="text-[var(--admin-gold)]">Trocar mês</span>
             </p>
           </div>
@@ -86,16 +94,21 @@ export default function ClientsMonthStat({ entries }: ClientsMonthStatProps) {
         <p className="mb-3 text-xs font-semibold uppercase tracking-[0.15em] text-[var(--admin-text-faint)]">
           Selecionar mês
         </p>
+        <p className="mb-3 text-[11px] text-[var(--admin-text-dim)]">
+          Total de clientes do mês inteiro (todos os dias).
+        </p>
         <div className="grid grid-cols-3 gap-1.5">
           {monthOptions.map((month) => {
+            const monthKey = monthKeyFromDate(month)
             const selected = isSameMonth(month, selectedMonth)
             const isCurrent = isSameMonth(month, new Date())
-            const label = format(month, "MMM yy", { locale: ptBR })
-            const monthCount = sumClientsForMonth(entries, month)
+            const monthName = format(month, "MMM", { locale: ptBR }).replace(".", "")
+            const year = format(month, "yyyy")
+            const monthCount = clientsByMonth.get(monthKey) ?? 0
 
             return (
               <button
-                key={month.toISOString()}
+                key={monthKey}
                 type="button"
                 onClick={() => selectMonth(month)}
                 className={cn(
@@ -106,10 +119,13 @@ export default function ClientsMonthStat({ entries }: ClientsMonthStatProps) {
                   isCurrent && !selected && "ring-1 ring-[var(--admin-gold-border-muted)]"
                 )}
               >
-                <span className="block text-xs font-semibold capitalize">
-                  {label.replace(".", "")}
+                <span className="block text-xs font-semibold capitalize leading-tight">
+                  {monthName}
                 </span>
-                <span className="mt-0.5 block text-[10px] font-medium opacity-80">
+                <span className="block text-[10px] font-medium leading-tight text-[var(--admin-text-faint)]">
+                  {year}
+                </span>
+                <span className="mt-1 block text-[10px] font-medium opacity-80">
                   {monthCount} {monthCount === 1 ? "cliente" : "clientes"}
                 </span>
               </button>

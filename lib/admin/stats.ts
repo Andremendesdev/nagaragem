@@ -4,13 +4,19 @@ import {
   endOfMonth,
   format,
   getDay,
-  isSameDay,
-  isSameMonth,
   startOfDay,
   startOfMonth,
   subDays,
 } from "date-fns"
 import { ptBR } from "date-fns/locale"
+import {
+  entryDayKey,
+  entryMonthKey,
+  isEntryInMonth,
+  isEntryOnDay,
+  monthKeyFromDate,
+  parseEntryCalendarDate,
+} from "./dates"
 import type { EarningCategory, EarningEntry, ExpenseEntry } from "./types"
 import { EARNING_CATEGORIES } from "./types"
 
@@ -70,24 +76,24 @@ export type DashboardStats = {
 
 function sumMoneyForDay(items: MoneyEntry[], day: Date) {
   return items
-    .filter((e) => isSameDay(new Date(e.createdAt), day))
+    .filter((e) => isEntryOnDay(e.createdAt, day))
     .reduce((acc, e) => acc + e.amount, 0)
 }
 
 function sumMoneyForMonth(items: MoneyEntry[], date: Date) {
   return items
-    .filter((e) => isSameMonth(new Date(e.createdAt), date))
+    .filter((e) => isEntryInMonth(e.createdAt, date))
     .reduce((acc, e) => acc + e.amount, 0)
 }
 
 function sumMoneyForYearUpToDate(items: MoneyEntry[], refDate: Date) {
   const year = refDate.getFullYear()
-  const end = startOfDay(refDate)
+  const endKey = format(startOfDay(refDate), "yyyy-MM-dd")
 
   return items
     .filter((e) => {
-      const date = startOfDay(new Date(e.createdAt))
-      return date.getFullYear() === year && date <= end
+      const key = entryDayKey(e.createdAt)
+      return key.slice(0, 4) === String(year) && key <= endKey
     })
     .reduce((acc, e) => acc + e.amount, 0)
 }
@@ -98,7 +104,7 @@ function clientsOf(entry: EarningEntry) {
 
 function sumClientsForDay(entries: EarningEntry[], day: Date) {
   return entries
-    .filter((e) => isSameDay(new Date(e.createdAt), day))
+    .filter((e) => isEntryOnDay(e.createdAt, day))
     .reduce((acc, e) => acc + clientsOf(e), 0)
 }
 
@@ -114,10 +120,19 @@ export function sumEarningsForMonth(entries: EarningEntry[], date: Date) {
   return sumForMonth(entries, date)
 }
 
+export function buildClientsByMonth(entries: EarningEntry[]) {
+  const totals = new Map<string, number>()
+
+  for (const entry of entries) {
+    const key = entryMonthKey(entry.createdAt)
+    totals.set(key, (totals.get(key) ?? 0) + clientsOf(entry))
+  }
+
+  return totals
+}
+
 export function sumClientsForMonth(entries: EarningEntry[], date: Date) {
-  return entries
-    .filter((e) => isSameMonth(new Date(e.createdAt), date))
-    .reduce((acc, e) => acc + clientsOf(e), 0)
+  return buildClientsByMonth(entries).get(monthKeyFromDate(date)) ?? 0
 }
 
 function percentChange(current: number, previous: number) {
@@ -149,13 +164,14 @@ function sumForMonthUpToDay(
   month: number,
   upToDay: number
 ) {
+  const monthKey = `${year}-${String(month + 1).padStart(2, "0")}`
+
   return entries
     .filter((e) => {
-      const d = new Date(e.createdAt)
+      const cal = parseEntryCalendarDate(e.createdAt)
       return (
-        d.getFullYear() === year &&
-        d.getMonth() === month &&
-        d.getDate() <= upToDay
+        entryMonthKey(e.createdAt) === monthKey &&
+        cal.getDate() <= upToDay
       )
     })
     .reduce((acc, e) => acc + e.amount, 0)
@@ -165,7 +181,7 @@ function calcBestWeekday(entries: EarningEntry[]) {
   const totals = [0, 0, 0, 0, 0, 0, 0]
 
   entries.forEach((entry) => {
-    const day = getDay(new Date(entry.createdAt))
+    const day = getDay(parseEntryCalendarDate(entry.createdAt))
     totals[day] += entry.amount
   })
 
@@ -197,7 +213,7 @@ function calcPersonalRecord(entries: EarningEntry[]) {
   const byDay = new Map<string, number>()
 
   entries.forEach((entry) => {
-    const key = format(startOfDay(new Date(entry.createdAt)), "yyyy-MM-dd")
+    const key = entryDayKey(entry.createdAt)
     byDay.set(key, (byDay.get(key) ?? 0) + entry.amount)
   })
 
@@ -305,9 +321,7 @@ export function computeStats(
     total: sumForDay(entries, date),
   }))
 
-  const monthEntries = entries.filter((e) =>
-    isSameMonth(new Date(e.createdAt), today)
-  )
+  const monthEntries = entries.filter((e) => isEntryInMonth(e.createdAt, today))
   const categoryMap = new Map<EarningCategory, { total: number; count: number }>()
 
   monthEntries.forEach((entry) => {

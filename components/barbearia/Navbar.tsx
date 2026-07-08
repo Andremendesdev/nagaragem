@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Scissors, Guitar, Zap, Menu, X } from "lucide-react";
+import Image from "next/image";
+import { Menu, X } from "lucide-react";
 import { motion } from "framer-motion";
 import StatusBadge from "./StatusBadge";
 
@@ -9,32 +10,52 @@ export default function Navbar({ statusOverride = "auto" }: { statusOverride?: s
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const hero = document.getElementById("hero");
+    if (!hero) {
+      const handleScroll = () => setIsScrolled(window.scrollY > 50);
+      window.addEventListener("scroll", handleScroll);
+      return () => window.removeEventListener("scroll", handleScroll);
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsScrolled(!entry.isIntersecting),
+      { threshold: 0, rootMargin: "-1px 0px 0px 0px" }
+    );
+
+    observer.observe(hero);
+    return () => observer.disconnect();
   }, []);
 
   return (
     <motion.nav
       className={`fixed w-full z-50 transition-all duration-300 ${
-        isScrolled ? "bg-black/80 backdrop-blur-md" : "bg-black/70"
+        isScrolled
+          ? "border-b border-white/5 bg-black/80 backdrop-blur-md"
+          : "bg-transparent"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Adicionado 'relative' aqui para ancorar o menu centralizado */}
-        <div className="relative flex justify-between items-center h-16 text-white">
-          {/* Lado Esquerdo: Ícones (alinhados ao centro) */}
-          <div className="flex items-center gap-2 sm:gap-4">
-            <Scissors size={16} className="text-white sm:size-5" />
-
-            <span className="text-[10px] sm:text-sm font-semibold tracking-[0.18em] sm:tracking-[0.25em] text-white uppercase">
-              Na Garage
-            </span>
-
-            <span className="text-[10px] sm:text-sm font-medium tracking-[0.12em] sm:tracking-[0.2em] text-yellow-400 uppercase">
-              Barbearia
-            </span>
-          </div>
+        <div className="relative flex justify-between items-center h-20 text-white">
+          {/* Lado Esquerdo: Logo */}
+          <a
+            href="#hero"
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" });
+            }}
+            className="flex shrink-0 items-center"
+            aria-label="Na Garage Barbearia — início"
+          >
+            <Image
+              src="/logo1.png"
+              alt="Na Garage Barbearia"
+              width={80}
+              height={80}
+              className="h-16 w-16 object-contain sm:h-[4.5rem] sm:w-[4.5rem]"
+              priority
+            />
+          </a>
           {/* CENTRO (Desktop): Links de navegação cravados no meio */}
           <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center">
             <div className="flex gap-8 font-medium text-sm uppercase tracking-wide">

@@ -26,12 +26,14 @@ function getStatus(override: string = "auto"): StatusInfo {
 }
 
 interface StatusBadgeProps {
-  /** Quando true, renderiza sem posicionamento absolute (para uso inline no mobile) */
+  /** @deprecated mantido por compatibilidade — estilo é igual em todos os usos */
   inline?: boolean;
   statusOverride?: string;
 }
 
-export default function StatusBadge({ inline = false, statusOverride = "auto" }: StatusBadgeProps) {
+export default function StatusBadge({
+  statusOverride = "auto",
+}: StatusBadgeProps) {
   const [status, setStatus] = useState<StatusInfo>({
     open: false,
     label: "Verificando...",
@@ -39,32 +41,26 @@ export default function StatusBadge({ inline = false, statusOverride = "auto" }:
 
   useEffect(() => {
     setStatus(getStatus(statusOverride));
-    if (statusOverride !== "auto") return; // Não precisa de timer se for manual
+    if (statusOverride !== "auto") return;
     const interval = setInterval(() => setStatus(getStatus(statusOverride)), 60_000);
     return () => clearInterval(interval);
   }, [statusOverride]);
 
-  const positionClass = inline
-    ? "rounded-xl border px-3 py-2 backdrop-blur-md"
-    : "absolute top-4 right-4 md:top-6 md:right-6 z-20 rounded-xl border px-4 py-3 backdrop-blur-md";
-
   return (
-    <div
-      className={`${positionClass} transition-all duration-500`}
+    <span
+      className="rounded-xl border px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.22em] backdrop-blur-md sm:px-4 sm:py-2 sm:text-xs"
       style={{
+        color: status.open ? "#4ade80" : "#f87171",
         borderColor: status.open ? "#4ade80" : "#f87171",
+        background: status.open
+          ? "rgba(34,197,94,0.1)"
+          : "rgba(248,113,113,0.1)",
         boxShadow: status.open
           ? "0 0 16px rgba(34,197,94,0.25)"
           : "0 0 16px rgba(248,113,113,0.25)",
-        background: "rgba(10,10,10,0.75)",
       }}
     >
-      <span
-        className="block text-[9px] font-semibold uppercase tracking-[0.22em]"
-        style={{ color: status.open ? "#4ade80" : "#f87171" }}
-      >
-        {status.label}
-      </span>
-    </div>
+      {status.label}
+    </span>
   );
 }

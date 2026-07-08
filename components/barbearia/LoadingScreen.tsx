@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import {
   createContext,
   useCallback,
@@ -137,14 +138,16 @@ export default function LoadingScreen({ children }: { children: ReactNode }) {
           <div className="loading-curtain-bottom" aria-hidden="true" />
 
           <div className="loading-screen-content px-6">
-            <h1 className="font-serif text-4xl font-bold uppercase tracking-tight leading-tight text-white text-center sm:text-5xl md:text-6xl">
-              <span className="loading-screen-line loading-screen-line--1 block whitespace-nowrap">
-                NA GARAGE
-              </span>
-              <span className="loading-screen-line loading-screen-line--2 gold-glow mt-2 block whitespace-nowrap">
-                BARBEARIA
-              </span>
-            </h1>
+            <div className="loading-screen-logo-wrap">
+              <Image
+                src="/logo1.png"
+                alt="Na Garage Barbearia"
+                width={320}
+                height={320}
+                priority
+                className="loading-screen-logo"
+              />
+            </div>
           </div>
         </div>
       )}

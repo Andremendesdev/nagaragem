@@ -2,11 +2,18 @@
 
 import { useMemo, useState } from "react"
 import { ChevronLeft, ChevronRight, Search, SlidersHorizontal, Trash2, X } from "lucide-react"
-import { format, isSameDay, parseISO, startOfDay, subDays, startOfMonth } from "date-fns"
+import { format, startOfDay, subDays } from "date-fns"
 import { ptBR } from "date-fns/locale"
 import type { EarningEntry } from "@/lib/admin/types"
 import { EARNING_CATEGORIES } from "@/lib/admin/types"
 import { formatCurrencyDetailed } from "@/lib/admin/format"
+import {
+  dayKeyFromDate,
+  entryDayKey,
+  isEntryInMonth,
+  isEntryOnDay,
+  parseEntryCalendarDate,
+} from "@/lib/admin/dates"
 import AdminDatePicker from "@/components/admin/AdminDatePicker"
 import { cn } from "@/lib/utils"
 
@@ -36,21 +43,23 @@ export default function RecentEntries({ entries, onRemove }: RecentEntriesProps)
   const now = new Date()
 
   const filtered = useMemo(() => {
-    const cutoff: Date | null =
-      period === "today"
-        ? new Date(now.getFullYear(), now.getMonth(), now.getDate())
-        : period === "7d"
-        ? subDays(now, 7)
-        : period === "month"
-        ? startOfMonth(now)
-        : null
+    const todayKey = dayKeyFromDate(now)
+    const weekCutoffKey = format(subDays(now, 7), "yyyy-MM-dd")
 
     return entries.filter((e) => {
       if (search && !e.note?.toLowerCase().includes(search.toLowerCase())) return false
       if (category !== "all" && e.category !== category) return false
+
       if (selectedDay) {
-        if (!isSameDay(parseISO(e.createdAt), selectedDay)) return false
-      } else if (cutoff && parseISO(e.createdAt) < cutoff) return false
+        if (!isEntryOnDay(e.createdAt, selectedDay)) return false
+      } else if (period === "today") {
+        if (entryDayKey(e.createdAt) !== todayKey) return false
+      } else if (period === "7d") {
+        if (entryDayKey(e.createdAt) < weekCutoffKey) return false
+      } else if (period === "month") {
+        if (!isEntryInMonth(e.createdAt, now)) return false
+      }
+
       return true
     })
   }, [entries, search, category, period, selectedDay, now])
@@ -260,8 +269,12 @@ export default function RecentEntries({ entries, onRemove }: RecentEntriesProps)
                   <div className="hidden items-center sm:flex">
                     <span className="text-xs text-[var(--admin-text-faint)]">
                       {selectedDay
-                        ? format(parseISO(entry.createdAt), "dd MMM yyyy", { locale: ptBR })
-                        : format(parseISO(entry.createdAt), "dd MMM · HH:mm", { locale: ptBR })}
+                        ? format(parseEntryCalendarDate(entry.createdAt), "dd MMM yyyy", {
+                            locale: ptBR,
+                          })
+                        : format(parseEntryCalendarDate(entry.createdAt), "dd MMM · HH:mm", {
+                            locale: ptBR,
+                          })}
                     </span>
                   </div>
 

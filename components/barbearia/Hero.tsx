@@ -176,11 +176,12 @@ export default function Hero() {
           onClick={() => trackGenerateLead("hero")}
           whileHover={{ scale: 1.04, y: -2 }}
           whileTap={{ scale: 0.97 }}
-          className="inline-flex w-full max-w-xs items-center justify-center gap-2.5 rounded-xl px-6 py-3.5 text-xs font-semibold uppercase tracking-widest transition-all duration-300 sm:w-auto md:justify-start md:px-8 md:py-4 md:text-sm"
+          className="inline-flex w-full max-w-xs items-center justify-center gap-2.5 rounded-3xl px-6 py-3.5 text-xs font-semibold uppercase tracking-widest backdrop-blur-md transition-all duration-300 sm:w-auto md:justify-start md:px-8 md:py-4 md:text-sm"
           style={{
             border: "2px solid #ffea00",
             color: "#ffea00",
-            background: "transparent",
+            background: "rgba(10, 10, 10, 0.35)",
+            backdropFilter: "blur(8px)",
             boxShadow:
               "0 0 12px rgba(255,234,0,0.25), inset 0 0 12px rgba(255,234,0,0.05)",
             textShadow: "0 0 10px #ffea00",
@@ -188,13 +189,15 @@ export default function Hero() {
           onMouseEnter={(e) => {
             const el = e.currentTarget;
             el.style.background = "#ffea00";
+            el.style.backdropFilter = "none";
             el.style.color = "#0a0a0a";
             el.style.textShadow = "none";
             el.style.boxShadow = "0 0 30px rgba(255,234,0,0.5)";
           }}
           onMouseLeave={(e) => {
             const el = e.currentTarget;
-            el.style.background = "transparent";
+            el.style.background = "rgba(10, 10, 10, 0.35)";
+            el.style.backdropFilter = "blur(8px)";
             el.style.color = "#ffea00";
             el.style.textShadow = "0 0 10px #ffea00";
             el.style.boxShadow =
