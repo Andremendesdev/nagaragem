@@ -29,6 +29,29 @@
   --admin-gold-bg-strong: #fde047;
   --admin-gold-border: #e6c200;
   --admin-gold-border-muted: #d4b800;
+
+  /* Chips / badges no tema claro */
+  --admin-badge-bg: #eeeeee;
+  --admin-badge-hover: #e8e8e8;
+
+  /* Sobrescreve tokens shadcn (site é dark; admin é light) */
+  --background: #ffffff;
+  --foreground: #171717;
+  --card: #ffffff;
+  --card-foreground: #171717;
+  --popover: #ffffff;
+  --popover-foreground: #171717;
+  --primary: #ffea00;
+  --primary-foreground: #171717;
+  --secondary: #f5f5f5;
+  --secondary-foreground: #171717;
+  --muted: #f5f5f5;
+  --muted-foreground: #525252;
+  --accent: #f0f0f0;
+  --accent-foreground: #171717;
+  --border: #e5e5e5;
+  --input: #f5f5f5;
+  --ring: #d4b800;
 }
 
 /* Popovers Radix renderizam fora de .admin-theme (portal) */
@@ -103,4 +126,25 @@
 .admin-popover .admin-calendar .rdp-button_next:hover {
   background: var(--admin-hover);
   color: var(--admin-text);
+}
+
+/* Botões shadcn — hover legível no tema claro */
+.admin-theme [data-slot="button"][class*="border"]:not(:disabled):hover {
+  background-color: var(--admin-hover) !important;
+  color: var(--admin-text) !important;
+}
+
+/* Tooltips de gráfico (herdam tokens do site dark por padrão) */
+.admin-theme [data-slot="chart"] .border-border\/50 {
+  border-color: var(--admin-border-muted) !important;
+  background-color: var(--admin-surface) !important;
+  color: var(--admin-text) !important;
+}
+
+.admin-theme [data-slot="chart"] .text-muted-foreground {
+  color: var(--admin-text-faint) !important;
+}
+
+.admin-theme [data-slot="chart"] .text-foreground {
+  color: var(--admin-text) !important;
 }

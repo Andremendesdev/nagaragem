@@ -173,7 +173,7 @@ export default function AdminDashboard() {
                   "flex flex-1 items-center justify-center gap-2 rounded-lg py-2.5 text-sm font-semibold transition-all",
                   activeTab === tab.id
                     ? "bg-[var(--admin-hover)] text-[var(--admin-text)] shadow-sm"
-                    : "text-[var(--admin-text-faint)] hover:text-[var(--admin-text-dim)]"
+                    : "text-[var(--admin-text-faint)] hover:bg-[var(--admin-hover)] hover:text-[var(--admin-text-dim)]"
                 )}
               >
                 <Icon className="size-4" />

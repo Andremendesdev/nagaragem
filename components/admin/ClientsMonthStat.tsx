@@ -60,7 +60,7 @@ export default function ClientsMonthStat({ entries }: ClientsMonthStatProps) {
           type="button"
           className="flex w-full items-center gap-3 rounded-xl border border-[var(--admin-border)] bg-[var(--admin-input)] px-4 py-3 text-left transition-colors hover:border-[var(--admin-gold-border-muted)] hover:bg-[var(--admin-hover)] focus:outline-none focus:border-[var(--admin-gold-border)]"
         >
-          <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-black/5">
+          <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-[var(--admin-badge-bg)]">
             <CalendarDays className="size-4 text-[var(--admin-gold)]" />
           </div>
           <div className="min-w-0 flex-1">
@@ -115,7 +115,7 @@ export default function ClientsMonthStat({ entries }: ClientsMonthStatProps) {
                   "rounded-lg border px-2 py-2 text-center transition-all",
                   selected
                     ? "border-[var(--admin-gold-border)] bg-[var(--admin-gold-bg)] text-[var(--admin-gold)]"
-                    : "border-[var(--admin-border)] bg-[var(--admin-input)] text-[var(--admin-text-dim)] hover:border-[var(--admin-gold-border-muted)] hover:text-[var(--admin-text)]",
+                    : "border-[var(--admin-border)] bg-[var(--admin-input)] text-[var(--admin-text-dim)] hover:border-[var(--admin-gold-border-muted)] hover:bg-[var(--admin-hover)] hover:text-[var(--admin-text)]",
                   isCurrent && !selected && "ring-1 ring-[var(--admin-gold-border-muted)]"
                 )}
               >

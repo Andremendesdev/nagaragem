@@ -73,7 +73,7 @@ export default function StatCard({
           {label}
         </p>
         {Icon && (
-          <div className="rounded-lg bg-black/5 p-1.5">
+          <div className="rounded-lg bg-[var(--admin-badge-bg)] p-1.5">
             <Icon className={cn("size-4", s.value)} />
           </div>
         )}
@@ -89,8 +89,8 @@ export default function StatCard({
             className={cn(
               "inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-semibold",
               isPositive
-                ? "bg-emerald-500/15 text-emerald-400"
-                : "bg-red-500/15 text-red-400"
+                ? "bg-emerald-500/15 text-emerald-700"
+                : "bg-red-500/15 text-red-700"
             )}
           >
             {isPositive ? (
@@ -123,7 +123,7 @@ export function MiniStat({
   return (
     <div className="flex items-center gap-3 rounded-xl border border-[var(--admin-border)] bg-[var(--admin-input)] px-4 py-3">
       {Icon && (
-        <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-black/5">
+        <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-[var(--admin-badge-bg)]">
           <Icon className="size-4 text-[var(--admin-text-faint)]" />
         </div>
       )}

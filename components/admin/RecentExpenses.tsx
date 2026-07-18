@@ -116,8 +116,8 @@ export default function RecentExpenses({ expenses, onRemove }: RecentExpensesPro
                 className={cn(
                   "rounded-lg px-3 py-1.5 text-xs font-semibold transition-all",
                   period === p.value
-                    ? "bg-red-500/15 text-red-300"
-                    : "text-[var(--admin-text-faint)] hover:text-[var(--admin-text-dim)]"
+                    ? "border border-red-500/25 bg-red-500/10 text-red-700"
+                    : "text-[var(--admin-text-faint)] hover:bg-[var(--admin-hover)] hover:text-[var(--admin-text)]"
                 )}
               >
                 {p.label}
@@ -171,7 +171,7 @@ export default function RecentExpenses({ expenses, onRemove }: RecentExpensesPro
                 <div
                   key={expense.id}
                   className={cn(
-                    "group grid grid-cols-[1fr_40px] gap-3 px-6 py-3.5 transition-colors hover:bg-black/[0.04] sm:grid-cols-[2fr_1fr_1fr_40px]",
+                    "group grid grid-cols-[1fr_40px] gap-3 px-6 py-3.5 transition-colors hover:bg-[var(--admin-hover)] sm:grid-cols-[2fr_1fr_1fr_40px]",
                     isRemoving && "opacity-50"
                   )}
                 >
@@ -180,7 +180,7 @@ export default function RecentExpenses({ expenses, onRemove }: RecentExpensesPro
                       {cat?.emoji ?? "📌"}
                     </span>
                     <div className="min-w-0">
-                      <p className="text-sm font-semibold text-red-300">
+                      <p className="text-sm font-semibold text-red-600">
                         − {formatCurrencyDetailed(expense.amount)}
                         <span className="ml-2 text-xs font-normal text-[var(--admin-text-faint)] sm:hidden">
                           · {cat?.label}
@@ -248,7 +248,7 @@ export default function RecentExpenses({ expenses, onRemove }: RecentExpensesPro
                         className={cn(
                           "flex size-8 items-center justify-center rounded-lg text-xs font-semibold transition-all",
                           safePage === p
-                            ? "bg-red-500/15 text-red-300"
+                            ? "border border-red-500/25 bg-red-500/10 text-red-700"
                             : "border border-[var(--admin-border)] text-[var(--admin-text-faint)] hover:text-[var(--admin-text)]"
                         )}
                       >

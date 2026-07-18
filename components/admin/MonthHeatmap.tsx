@@ -61,9 +61,9 @@ export default function MonthHeatmap({ days }: MonthHeatmapProps) {
                   isToday && "ring-1 ring-[var(--admin-gold-border)] ring-offset-1 ring-offset-[var(--admin-surface)]",
                   level === 0 && "bg-[var(--admin-heatmap-0)] text-[var(--admin-text-dim)]",
                   level === 1 && "bg-[var(--admin-gold-bg-subtle)] text-[var(--admin-text-dim)]",
-                  level === 2 && "bg-[var(--admin-gold-bg)] text-[#171717]",
-                  level === 3 && "bg-[var(--admin-gold-bg-strong)] text-[#171717]",
-                  level === 4 && "bg-[var(--admin-gold-vivid)] text-[#171717]"
+                  level === 2 && "bg-[var(--admin-gold-bg)] text-[var(--admin-text)]",
+                  level === 3 && "bg-[var(--admin-gold-bg-strong)] text-[var(--admin-text)]",
+                  level === 4 && "bg-[var(--admin-gold-vivid)] text-[var(--admin-text)]"
                 )}
               >
                 {format(parseISO(day.date), "d")}

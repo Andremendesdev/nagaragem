@@ -43,7 +43,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
             <button
               type="button"
               onClick={() => setMobileOpen((v) => !v)}
-              className="flex size-9 items-center justify-center rounded-lg border border-[var(--admin-border)] text-[var(--admin-text-dim)] transition-colors hover:text-[var(--admin-text)] lg:hidden"
+              className="flex size-9 items-center justify-center rounded-lg border border-[var(--admin-border)] text-[var(--admin-text-dim)] transition-colors hover:bg-[var(--admin-hover)] hover:text-[var(--admin-text)] lg:hidden"
               aria-label={mobileOpen ? "Fechar menu" : "Abrir menu"}
             >
               {mobileOpen ? <X className="size-5" /> : <Menu className="size-5" />}

@@ -117,8 +117,8 @@ export default function InsightsPanel({
             <span className={cn(
               "rounded-full px-3 py-1 text-sm font-bold",
               overGoal
-                ? "bg-emerald-500/15 text-emerald-400"
-                : "bg-black/5 text-[var(--admin-text)]"
+                ? "bg-emerald-500/15 text-emerald-700"
+                : "bg-[var(--admin-badge-bg)] text-[var(--admin-text)]"
             )}>
               {Math.min(stats.goalProgress, 999).toFixed(0)}%
             </span>

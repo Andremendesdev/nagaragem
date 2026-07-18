@@ -116,7 +116,7 @@ export default function AddEarningPanel({ onAdd }: AddEarningPanelProps) {
             <p className="text-xs text-[var(--admin-text-faint)]">Valor total e quantidade de clientes</p>
           </div>
           {success && (
-            <div className="ml-auto flex items-center gap-1.5 rounded-full bg-emerald-500/15 px-3 py-1 text-xs font-semibold text-emerald-400">
+            <div className="ml-auto flex items-center gap-1.5 rounded-full bg-emerald-500/15 px-3 py-1 text-xs font-semibold text-emerald-700">
               <CheckCircle className="size-3" />
               Salvo!
             </div>
@@ -215,7 +215,7 @@ export default function AddEarningPanel({ onAdd }: AddEarningPanelProps) {
                     "rounded-xl border py-2.5 text-center text-xs font-medium transition-all",
                     category === cat.value
                       ? "border-[var(--admin-gold)] bg-[var(--admin-gold-bg)] text-[var(--admin-gold)]"
-                      : "border-[var(--admin-border)] bg-[var(--admin-input)] text-[var(--admin-text-faint)] hover:border-[var(--admin-border-muted)] hover:text-[var(--admin-text-dim)]"
+                      : "border-[var(--admin-border)] bg-[var(--admin-input)] text-[var(--admin-text-faint)] hover:border-[var(--admin-border-muted)] hover:bg-[var(--admin-hover)] hover:text-[var(--admin-text)]"
                   )}
                 >
                   <span className="block text-base leading-none">{cat.emoji}</span>
@@ -263,7 +263,7 @@ export default function AddEarningPanel({ onAdd }: AddEarningPanelProps) {
                 type="button"
                 disabled={submitting}
                 onClick={() => quickAdd(v)}
-                className="rounded-lg border border-[var(--admin-border)] bg-[var(--admin-bg)] px-3 py-1.5 text-xs font-semibold text-[var(--admin-text-dim)] transition-all hover:border-[var(--admin-gold-border)] hover:text-[var(--admin-gold)] disabled:opacity-40"
+                className="rounded-lg border border-[var(--admin-border)] bg-[var(--admin-bg)] px-3 py-1.5 text-xs font-semibold text-[var(--admin-text-dim)] transition-all hover:border-[var(--admin-gold-border)] hover:bg-[var(--admin-hover)] hover:text-[var(--admin-gold)] disabled:opacity-40"
               >
                 {formatCurrency(v)}
               </button>

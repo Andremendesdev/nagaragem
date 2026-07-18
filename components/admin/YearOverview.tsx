@@ -173,14 +173,14 @@ export default function YearOverview({ data, yearTotal, entries }: YearOverviewP
           <button
             type="button"
             onClick={selectCurrentMonth}
-            className="rounded-lg border border-[var(--admin-border)] bg-[var(--admin-bg)] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-[var(--admin-text-dim)] transition-colors hover:border-[var(--admin-gold-border)] hover:text-[var(--admin-gold)]"
+            className="rounded-lg border border-[var(--admin-border)] bg-[var(--admin-bg)] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-[var(--admin-text-dim)] transition-colors hover:border-[var(--admin-gold-border)] hover:bg-[var(--admin-hover)] hover:text-[var(--admin-gold)]"
           >
             Este mês
           </button>
           <button
             type="button"
             onClick={selectLastThreeMonths}
-            className="rounded-lg border border-[var(--admin-border)] bg-[var(--admin-bg)] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-[var(--admin-text-dim)] transition-colors hover:border-[var(--admin-gold-border)] hover:text-[var(--admin-gold)]"
+            className="rounded-lg border border-[var(--admin-border)] bg-[var(--admin-bg)] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-[var(--admin-text-dim)] transition-colors hover:border-[var(--admin-gold-border)] hover:bg-[var(--admin-hover)] hover:text-[var(--admin-gold)]"
           >
             Últimos 3 meses
           </button>
@@ -188,7 +188,7 @@ export default function YearOverview({ data, yearTotal, entries }: YearOverviewP
             <button
               type="button"
               onClick={clearSelection}
-              className="inline-flex items-center gap-1 rounded-lg border border-[var(--admin-border)] px-2.5 py-1 text-[10px] font-semibold text-[var(--admin-text-dim)] transition-colors hover:border-red-500/30 hover:text-red-300"
+              className="inline-flex items-center gap-1 rounded-lg border border-[var(--admin-border)] bg-[var(--admin-bg)] px-2.5 py-1 text-[10px] font-semibold text-[var(--admin-text-dim)] transition-colors hover:border-red-500/30 hover:bg-red-500/10 hover:text-red-700"
             >
               <X className="size-3" />
               Limpar
@@ -211,7 +211,7 @@ export default function YearOverview({ data, yearTotal, entries }: YearOverviewP
                   "rounded-lg border px-2 py-2 text-center text-xs font-semibold capitalize transition-all",
                   selected
                     ? "border border-[var(--admin-gold-border-muted)] bg-[var(--admin-gold-bg)] text-[var(--admin-gold)]"
-                    : "border-[var(--admin-border)] bg-[var(--admin-input)] text-[var(--admin-text-faint)] hover:border-[var(--admin-gold-border)] hover:text-[var(--admin-text)]",
+                    : "border-[var(--admin-border)] bg-[var(--admin-input)] text-[var(--admin-text-faint)] hover:border-[var(--admin-gold-border)] hover:bg-[var(--admin-hover)] hover:text-[var(--admin-text)]",
                   isCurrent && !selected && "ring-1 ring-[var(--admin-gold-border-muted)]"
                 )}
               >
@@ -240,9 +240,9 @@ export default function YearOverview({ data, yearTotal, entries }: YearOverviewP
 
           <div className="mb-3 grid gap-2 sm:grid-cols-3">
             <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 px-3 py-2">
-              <p className="text-[10px] uppercase tracking-wide text-emerald-400/80">Melhor</p>
+              <p className="text-[10px] uppercase tracking-wide text-emerald-700/90">Melhor</p>
               <p className="text-sm font-bold capitalize text-[var(--admin-text)]">{comparison.best.label.replace(".", "")}</p>
-              <p className="text-sm font-semibold text-emerald-400">{formatCurrency(comparison.best.total)}</p>
+              <p className="text-sm font-semibold text-emerald-700">{formatCurrency(comparison.best.total)}</p>
             </div>
             <div className="rounded-xl border border-[var(--admin-border)] bg-[var(--admin-input)] px-3 py-2">
               <p className="text-[10px] uppercase tracking-wide text-[var(--admin-text-faint)]">Média</p>
@@ -250,9 +250,9 @@ export default function YearOverview({ data, yearTotal, entries }: YearOverviewP
               <p className="text-sm font-semibold text-[var(--admin-gold)]">{formatCurrency(comparison.avg)}</p>
             </div>
             <div className="rounded-xl border border-red-500/20 bg-red-500/5 px-3 py-2">
-              <p className="text-[10px] uppercase tracking-wide text-red-400/80">Menor</p>
+              <p className="text-[10px] uppercase tracking-wide text-red-700/90">Menor</p>
               <p className="text-sm font-bold capitalize text-[var(--admin-text)]">{comparison.worst.label.replace(".", "")}</p>
-              <p className="text-sm font-semibold text-red-400">{formatCurrency(comparison.worst.total)}</p>
+              <p className="text-sm font-semibold text-red-700">{formatCurrency(comparison.worst.total)}</p>
             </div>
           </div>
 
@@ -286,7 +286,7 @@ export default function YearOverview({ data, yearTotal, entries }: YearOverviewP
                     <span
                       className={cn(
                         "font-medium",
-                        vsAvg >= 0 ? "text-emerald-400" : "text-red-400"
+                        vsAvg >= 0 ? "text-emerald-700" : "text-red-700"
                       )}
                     >
                       {formatPercent(vsAvg)} vs média

@@ -73,7 +73,7 @@ export default function AddExpensePanel({ onAdd }: AddExpensePanelProps) {
             <p className="text-xs text-[var(--admin-text-faint)]">Aluguel, produtos, contas...</p>
           </div>
           {success && (
-            <div className="ml-auto flex items-center gap-1.5 rounded-full bg-emerald-500/15 px-3 py-1 text-xs font-semibold text-emerald-400">
+            <div className="ml-auto flex items-center gap-1.5 rounded-full bg-emerald-500/15 px-3 py-1 text-xs font-semibold text-emerald-700">
               <CheckCircle className="size-3" />
               Salvo!
             </div>
@@ -125,8 +125,8 @@ export default function AddExpensePanel({ onAdd }: AddExpensePanelProps) {
                   className={cn(
                     "rounded-xl border py-2.5 text-center text-xs font-medium transition-all",
                     category === cat.value
-                      ? "border-red-400/60 bg-red-500/10 text-red-300"
-                      : "border-[var(--admin-border)] bg-[var(--admin-input)] text-[var(--admin-text-faint)] hover:border-[var(--admin-border-muted)] hover:text-[var(--admin-text-dim)]"
+                      ? "border-red-400/60 bg-red-500/10 text-red-700"
+                      : "border-[var(--admin-border)] bg-[var(--admin-input)] text-[var(--admin-text-faint)] hover:border-[var(--admin-border-muted)] hover:bg-[var(--admin-hover)] hover:text-[var(--admin-text)]"
                   )}
                 >
                   <span className="block text-base leading-none">{cat.emoji}</span>
@@ -175,7 +175,7 @@ export default function AddExpensePanel({ onAdd }: AddExpensePanelProps) {
                 type="button"
                 disabled={submitting}
                 onClick={() => quickAdd(v)}
-                className="rounded-lg border border-[var(--admin-border)] bg-[var(--admin-bg)] px-3 py-1.5 text-xs font-semibold text-[var(--admin-text-dim)] transition-all hover:border-red-500/30 hover:text-red-300 disabled:opacity-40"
+                className="rounded-lg border border-[var(--admin-border)] bg-[var(--admin-bg)] px-3 py-1.5 text-xs font-semibold text-[var(--admin-text-dim)] transition-all hover:border-red-500/30 hover:bg-red-500/10 hover:text-red-700 disabled:opacity-40"
               >
                 {formatCurrency(v)}
               </button>

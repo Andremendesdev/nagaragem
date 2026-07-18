@@ -118,7 +118,7 @@ export default function RecentEntries({ entries, onRemove }: RecentEntriesProps)
           {hasFilters && (
             <button
               onClick={resetFilters}
-              className="flex items-center gap-1.5 rounded-lg border border-[var(--admin-border-muted)] px-3 py-1.5 text-xs text-[var(--admin-text-dim)] transition-colors hover:border-[var(--admin-border-muted)] hover:text-[var(--admin-text)]"
+              className="flex items-center gap-1.5 rounded-lg border border-[var(--admin-border-muted)] px-3 py-1.5 text-xs text-[var(--admin-text-dim)] transition-colors hover:border-[var(--admin-border-muted)] hover:bg-[var(--admin-hover)] hover:text-[var(--admin-text)]"
             >
               <X className="size-3" />
               Limpar filtros
@@ -153,7 +153,7 @@ export default function RecentEntries({ entries, onRemove }: RecentEntriesProps)
                     "rounded-lg px-3 py-1.5 text-xs font-semibold transition-all",
                     period === p.value && !selectedDay
                       ? "border border-[var(--admin-gold-border-muted)] bg-[var(--admin-gold-bg)] text-[var(--admin-gold)]"
-                      : "text-[var(--admin-text-faint)] hover:text-[var(--admin-text-dim)]"
+                      : "text-[var(--admin-text-faint)] hover:bg-[var(--admin-hover)] hover:text-[var(--admin-text)]"
                   )}
                 >
                   {p.label}
@@ -239,7 +239,7 @@ export default function RecentEntries({ entries, onRemove }: RecentEntriesProps)
                 <div
                   key={entry.id}
                   className={cn(
-                    "group grid grid-cols-[1fr_40px] gap-3 px-6 py-3.5 transition-colors hover:bg-black/[0.04] sm:grid-cols-[2fr_1fr_1fr_1fr_40px]",
+                    "group grid grid-cols-[1fr_40px] gap-3 px-6 py-3.5 transition-colors hover:bg-[var(--admin-hover)] sm:grid-cols-[2fr_1fr_1fr_1fr_40px]",
                     isRemoving && "opacity-50"
                   )}
                 >
@@ -261,7 +261,7 @@ export default function RecentEntries({ entries, onRemove }: RecentEntriesProps)
                   </div>
 
                   <div className="hidden items-center sm:flex">
-                    <span className="rounded-full bg-black/5 px-2 py-0.5 text-xs font-medium text-[var(--admin-text-dim)]">
+                    <span className="rounded-full bg-[var(--admin-badge-bg)] px-2 py-0.5 text-xs font-medium text-[var(--admin-text-dim)]">
                       {clients} {clients === 1 ? "cliente" : "clientes"}
                     </span>
                   </div>
