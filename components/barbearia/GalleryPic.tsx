@@ -26,8 +26,7 @@ function GalleryItem({
   return (
     <motion.div
       ref={ref}
-      className={`relative overflow-hidden rounded-2xl cursor-pointer`}
-      style={{ minHeight: 280 }}
+      className="relative overflow-hidden rounded-xl sm:rounded-2xl cursor-pointer aspect-square md:aspect-auto md:min-h-[280px]"
       initial={{ opacity: 0, scale: 0.96 }}
       animate={inView ? { opacity: 1, scale: 1 } : {}}
       transition={{
@@ -144,7 +143,7 @@ export default function GalleryPic({ photos = [] }: { photos?: CanalhaPhotoType[
           </motion.div>
         ) : (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-3 gap-2 sm:gap-4">
               {displayedPhotos.map((photo, i) => (
                 <GalleryItem key={photo._id || i} photo={photo} index={i} />
               ))}
@@ -187,15 +186,14 @@ export default function GalleryPic({ photos = [] }: { photos?: CanalhaPhotoType[
               </button>
             </div>
             
-            {/* Grid de fotos no modal: 3 colunas desktop, 1 coluna mobile */}
-            <div className="flex-1 overflow-y-auto p-6">
+            {/* Grid de fotos no modal: 3 colunas mobile e desktop */}
+            <div className="flex-1 overflow-y-auto p-4 sm:p-6">
               <div className="max-w-7xl mx-auto">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-3 gap-2 sm:gap-4">
                   {photos.map((photo, i) => (
                     <div 
                       key={photo._id || i} 
-                      className="relative overflow-hidden rounded-2xl group cursor-pointer"
-                      style={{ minHeight: "350px" }}
+                      className="relative overflow-hidden rounded-xl sm:rounded-2xl group cursor-pointer aspect-square md:aspect-auto md:min-h-[350px]"
                     >
                       {photo.image && (
                         <img
@@ -205,7 +203,7 @@ export default function GalleryPic({ photos = [] }: { photos?: CanalhaPhotoType[
                         />
                       )}
                       <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                      <div className="absolute inset-0 rounded-2xl pointer-events-none box-border border-2 border-transparent group-hover:border-[#ffea00]/50 transition-colors duration-300" />
+                      <div className="absolute inset-0 rounded-xl sm:rounded-2xl pointer-events-none box-border border-2 border-transparent group-hover:border-[#ffea00]/50 transition-colors duration-300" />
                     </div>
                   ))}
                 </div>
